@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatefulWidget {
+  static const String routeName = '/account-screen';
   const AccountScreen({Key? key}) : super(key: key);
 
   @override
@@ -10,6 +11,8 @@ class AccountScreen extends StatefulWidget {
 class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return  const Center(
+      child: Text("THis is Account Scrreen"),
+    );
   }
 }

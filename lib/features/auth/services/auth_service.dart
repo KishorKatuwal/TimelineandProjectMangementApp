@@ -21,6 +21,7 @@ class AuthService {
     required String name,
     required String group,
     required String faculty,
+    required String year,
   }) async {
     try {
       User user = User(
@@ -29,6 +30,7 @@ class AuthService {
           email: email,
           group: group,
           faculty: faculty,
+          year: year,
           type: '',
           token: '',
           password: password);

@@ -6,6 +6,7 @@ class User {
   final String email;
   final String group;
   final String faculty;
+  final String year;
   final String type;
   final String token;
   final String password;
@@ -15,6 +16,7 @@ class User {
     required this.email,
     required this.group,
     required this.faculty,
+    required this.year,
     required this.type,
     required this.token,
     required this.password,
@@ -28,6 +30,7 @@ class User {
     result.addAll({'email': email});
     result.addAll({'group': group});
     result.addAll({'faculty': faculty});
+    result.addAll({'year': year});
     result.addAll({'type': type});
     result.addAll({'token': token});
     result.addAll({'password': password});
@@ -42,6 +45,7 @@ class User {
       email: map['email'] ?? '',
       group: map['group'] ?? '',
       faculty: map['faculty'] ?? '',
+      year: map['year'] ?? '',
       type: map['type'] ?? '',
       token: map['token'] ?? '',
       password: map['password'] ?? '',
