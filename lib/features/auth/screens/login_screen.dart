@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const String routeName = '/login-screen';
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -10,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final AuthService authService= AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -19,6 +23,11 @@ class _LoginScreenState extends State<LoginScreen> {
     _emailController.dispose();
     _passwordController.dispose();
   }
+
+
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,10 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const Text(
                   'Login In with your Account',
-                  style: TextStyle(
-                     
-                      fontSize: 25,
-                      color: Colors.black87),
+                  style: TextStyle(fontSize: 23, color: Colors.black87),
                 ),
                 const SizedBox(
                   height: 15,
@@ -56,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   height: 15,
                 ),
                 CustomTextField(
-                    controller: _passwordController, hintText: "Password"),
+                    controller: _passwordController, hintText: "Password", obText: true,),
                 const SizedBox(
                   height: 25,
                 ),
@@ -89,7 +95,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     const Text("Don't have an Account?"),
                     TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.pushNamed(context, SignupScreen.routeName);
+                      },
                       child: const Text(
                         "Sign up now",
                         style: TextStyle(

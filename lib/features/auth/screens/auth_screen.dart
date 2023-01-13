@@ -42,6 +42,7 @@ class _AuthScreenState extends State<AuthScreen> {
       name: _nameController.text,
       faculty: _facultyController.text,
       group: _facultyController.text,
+      year: "Year1"
     );
   }
 
