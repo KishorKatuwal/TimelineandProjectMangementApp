@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/home/screens/home_screen.dart';
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
@@ -13,7 +14,6 @@ void main() {
     ChangeNotifierProvider(create: (context) => UserProvider()),
   ], child: const MyApp()));
 }
-
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -41,15 +41,14 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(
           scaffoldBackgroundColor: GlobalVariables.backgroundColor,
           colorScheme:
-              const ColorScheme.light(primary: GlobalVariables.secondaryColor),
+              const ColorScheme.light(primary: GlobalVariables.mainColor),
           appBarTheme: const AppBarTheme(
               elevation: 0, iconTheme: IconThemeData(color: Colors.black))),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home:
-
-      Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? const BottomBar()
-          : const AuthScreen(),
+      home: LoginScreen()
+      // Provider.of<UserProvider>(context).user.token.isNotEmpty
+      //     ? const BottomBar()
+      //     : const AuthScreen(),
     );
   }
 }
