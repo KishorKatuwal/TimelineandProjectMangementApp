@@ -34,34 +34,26 @@ authRouter.post("/api/signup", async (req, res) => {
 });
 
 //api for singing in
-authRouter.post("/api/signin", async (req, res) => {
-  try {
-    const { email, password } = req.body;
-    //finding the user
-    const user = await User.findOne({ email });
-    if (!user) {
-      return (
-        res.status(400), json({ message: "User with this email not found" })
-      );
+ authRouter.post('/api/signin', async (req, res)=> {
+    try{
+        const {email, password} = req.body;
+        const user = await User.findOne({ email});
+        if(!user){
+            return res.status(400)
+            .json({msg: "User with this email does not exist"});
+        }
+        const isMatch = await bcryptjs.compare(password, user.password);
+        if(!isMatch){
+            return res.status(400)
+            .json({msg: "Incorrect Password"});
+        }
+        const token = jwt.sign({id: user._id}, "passwordKey");
+        res.json({token, ...user._doc})
+
+    }catch(e){
+        res.status(500).json({ error: e.message });
     }
-
-    //checking password
-    const isMatch = bcryptjs.compare(password, user.password);
-    if (!user) {
-      return res.status(400), json({ msg: "Incorrect Password!" });
-    }
-
-    //what to give jwt to isgn in with
-    const token = jwt.sign({ id: user._id }, "passwordKey");
-    //...is object destructing
-    res.json({ token, ...user._doc });
-
-
-
-  } catch (e) {
-    res.status(500).json({ error: e.message });
-  }
-});
+ });
 
     //checking token is valid
     authRouter.post("/tokenIsValid", async (req, res) => {

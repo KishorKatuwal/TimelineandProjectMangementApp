@@ -13,6 +13,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _signInFormKey = GlobalKey<FormState>();
   final AuthService authService= AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -25,7 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
 
-
+  void signInUser() {
+    authService.signInUser(
+        context: context,
+        email: _emailController.text,
+        password: _passwordController.text);
+  }
 
 
 
@@ -36,77 +42,84 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 15, right: 15, top: 50),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  padding: const EdgeInsets.only(top: 50),
-                  child: Image.asset(
-                    'assets/logo.png',
-                  ),
-                ),
-                const SizedBox(
-                  height: 40,
-                ),
-                const Text(
-                  'Login In with your Account',
-                  style: TextStyle(fontSize: 23, color: Colors.black87),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                CustomTextField(
-                    controller: _emailController, hintText: "Email"),
-                const SizedBox(
-                  height: 15,
-                ),
-                CustomTextField(
-                    controller: _passwordController, hintText: "Password", obText: true,),
-                const SizedBox(
-                  height: 25,
-                ),
-                CustomButton(
-                  text: "Log in",
-                  onTap: () {},
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                Container(
-                  margin: const EdgeInsets.only(right: 220, top: 5),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Forgot Password?",
-                      style: TextStyle(color: Colors.redAccent),
+            child: Form(
+              key: _signInFormKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: Image.asset(
+                      'assets/logo.png',
                     ),
                   ),
-                ),
-                const Divider(
-                  color: Colors.black,
-                  height: 10,
-                  thickness: 2,
-                  indent: 5,
-                  endIndent: 5,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text("Don't have an Account?"),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.pushNamed(context, SignupScreen.routeName);
-                      },
+                  const SizedBox(
+                    height: 40,
+                  ),
+                  const Text(
+                    'Login In with your Account',
+                    style: TextStyle(fontSize: 23, color: Colors.black87),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  CustomTextField(
+                      controller: _emailController, hintText: "Email"),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  CustomTextField(
+                      controller: _passwordController, hintText: "Password", obText: true,),
+                  const SizedBox(
+                    height: 25,
+                  ),
+                  CustomButton(
+                    text: "Log in",
+                    onTap: () {
+                      if (_signInFormKey.currentState!.validate()) {
+                        signInUser();
+                      }
+                    },
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(right: 220, top: 5),
+                    child: TextButton(
+                      onPressed: () {},
                       child: const Text(
-                        "Sign up now",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20),
+                        "Forgot Password?",
+                        style: TextStyle(color: Colors.redAccent),
                       ),
                     ),
-                  ],
-                )
-              ],
+                  ),
+                  const Divider(
+                    color: Colors.black,
+                    height: 10,
+                    thickness: 2,
+                    indent: 5,
+                    endIndent: 5,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an Account?"),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushNamed(context, SignupScreen.routeName);
+                        },
+                        child: const Text(
+                          "Sign up now",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

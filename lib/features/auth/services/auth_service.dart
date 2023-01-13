@@ -11,6 +11,7 @@ import 'package:http/http.dart' as http;
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/utils.dart';
+import '../../admin/screens/admin_screen.dart';
 
 class AuthService {
   //function  for signup user
@@ -74,9 +75,6 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
-      print(res.body);
-
       httpErrorHandle(
         response: res,
         context: context,
@@ -86,7 +84,12 @@ class AuthService {
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
           Navigator.pushNamedAndRemoveUntil(
-              context, BottomBar.routeName, (route) => false);
+              context,
+              Provider.of<UserProvider>(context, listen: false).user.type ==
+                      'user'
+                  ? BottomBar.routeName
+                  : AdminScreen.routeName,
+              (route) => false);
 
           showSnackBar(
             context,
@@ -125,7 +128,6 @@ class AuthService {
               'Content-Type': 'application/json; charset=UTF-8',
               'x-auth-token': token
             });
-
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
       }
