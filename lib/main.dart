@@ -7,6 +7,7 @@ import 'package:timelineandprojectmanagementapp/features/auth/services/auth_serv
 import 'package:timelineandprojectmanagementapp/features/home/screens/home_screen.dart';
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
 import 'package:timelineandprojectmanagementapp/router,dart.dart';
+import 'features/admin/screens/admin_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
 
 void main() {
@@ -45,10 +46,11 @@ class _MyAppState extends State<MyApp> {
           appBarTheme: const AppBarTheme(
               elevation: 0, iconTheme: IconThemeData(color: Colors.black))),
       onGenerateRoute: (settings) => generateRoute(settings),
-      home: LoginScreen()
-      // Provider.of<UserProvider>(context).user.token.isNotEmpty
-      //     ? const BottomBar()
-      //     : const AuthScreen(),
+      home: Provider.of<UserProvider>(context).user.token.isNotEmpty
+          ? Provider.of<UserProvider>(context).user.type == 'user'
+          ? const BottomBar()
+          : const AdminScreen()
+          : const LoginScreen(),
     );
   }
 }
