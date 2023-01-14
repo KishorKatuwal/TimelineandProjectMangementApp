@@ -38,6 +38,9 @@ dependencies:
   shared_preferences: ^2.0.15
   provider: ^6.0.5
   badges: ^2.0.3
+  csv: ^5.0.1
+  intl: ^0.17.0
+  rxdart: ^0.27.5
 
 dev_dependencies:
   flutter_test:
