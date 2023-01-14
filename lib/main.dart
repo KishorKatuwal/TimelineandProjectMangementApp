@@ -6,7 +6,7 @@ import 'package:timelineandprojectmanagementapp/features/auth/screens/login_scre
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/home/screens/home_screen.dart';
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
-import 'package:timelineandprojectmanagementapp/router,dart.dart';
+import 'package:timelineandprojectmanagementapp/router.dart';
 import 'features/admin/screens/admin_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
 
