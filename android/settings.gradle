@@ -1,6 +1,5 @@
 include ':app'
-include 'android'
-include 'core'
+
 
 def localPropertiesFile = new File(rootProject.projectDir, "local.properties")
 def properties = new Properties()
