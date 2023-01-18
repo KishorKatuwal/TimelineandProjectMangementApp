@@ -38,7 +38,7 @@ class _SignupScreenState extends State<SignupScreen> {
       password: _passwordController.text,
       name: _nameController.text,
       faculty: facultyValue,
-      group: _groupController.text,
+      group: _groupController.text.toUpperCase(),
       year: category,
     );
   }
