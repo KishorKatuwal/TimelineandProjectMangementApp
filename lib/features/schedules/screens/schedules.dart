@@ -46,6 +46,9 @@ class _SchedulesPageState extends State<SchedulesPage> {
     List<List<dynamic>> _listData =
         const CsvToListConverter().convert(_rawData);
     _data = _listData;
+    setState(() {
+
+    });
   }
 
   @override
