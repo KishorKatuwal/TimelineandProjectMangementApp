@@ -5,6 +5,7 @@ import 'package:timelineandprojectmanagementapp/constants/global_variables.dart'
 import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/home/screens/home_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/schedules/services/schedules_service.dart';
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
 import 'package:timelineandprojectmanagementapp/router.dart';
 import 'features/admin/screens/admin_screen.dart';
