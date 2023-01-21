@@ -33,6 +33,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     authService.getUserData(context);
+
   }
 
   @override

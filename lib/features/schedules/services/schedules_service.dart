@@ -2,10 +2,7 @@ import 'package:csv/csv.dart';
 import 'package:flutter/services.dart';
 
 class SchedulesService {
-  String Group = "C4";
-
-
-  Future<List<List>> loadListFromCSV(String WeekDay) async {
+  Future<List<List>> loadListFromCSV(String WeekDay,String Group) async {
     List<List<dynamic>> _data = [];
     List<List<dynamic>> _finaldata = [];
     String data = await rootBundle.loadString("assets/data.csv");
