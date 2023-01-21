@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/screens/schedules.dart';
+import 'package:timelineandprojectmanagementapp/features/schedules/Widget/tab_class.dart';
 import '../../constants/global_variables.dart';
 import '../../features/account/screens/account.dart';
 import '../../features/home/screens/home_screen.dart';
@@ -22,7 +23,7 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     const HomeScreen(),
-    const SchedulesPage(),
+    const TabClass(),
     const AccountScreen(),
   ];
 
