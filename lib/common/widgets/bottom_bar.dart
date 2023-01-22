@@ -24,7 +24,8 @@ class _BottomBarState extends State<BottomBar> {
   double bottombarBordersWidth = 5;
 
   List<Widget> pages = [
-    const EventScreen(),
+    // const EventScreen(),
+    const TryScreen(),
     const TabClass(),
     const AccountScreen(),
   ];

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 
-import '../model/event_model.dart';
+import '../model/ecent_try_model.dart';
 
 class TryScreen extends StatefulWidget {
   const TryScreen({Key? key}) : super(key: key);
@@ -12,9 +12,13 @@ class TryScreen extends StatefulWidget {
 }
 
 class _TryScreenState extends State<TryScreen> {
-  final nameController = TextEditingController();
-  final titleController = TextEditingController();
+  final eventNameController = TextEditingController();
+  final eventDateController = TextEditingController();
   final descriptionController = TextEditingController();
+  final subjectController = TextEditingController();
+  final eventTimeController = TextEditingController();
+  final eventTypeController = TextEditingController();
+
   final EventServices eventServices = EventServices();
 
   Map<String, List> mySelectedEvents = {};
@@ -33,49 +37,52 @@ class _TryScreenState extends State<TryScreen> {
   }
 
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          const SizedBox(height: 30,),
+          const SizedBox(
+            height: 30,
+          ),
           TextField(
-            controller: titleController,
+            controller: eventNameController,
             decoration: const InputDecoration(labelText: 'Event Name'),
           ),
           TextField(
-            controller: descriptionController,
-            decoration: const InputDecoration(labelText: 'Event Location'),
+            controller: eventDateController,
+            decoration: const InputDecoration(labelText: 'Event Date'),
           ),
-          RaisedButton(
+          TextField(
+            controller: eventTimeController,
+            decoration: const InputDecoration(labelText: 'Event Time'),
+          ),
+          TextField(
+            controller: descriptionController,
+            decoration: const InputDecoration(labelText: 'Event Description'),
+          ),
+          TextField(
+            controller: subjectController,
+            decoration: const InputDecoration(labelText: 'Event Subject'),
+          ),
+          TextField(
+            controller: eventTypeController,
+            decoration: const InputDecoration(labelText: 'Event Type'),
+          ),
+          ElevatedButton(
             child: const Text('Add Event'),
             onPressed: () {
-              for (int i = 0; i < eventModel.length; i++) {
-                setState(() {
-                  if (mySelectedEvents[eventModel[i].name] != null) {
-                    mySelectedEvents[eventModel[i].name]
-                        ?.add({
-                      "eventTitle": eventModel[i].title,
-                      "eventDesc": eventModel[i].title,
-                    });
-                  } else {
-                    mySelectedEvents[eventModel[i].name] = [
-                      {
-                        "eventTitle": eventModel[i].title,
-                        "eventDesc": eventModel[i].title,
-                      }
-                    ];
-                  }
-                });
-                print(mySelectedEvents);
-              }
+              eventServices.sellProduct(context: context,
+                  EventName: eventNameController.text,
+                  EventDate: eventDateController.text,
+                  EventTime: eventTimeController.text,
+                  Subject: subjectController.text,
+                  Description: descriptionController.text,
+                  EventType: eventTypeController.text);
             },
           ),
         ],
       ),
     );
   }
-
 }
