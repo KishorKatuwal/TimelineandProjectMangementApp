@@ -10,17 +10,19 @@ class User {
   final String type;
   final String token;
   final String password;
-  User({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.group,
-    required this.faculty,
-    required this.year,
-    required this.type,
-    required this.token,
-    required this.password,
-  });
+  final List<dynamic> events;
+
+  User(
+      {required this.id,
+      required this.name,
+      required this.email,
+      required this.group,
+      required this.faculty,
+      required this.year,
+      required this.type,
+      required this.token,
+      required this.password,
+      required this.events});
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -34,6 +36,7 @@ class User {
     result.addAll({'type': type});
     result.addAll({'token': token});
     result.addAll({'password': password});
+    result.addAll({'events': events});
 
     return result;
   }
@@ -49,10 +52,41 @@ class User {
       type: map['type'] ?? '',
       token: map['token'] ?? '',
       password: map['password'] ?? '',
+      events: List<Map<String, dynamic>>.from(
+        map['events']?.map(
+          (x) => Map<String, dynamic>.from(x),
+        ),
+      ),
     );
   }
 
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));
+
+  User copyWith({
+    String? id,
+    String? name,
+    String? email,
+    String? year,
+    String? group,
+    String? faculty,
+    String? type,
+    String? password,
+    String? token,
+    List<dynamic>? events,
+  }) {
+    return User(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      email: email ?? this.email,
+      year: year ?? this.year,
+      group: group ?? this.group,
+      faculty: faculty ?? this.faculty,
+      type: type ?? this.type,
+      password: password ?? this.password,
+      token: token ?? this.token,
+      events: events ?? this.events,
+    );
+  }
 }

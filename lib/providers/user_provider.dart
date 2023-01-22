@@ -11,13 +11,18 @@ class UserProvider extends ChangeNotifier {
       year: '',
       type: '',
       token: '',
-      password: '');
+      password: '',
+      events: []);
 
-  User get user =>_user;
+  User get user => _user;
 
-  void setUser(String user){
+  void setUser(String user) {
     _user = User.fromJson(user);
     notifyListeners();
   }
 
+  void setUserFromModel(User user) {
+    _user = user;
+    notifyListeners();
+  }
 }

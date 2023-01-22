@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Events = require('./event');
 
 const userSchema = mongoose.Schema({
   name: {
@@ -23,7 +24,7 @@ const userSchema = mongoose.Schema({
     required: true,
     type: String,
     validator: (value) => {
-      return value.lenght > 6;
+      return value.length > 6;
     },
     message: "Please insert a long Password",
   },
@@ -46,6 +47,8 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "user",
   },
+  //for events
+  events: [Events.schema]
   //details
 });
 

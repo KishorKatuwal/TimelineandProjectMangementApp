@@ -33,7 +33,8 @@ class AuthService {
           year: year,
           type: '',
           token: '',
-          password: password);
+          password: password,
+          events: []);
 
       http.Response res = await http.post(
         Uri.parse('$uri/api/signup'),
