@@ -32,7 +32,6 @@ class _TryScreenState extends State<TryScreen> {
   }
 
   void getDate() {
-    eventModel = eventServices.getDataList();
     print(eventModel.length);
   }
 

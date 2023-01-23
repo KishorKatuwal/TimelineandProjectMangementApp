@@ -5,6 +5,8 @@ import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
 
 class AddEventScreen extends StatefulWidget {
+  static const String routeName = '/add-event-screen';
+
   const AddEventScreen({Key? key}) : super(key: key);
 
   @override
@@ -20,10 +22,23 @@ class _AddEventScreenState extends State<AddEventScreen> {
   final _eventTimeController = TextEditingController();
   final _eventTypeController = TextEditingController();
 
-  final EventServices eventServices=EventServices();
+  final EventServices eventServices = EventServices();
 
-  void addNewEvent(){
-    eventServices.addNewEvent(context: context,
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _eventTypeController.dispose();
+    _eventNameController.dispose();
+    _eventDateController.dispose();
+    _eventTimeController.dispose();
+    _subjectController.dispose();
+    _descriptionController.dispose();
+  }
+
+  void addNewEvent() {
+    eventServices.addNewEvent(
+        context: context,
         EventName: _eventNameController.text,
         EventDate: _eventDateController.text,
         EventTime: _eventTimeController.text,
@@ -133,7 +148,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   const SizedBox(
                     height: 30,
                   ),
-
                   CustomButton(
                     text: "Add Event",
                     onTap: () {
