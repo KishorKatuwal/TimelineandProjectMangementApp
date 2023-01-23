@@ -47,7 +47,7 @@ class EventServices {
     return _finalEvents;
   }
 
-  void sellProduct({
+  void addNewEvent({
     required BuildContext context,
     required String EventName,
     required String EventDate,
