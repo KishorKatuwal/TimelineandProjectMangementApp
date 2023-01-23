@@ -84,4 +84,45 @@ class EventServices {
     }
     return eventList;
   }
+
+
+  void deleteEvent({
+    required BuildContext context,
+    required String eventID,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.delete(
+        Uri.parse('$uri/api/delete-events'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'EventID': eventID,
+        }),
+      );
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            User user =
+            userProvider.user.copyWith(events: jsonDecode(res.body)['events']);
+            userProvider.setUserFromModel(user);
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+
+
+
+
+
+
+
+
+
+
 }
