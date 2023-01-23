@@ -20,6 +20,17 @@ userRouter.post("/api/add-event", auth, async (req, res) => {
     }
 });
 
+userRouter.get('/api/get-events',auth, async (req, res) => {
+    try {
+        let user = await User.findById(req.user);
+        const userEvents = user.events;
+//        console.log(userEvents);
+        res.json(userEvents);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+
+});
 
 
 

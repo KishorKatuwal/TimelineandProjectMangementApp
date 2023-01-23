@@ -2,12 +2,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/event/model/ecent_try_model.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 
+import '../model/event_data_model.dart';
+
 class EventScreen extends StatefulWidget {
+  static const String routeName = '/event-screen';
   const EventScreen({Key? key}) : super(key: key);
 
   @override
@@ -23,6 +29,9 @@ class _EventScreenState extends State<EventScreen> {
   final titleController = TextEditingController();
   final descController = TextEditingController();
 
+  List<EventDataModel> _eventsFromBackend = [];
+  Map<String, List> _finalEvents = {};
+
   bool loading = false;
 
   @override
@@ -33,11 +42,31 @@ class _EventScreenState extends State<EventScreen> {
     getFinalData();
   }
 
-  void getFinalData() {
-    mySelectedEvents = eventServices.getFinalDataList();
+  void getFinalData() async {
+    mySelectedEvents = await getFinalDataList();
+    // print("New event for backed Developer ${json.encode(mySelectedEvents)}");
+  }
+
+  Future<Map<String, List>> getFinalDataList() async {
+    _eventsFromBackend = await eventServices.fetchAllProducts(context);
+    for (int i = 0; i < _eventsFromBackend.length; i++) {
+      if (_finalEvents[_eventsFromBackend[i].EventDate] != null) {
+        _finalEvents[_eventsFromBackend[i].EventDate]?.add({
+          "eventTitle": _eventsFromBackend[i].EventType,
+          "eventDesc": _eventsFromBackend[i].EventName,
+        });
+      } else {
+        _finalEvents[_eventsFromBackend[i].EventDate] = [
+          {
+            "eventTitle": _eventsFromBackend[i].EventType,
+            "eventDesc": _eventsFromBackend[i].EventName,
+          }
+        ];
+      }
+    }
     loading = true;
     setState(() {});
-    print("New event for backed Developer ${json.encode(mySelectedEvents)}");
+    return _finalEvents;
   }
 
   List _listofDayEvents(DateTime dateTime) {
@@ -48,77 +77,6 @@ class _EventScreenState extends State<EventScreen> {
     }
   }
 
-  _showAddEventDialog() async {
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text(
-          "Add new Event",
-          textAlign: TextAlign.center,
-        ),
-        content: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: titleController,
-              textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(
-                labelText: 'Title',
-              ),
-            ),
-            TextField(
-              controller: descController,
-              textCapitalization: TextCapitalization.words,
-              decoration: const InputDecoration(
-                labelText: 'Description',
-              ),
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              if (titleController.text.isEmpty && descController.text.isEmpty) {
-                showSnackBar(context, "Required title and description");
-              } else {
-                setState(() {
-                  if (mySelectedEvents[
-                          DateFormat('yyyy-MM-dd').format(_selectedDate!)] !=
-                      null) {
-                    mySelectedEvents[
-                            DateFormat('yyyy-MM-dd').format(_selectedDate!)]
-                        ?.add({
-                      "eventTitle": titleController.text,
-                      "eventDesc": descController.text,
-                    });
-                  } else {
-                    mySelectedEvents[
-                        DateFormat('yyyy-MM-dd').format(_selectedDate!)] = [
-                      {
-                        "eventTitle": titleController.text,
-                        "eventDesc": descController.text,
-                      }
-                    ];
-                  }
-                });
-                print(
-                    "New event for backed Developer ${json.encode(mySelectedEvents)}");
-                Navigator.pop(context);
-                return;
-              }
-            },
-            child: const Text('Add Event'),
-          ),
-        ],
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,60 +84,102 @@ class _EventScreenState extends State<EventScreen> {
         title: const Text("Event Calendar"),
         centerTitle: true,
       ),
-      body: loading
-          ? Column(
-              children: [
-                TableCalendar(
-                  firstDay: DateTime(2023),
-                  lastDay: DateTime(2024),
-                  focusedDay: _focusedDay,
-                  calendarFormat: _calendarFormat,
-                  onDaySelected: (selectedDate, focusedDay) {
-                    if (!isSameDay(_selectedDate, selectedDate)) {
-                      setState(() {
-                        _selectedDate = selectedDate;
-                        _focusedDay = focusedDay;
-                      });
-                    }
-                  },
-                  selectedDayPredicate: (day) {
-                    return isSameDay(_selectedDate, day);
-                  },
-                  onFormatChanged: (format) {
-                    if (_calendarFormat != format) {
-                      setState(() {
-                        _calendarFormat = format;
-                      });
-                    }
-                  },
-                  onPageChanged: (focusedDay) {
-                    _focusedDay = focusedDay;
-                  },
-                  eventLoader: _listofDayEvents,
-                ),
-                ..._listofDayEvents(_selectedDate!).map(
-                  (myEvents) => ListTile(
-                    leading: const Icon(
-                      Icons.done,
-                      color: Colors.teal,
+      body: SingleChildScrollView(
+        child: loading
+            ? Column(
+                children: [
+                  TableCalendar(
+                    calendarStyle: const CalendarStyle(
+                        weekendTextStyle: TextStyle(color: Colors.red)),
+                    firstDay: DateTime(2023),
+                    lastDay: DateTime(2024),
+                    focusedDay: _focusedDay,
+                    calendarFormat: _calendarFormat,
+                    weekendDays: const [6],
+                    daysOfWeekStyle: const DaysOfWeekStyle(
+                      weekdayStyle: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                      weekendStyle: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
                     ),
-                    title: Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Text("Event Title: ${myEvents['eventTitle']}"),
+                    headerStyle: const HeaderStyle(
+                      titleCentered: true,
+                      formatButtonVisible: false,
+                      titleTextStyle:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                     ),
-                    subtitle: Text("Decoration: ${myEvents['eventDesc']}"),
+                    onDaySelected: (selectedDate, focusedDay) {
+                      if (!isSameDay(_selectedDate, selectedDate)) {
+                        setState(() {
+                          _selectedDate = selectedDate;
+                          _focusedDay = focusedDay;
+                        });
+                      }
+                    },
+                    selectedDayPredicate: (day) {
+                      return isSameDay(_selectedDate, day);
+                    },
+                    onFormatChanged: (format) {
+                      if (_calendarFormat != format) {
+                        setState(() {
+                          _calendarFormat = format;
+                        });
+                      }
+                    },
+                    onPageChanged: (focusedDay) {
+                      _focusedDay = focusedDay;
+                    },
+                    eventLoader: _listofDayEvents,
                   ),
-                ),
-              ],
-            )
-          : const Center(
-              child: CircularProgressIndicator(),
-            ),
-      floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            _showAddEventDialog();
-          },
-          label: const Text("Add Event")),
+                  const Divider(
+                    height: 3,
+                    color: Colors.black,
+                    thickness: 2,
+                  ),
+                  ..._listofDayEvents(_selectedDate!).map(
+                    (myEvents) => ListTile(
+                      leading: const Icon(
+                        Icons.done,
+                        color: Colors.teal,
+                      ),
+                      title: Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text("Event Title: ${myEvents['eventTitle']}"),
+                      ),
+                      subtitle: Text("Decoration: ${myEvents['eventDesc']}"),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    child: CustomButton(
+                        text: "View Your Events",
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, ViewEventScreen.routeName);
+                        }),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(8),
+                    child: CustomButton(
+                        text: "Add New Event",
+                        onTap: () {
+                          Navigator.pushNamed(
+                              context, AddEventScreen.routeName);
+                        }),
+                  ),
+                ],
+              )
+            : const Center(
+                child: CircularProgressIndicator(),
+              ),
+      ),
     );
   }
 }
