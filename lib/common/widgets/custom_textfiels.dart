@@ -19,6 +19,7 @@ class CustomTextField extends StatelessWidget {
       controller: controller,
       obscureText: obText,
       decoration: InputDecoration(
+
         hintText: hintText,
         border: const OutlineInputBorder(
           borderSide: BorderSide(

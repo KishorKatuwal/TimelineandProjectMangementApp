@@ -72,7 +72,7 @@ class _TryScreenState extends State<TryScreen> {
           ElevatedButton(
             child: const Text('Add Event'),
             onPressed: () {
-              eventServices.sellProduct(context: context,
+              eventServices.addNewEvent(context: context,
                   EventName: eventNameController.text,
                   EventDate: eventDateController.text,
                   EventTime: eventTimeController.text,
