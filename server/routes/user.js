@@ -33,5 +33,25 @@ userRouter.get('/api/get-events',auth, async (req, res) => {
 });
 
 
+userRouter.delete("/api/delete-events",auth, async (req, res) => {
+    try {
+        const { id } = req.body;
+        let user = await User.findById(req.user);
+        const existingEvents = await user.events;
+       for(let i=0; i<existingEvents.length; i++){
+        if(existingEvents[i].EventID==id){
+            user.events.splice(i, 1);
+        }
+        }
+       user = await user.save();
+        res.json(user);
+    } catch (e) {
+        res.status(500).json({error: e.message});
+    }
+
+});
+
+
+
 
 module.exports = userRouter;
