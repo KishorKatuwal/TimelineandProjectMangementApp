@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String uri = 'http://192.168.1.69:3000';
+String uri = 'http://192.168.1.71:3000';
 // String uri = 'http://localhost:3000';
 
 class GlobalVariables {
@@ -14,6 +14,7 @@ class GlobalVariables {
   );
 
   static const mainColor = Color.fromRGBO(65,105,225,1);
+  static const eventListColor = Color.fromRGBO(0,191,225,1);
   static const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
   static const backgroundColor = Colors.white;
   static const Color greyBackgroundCOlor = Color(0xffebecee);

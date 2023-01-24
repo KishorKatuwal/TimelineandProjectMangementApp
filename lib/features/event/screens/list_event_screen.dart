@@ -26,9 +26,9 @@ class _ListEventScreenState extends State<ListEventScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final productCart = context.watch<UserProvider>().user.events[widget.index];
-    final product = EventDataModel.fromMap(productCart);
-    return productCart == null
+    final eventList = context.watch<UserProvider>().user.events[widget.index];
+    final events = EventDataModel.fromMap(eventList);
+    return eventList == null
         ? const Center(
             child: CircularProgressIndicator(),
           )
@@ -37,13 +37,13 @@ class _ListEventScreenState extends State<ListEventScreen> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(product.EventID),
+                    child: Text(events.EventID),
                   ),
                   IconButton(
                       iconSize: 30,
                       icon: const Icon(Icons.delete_outline),
                       onPressed: () {
-                        deleteProduct(product.EventID);
+                        deleteProduct(events.EventID);
                       })
                 ],
               ),
