@@ -56,7 +56,7 @@ class _TryScreenState extends State<TryScreen> {
                 right: 10,
               ),
               decoration: const BoxDecoration(
-                color: Colors.white70,
+                color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(12)),
                 boxShadow: [
                   BoxShadow(
