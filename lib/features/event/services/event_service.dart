@@ -13,6 +13,9 @@ import '../../../model/user.dart';
 import '../../../providers/user_provider.dart';
 
 class EventServices {
+
+
+
   void addNewEvent({
     required BuildContext context,
     required String EventName,
@@ -50,7 +53,11 @@ class EventServices {
           User user = userProvider.user
               .copyWith(events: jsonDecode(res.body)['events']);
           userProvider.setUserFromModel(user);
-          Navigator.pushNamed(context, BottomBar.routeName);
+          // Navigator.pushNamed(context, BottomBar.routeName);
+          Navigator.pushReplacementNamed(context, BottomBar.routeName);
+
+
+
         },
       );
     } catch (e) {
@@ -85,7 +92,6 @@ class EventServices {
     return eventList;
   }
 
-
   void deleteEvent({
     required BuildContext context,
     required String eventID,
@@ -106,23 +112,13 @@ class EventServices {
           response: res,
           context: context,
           onSuccess: () {
-            User user =
-            userProvider.user.copyWith(events: jsonDecode(res.body)['events']);
+            User user = userProvider.user
+                .copyWith(events: jsonDecode(res.body)['events']);
             userProvider.setUserFromModel(user);
+            // Navigator.pushReplacementNamed(context, BottomBar.routeName);
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
-
-
-
-
-
-
-
-
-
-
-
 }
