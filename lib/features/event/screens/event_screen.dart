@@ -160,12 +160,12 @@ class _EventScreenState extends State<EventScreen> {
                     child: CustomButton(
                         text: "View Your Events",
                         onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const TryScreen()),
-                          );
-                          // Navigator.pushNamed(
-                          //     context, ViewEventScreen.routeName);
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => const TryScreen()),
+                          // );
+                          Navigator.pushNamed(
+                              context, ViewEventScreen.routeName);
 
                         }),
                   ),
