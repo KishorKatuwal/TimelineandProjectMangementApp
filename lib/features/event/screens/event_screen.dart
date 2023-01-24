@@ -5,6 +5,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/tryclass.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 
@@ -165,7 +166,7 @@ class _EventScreenState extends State<EventScreen> {
                           //   MaterialPageRoute(builder: (context) => const TryScreen()),
                           // );
                           Navigator.pushNamed(
-                              context, ViewEventScreen.routeName);
+                              context, ViewAddedEventScreen.routeName);
 
                         }),
                   ),

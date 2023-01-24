@@ -6,6 +6,8 @@ import 'package:timelineandprojectmanagementapp/features/auth/screens/login_scre
 import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/tryclass.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
 import 'features/home/screens/home_screen.dart';
@@ -36,7 +38,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const BottomBar());
 
-      case AdminScreen.routeName:
+    case AdminScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const AdminScreen());
 
@@ -52,6 +54,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ViewEventScreen());
 
+    // case TryScreen.routeName:
+    //   return MaterialPageRoute(
+    //       settings: routeSettings, builder: (_) => const TryScreen());
+
+    case ViewAddedEventScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => const ViewAddedEventScreen());
 
     default:
       return MaterialPageRoute(
