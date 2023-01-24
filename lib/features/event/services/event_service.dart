@@ -6,6 +6,9 @@ import 'package:timelineandprojectmanagementapp/features/event/model/ecent_try_m
 import 'package:http/http.dart' as http;
 import 'package:timelineandprojectmanagementapp/features/event/model/event_data_model.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/tryclass.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/global_variables.dart';
 import '../../../constants/utils.dart';
@@ -115,7 +118,9 @@ class EventServices {
             User user = userProvider.user
                 .copyWith(events: jsonDecode(res.body)['events']);
             userProvider.setUserFromModel(user);
-            // Navigator.pushReplacementNamed(context, BottomBar.routeName);
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, BottomBar.routeName);
+            Navigator.pushNamed(context, ViewAddedEventScreen.routeName);
           });
     } catch (e) {
       showSnackBar(context, e.toString());
