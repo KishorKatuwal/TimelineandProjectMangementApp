@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
-import 'package:timelineandprojectmanagementapp/features/event/screens/tryclass.dart';
+import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
@@ -13,6 +13,7 @@ import '../model/event_data_model.dart';
 
 class EventScreen extends StatefulWidget {
   static const String routeName = '/event-screen';
+
   const EventScreen({Key? key}) : super(key: key);
 
   @override
@@ -51,14 +52,14 @@ class _EventScreenState extends State<EventScreen> {
     for (int i = 0; i < _eventsFromBackend.length; i++) {
       if (_finalEvents[_eventsFromBackend[i].EventDate] != null) {
         _finalEvents[_eventsFromBackend[i].EventDate]?.add({
-          "eventTitle": _eventsFromBackend[i].EventType,
-          "eventDesc": _eventsFromBackend[i].EventName,
+          "eventTitle": _eventsFromBackend[i].EventName,
+          "eventType": _eventsFromBackend[i].EventType,
         });
       } else {
         _finalEvents[_eventsFromBackend[i].EventDate] = [
           {
-            "eventTitle": _eventsFromBackend[i].EventType,
-            "eventDesc": _eventsFromBackend[i].EventName,
+            "eventTitle": _eventsFromBackend[i].EventName,
+            "eventType": _eventsFromBackend[i].EventType,
           }
         ];
       }
@@ -137,20 +138,37 @@ class _EventScreenState extends State<EventScreen> {
                   ),
                   const Divider(
                     height: 3,
-                    color: Colors.black,
+                    color: Colors.black26,
                     thickness: 2,
                   ),
                   ..._listofDayEvents(_selectedDate!).map(
                     (myEvents) => ListTile(
-                      leading: const Icon(
-                        Icons.done,
-                        color: Colors.teal,
+                      title: Container(
+                        decoration: const BoxDecoration(
+                            color: Color.fromRGBO(65, 105, 225, 0.1)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Event Title: ${myEvents['eventTitle']}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 18,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Text(
+                                "Event Type: ${myEvents['eventType']}",
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                      title: Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Text("Event Title: ${myEvents['eventTitle']}"),
-                      ),
-                      subtitle: Text("Decoration: ${myEvents['eventDesc']}"),
                     ),
                   ),
                   const SizedBox(
@@ -167,7 +185,6 @@ class _EventScreenState extends State<EventScreen> {
                           // );
                           Navigator.pushNamed(
                               context, ViewAddedEventScreen.routeName);
-
                         }),
                   ),
                   Container(

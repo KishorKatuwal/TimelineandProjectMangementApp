@@ -6,7 +6,7 @@ import 'package:timelineandprojectmanagementapp/features/event/model/ecent_try_m
 import 'package:http/http.dart' as http;
 import 'package:timelineandprojectmanagementapp/features/event/model/event_data_model.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
-import 'package:timelineandprojectmanagementapp/features/event/screens/tryclass.dart';
+import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import '../../../constants/error_handling.dart';
