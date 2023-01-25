@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:timelineandprojectmanagementapp/common/widgets/common_text.dart';
+import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
+import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
+import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:timelineandprojectmanagementapp/features/event/model/event_data_model.dart';
+import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 
-import '../../../common/widgets/common_text.dart';
-import '../model/event_data_model.dart';
-import '../services/event_service.dart';
+class TryScreen extends StatefulWidget {
+  static const String routeName = '/try-screen';
 
-class ViewAddedEventScreen extends StatefulWidget {
-  static const String routeName = '/view-added-event-screen';
-
-  const ViewAddedEventScreen({Key? key}) : super(key: key);
+  const TryScreen({Key? key}) : super(key: key);
 
   @override
-  State<ViewAddedEventScreen> createState() => _ViewAddedEventScreenState();
+  State<TryScreen> createState() => _TryScreenState();
 }
 
-class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
+class _TryScreenState extends State<TryScreen> {
   final EventServices eventServices = EventServices();
   List<EventDataModel> eventModel = [];
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   getDate();
-  // }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDate();
+  }
 
   void getDate() async {
     eventModel = await eventServices.fetchAllProducts(context);
@@ -42,31 +44,15 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
         title: const Text("User Events"),
         centerTitle: true,
       ),
-      body: FutureBuilder(
-        future: eventServices.fetchAllProducts(context),
-        builder: (context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else if (snapshot.hasError) {
-            return Center(
-              child: Text("An error occurred: ${snapshot.error}"),
-            );
-          } else if (!snapshot.hasData) {
-            return const Center(
-              child: Text("No Events are added"),
-            );
-          } else {
-            eventModel = snapshot.data;
-            return ListView.builder(
+      body: eventModel.isNotEmpty
+          ? ListView.builder(
               itemCount: eventModel.length,
-              itemBuilder: (context, index) {
+              itemBuilder: ((context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(
                     right: 8,
                     left: 8,
-                    bottom: 2
+                    top: 3,
                   ),
                   child: Container(
                     padding: const EdgeInsets.only(
@@ -75,7 +61,7 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                     ),
                     decoration: const BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(2)),
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey,
@@ -168,11 +154,11 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                     ),
                   ),
                 );
-              },
-            );
-          }
-        },
-      ),
+              }),
+            )
+          : const Center(
+              child: Text("There are no available Events"),
+            ),
     );
   }
 }

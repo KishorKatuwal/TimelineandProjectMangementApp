@@ -6,7 +6,7 @@ import 'package:timelineandprojectmanagementapp/features/auth/screens/login_scre
 import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
-import 'package:timelineandprojectmanagementapp/features/event/screens/tryclass.dart';
+import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
