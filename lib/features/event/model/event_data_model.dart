@@ -8,6 +8,7 @@ class EventDataModel {
   final String Subject;
   final String Description;
   final String EventType;
+
   EventDataModel({
     required this.EventID,
     required this.EventName,
@@ -45,5 +46,6 @@ class EventDataModel {
 
   String toJson() => json.encode(toMap());
 
-  factory EventDataModel.fromJson(String source) => EventDataModel.fromMap(json.decode(source));
+  factory EventDataModel.fromJson(String source) =>
+      EventDataModel.fromMap(json.decode(source));
 }

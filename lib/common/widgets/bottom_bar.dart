@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/projects_screens/projects_page.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/screens/project_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_page.dart';
 import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/screens/schedules.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/Widget/tab_class.dart';
@@ -25,7 +27,9 @@ class _BottomBarState extends State<BottomBar> {
   double bottombarBordersWidth = 5;
 
   List<Widget> pages = [
-    const ProjectManagementScreen(),
+    // const ProjectManagementScreen(),
+    // const ProjectsPage(),
+    const TasksPage(),
     const EventScreen(),
     const TabClass(),
     const AccountScreen(),
