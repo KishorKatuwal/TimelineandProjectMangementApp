@@ -17,19 +17,20 @@ class _AddNewTaskState extends State<AddNewTask> {
   late TextEditingController _EndTime;
   DateTime SelectedDate = DateTime.now();
   String Category = "Meeting";
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _Titlecontroller = new TextEditingController();
-    _Datecontroller = new TextEditingController(
-        text: '${DateFormat('EEE, MMM d, ' 'yy').format(this.SelectedDate)}');
-    _StartTime = new TextEditingController(
-        text: '${DateFormat.jm().format(DateTime.now())}');
-    _EndTime = new TextEditingController(
-        text: '${DateFormat.jm().format(DateTime.now().add(
-          Duration(hours: 1),
-        ))}');
+    _Titlecontroller = TextEditingController();
+    _Datecontroller = TextEditingController(
+        text: DateFormat('EEE, MMM d, ' 'yy').format(SelectedDate));
+    _StartTime = TextEditingController(
+        text: DateFormat.jm().format(DateTime.now()));
+    _EndTime = TextEditingController(
+        text: DateFormat.jm().format(DateTime.now().add(
+      const Duration(hours: 1),
+    )));
   }
 
   _selectDate(BuildContext context) async {
@@ -43,14 +44,14 @@ class _AddNewTaskState extends State<AddNewTask> {
       setState(() {
         SelectedDate = selected;
         _Datecontroller.text =
-        '${DateFormat('EEE, MMM d, ' 'yy').format(selected)}';
+            DateFormat('EEE, MMM d, ' 'yy').format(selected);
       });
     }
   }
 
   _selectTime(BuildContext context, String Timetype) async {
     final TimeOfDay? result =
-    await showTimePicker(context: context, initialTime: TimeOfDay.now());
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
     if (result != null) {
       setState(() {
         if (Timetype == "StartTime") {
@@ -63,7 +64,7 @@ class _AddNewTaskState extends State<AddNewTask> {
   }
 
   _SetCategory(String Category) {
-    this.setState(() {
+    setState(() {
       this.Category = Category;
     });
   }
@@ -81,7 +82,7 @@ class _AddNewTaskState extends State<AddNewTask> {
               children: [
                 Container(
                   padding:
-                  EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
+                      const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -103,11 +104,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                           fontSize: 20,
                           decoration: TextDecoration.none,
                         ),
-                        // style: GoogleFonts.montserrat(
-                        //   color: Colors.white,
-                        //   fontSize: 20,
-                        //   decoration: TextDecoration.none,
-                        // ),
+
                       ),
                     ],
                   ),
@@ -118,24 +115,23 @@ class _AddNewTaskState extends State<AddNewTask> {
                   child: TextFormField(
                     controller: _Titlecontroller,
                     cursorColor: Colors.white,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                      ),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
                     decoration: const InputDecoration(
                       labelText: "Title",
-                      enabledBorder:  UnderlineInputBorder(
+                      enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
-                      focusedBorder:  UnderlineInputBorder(
+                      focusedBorder: UnderlineInputBorder(
                         borderSide: BorderSide(color: Colors.white),
                       ),
                       fillColor: Colors.white,
-                      labelStyle:       TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-
-                    ),
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ),
@@ -148,7 +144,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 15,
-
                     ),
                     readOnly: true,
                     decoration: InputDecoration(
@@ -169,18 +164,17 @@ class _AddNewTaskState extends State<AddNewTask> {
                         borderSide: BorderSide(color: Colors.white),
                       ),
                       fillColor: Colors.white,
-                      labelStyle:  const TextStyle(
-                      color: Colors.white,
-                      fontSize: 10,
-
-                    ),
+                      labelStyle: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
                     ),
                   ),
                 ),
                 Container(
                   margin: const EdgeInsets.only(top: 40),
-                  padding:
-                  const EdgeInsets.only(left: 20, right: 20, top: 20, bottom: 20),
+                  padding: const EdgeInsets.only(
+                      left: 20, right: 20, top: 20, bottom: 20),
                   decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -195,7 +189,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
+                            SizedBox(
                               width: MediaQuery.of(context).size.width * 0.4,
                               child: TextField(
                                 readOnly: true,
@@ -213,11 +207,11 @@ class _AddNewTaskState extends State<AddNewTask> {
                                   ),
                                   enabledBorder: const UnderlineInputBorder(
                                     borderSide:
-                                    BorderSide(color: Colors.black26),
+                                        BorderSide(color: Colors.black26),
                                   ),
                                   focusedBorder: const UnderlineInputBorder(
                                     borderSide:
-                                    BorderSide(color: Colors.black26),
+                                        BorderSide(color: Colors.black26),
                                   ),
                                   fillColor: Colors.black26,
                                   labelStyle: const TextStyle(
@@ -245,11 +239,11 @@ class _AddNewTaskState extends State<AddNewTask> {
                                   ),
                                   enabledBorder: const UnderlineInputBorder(
                                     borderSide:
-                                    BorderSide(color: Colors.black26),
+                                        BorderSide(color: Colors.black26),
                                   ),
                                   focusedBorder: const UnderlineInputBorder(
                                     borderSide:
-                                    BorderSide(color: Colors.black26),
+                                        BorderSide(color: Colors.black26),
                                   ),
                                   fillColor: Colors.black26,
                                   labelStyle: const TextStyle(
@@ -269,20 +263,20 @@ class _AddNewTaskState extends State<AddNewTask> {
                           minLines: 1,
                           maxLines: 8,
                           cursorColor: Colors.black26,
-                          style:const TextStyle(
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 15,
                           ),
                           decoration: const InputDecoration(
                             labelText: "Description",
-                            enabledBorder:  UnderlineInputBorder(
+                            enabledBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black26),
                             ),
-                            focusedBorder:  UnderlineInputBorder(
+                            focusedBorder: UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.black26),
                             ),
                             fillColor: Colors.black26,
-                            labelStyle:  TextStyle(
+                            labelStyle: TextStyle(
                               color: Colors.black26,
                               fontSize: 15,
                             ),
@@ -293,7 +287,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                         padding: const EdgeInsets.only(top: 10, bottom: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children:  [
+                          children: [
                             const Text(
                               "Category",
                               textAlign: TextAlign.center,
@@ -309,65 +303,65 @@ class _AddNewTaskState extends State<AddNewTask> {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    this._SetCategory('Marketting');
+                                    _SetCategory('Marketing');
                                   },
                                   child: Categorcard(
-                                    CategoryText: 'Marketting',
-                                    isActive: this.Category == 'Marketting',
+                                    CategoryText: 'Marketing',
+                                    isActive: Category == 'Marketing',
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    this._SetCategory('Meeting');
+                                    _SetCategory('Meeting');
                                   },
                                   child: Categorcard(
                                     CategoryText: 'Meeting',
-                                    isActive: this.Category == 'Meeting',
+                                    isActive: Category == 'Meeting',
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    this._SetCategory('Study');
+                                    _SetCategory('Study');
                                   },
                                   child: Categorcard(
                                     CategoryText: 'Study',
-                                    isActive: this.Category == 'Study',
+                                    isActive: Category == 'Study',
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    this._SetCategory('Sports');
+                                    _SetCategory('Sports');
                                   },
                                   child: Categorcard(
                                     CategoryText: 'Sports',
-                                    isActive: this.Category == 'Sports',
+                                    isActive: Category == 'Sports',
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    this._SetCategory('Development');
+                                    _SetCategory('Development');
                                   },
                                   child: Categorcard(
                                     CategoryText: 'Development',
-                                    isActive: this.Category == 'Development',
+                                    isActive: Category == 'Development',
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    this._SetCategory('Family');
+                                    _SetCategory('Family');
                                   },
                                   child: Categorcard(
                                     CategoryText: 'Family',
-                                    isActive: this.Category == 'Family',
+                                    isActive: Category == 'Family',
                                   ),
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    this._SetCategory('Urgent');
+                                    _SetCategory('Urgent');
                                   },
                                   child: Categorcard(
                                     CategoryText: 'Urgent',
-                                    isActive: this.Category == 'Urgent',
+                                    isActive: Category == 'Urgent',
                                   ),
                                 )
                               ],
@@ -379,7 +373,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                         height: 100,
                       ),
                       Container(
-                        padding: EdgeInsets.all(15),
+                        padding: const EdgeInsets.all(15),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           // color: Color.fromRGBO(130, 0, 255, 1),
