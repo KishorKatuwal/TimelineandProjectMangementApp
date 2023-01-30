@@ -11,6 +11,7 @@ class User {
   final String token;
   final String password;
   final List<dynamic> events;
+  final List<dynamic> projects;
 
   User(
       {required this.id,
@@ -22,7 +23,9 @@ class User {
       required this.type,
       required this.token,
       required this.password,
-      required this.events});
+      required this.events,
+      required this.projects,
+      });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
@@ -37,6 +40,7 @@ class User {
     result.addAll({'token': token});
     result.addAll({'password': password});
     result.addAll({'events': events});
+    result.addAll({'projects': projects});
 
     return result;
   }
@@ -54,6 +58,11 @@ class User {
       password: map['password'] ?? '',
       events: List<Map<String, dynamic>>.from(
         map['events']?.map(
+          (x) => Map<String, dynamic>.from(x),
+        ),
+      ),
+      projects: List<Map<String, dynamic>>.from(
+        map['projects']?.map(
           (x) => Map<String, dynamic>.from(x),
         ),
       ),
@@ -75,6 +84,7 @@ class User {
     String? password,
     String? token,
     List<dynamic>? events,
+    List<dynamic>? projects,
   }) {
     return User(
       id: id ?? this.id,
@@ -87,6 +97,7 @@ class User {
       password: password ?? this.password,
       token: token ?? this.token,
       events: events ?? this.events,
+      projects: events ?? this.projects,
     );
   }
 }

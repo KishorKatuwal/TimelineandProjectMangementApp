@@ -34,7 +34,9 @@ class AuthService {
           type: '',
           token: '',
           password: password,
-          events: []);
+          events: [],
+          projects: [],
+      );
 
       http.Response res = await http.post(
         Uri.parse('$uri/api/signup'),
