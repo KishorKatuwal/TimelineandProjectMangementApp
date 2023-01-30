@@ -8,18 +8,29 @@ import '../../../constants/utils.dart';
 import '../../../model/user.dart';
 import '../../../providers/user_provider.dart';
 import '../models/project_management_model.dart';
+import '../models/task_model.dart';
 
 class ProjectServices {
   void addNewProject({
     required BuildContext context,
     required String projectName,
+    required String projectDescription,
+    required String startDate,
+    required String endDate,
+    required bool isCompleted,
     required List<Task> tasks,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
     try {
       ProjectDataModel projectDataModel = ProjectDataModel(
-          projectid: "", projectName: projectName,tasks: tasks);
+          projectid: "",
+          projectName: projectName,
+          projectDescription: projectDescription,
+          startDate: startDate,
+          endDate: endDate,
+          isCompleted: isCompleted,
+          tasks: tasks);
 
       http.Response res = await http.post(
         Uri.parse('$uri/api/add-project'),

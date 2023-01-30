@@ -54,10 +54,11 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
 
     userRouter.post("/api/add-project", auth, async (req, res) => {
         try {
-               const { projectName, tasks }= req.body;
+               const { projectName,projectDescription,startDate,endDate,isCompleted,
+                tasks }= req.body;
 //               console.log(req.body);
                let user = await User.findById(req.user);
-               user.projects.push({projectName, tasks});
+               user.projects.push({projectName, projectDescription,startDate,endDate,isCompleted ,tasks});
                //saving to database
                user = await user.save();
                res.json(user);

@@ -7,6 +7,25 @@ const projectsSchema = mongoose.Schema({
     required: true,
     trim: true,
   },
+    projectDescription: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+      startDate: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+        endDate: {
+          type: String,
+          required: true,
+          trim: true,
+        },
+          isCompleted: {
+            type: Boolean,
+            required: true,
+          },
  tasks: [Tasks.schema],
 });
 
