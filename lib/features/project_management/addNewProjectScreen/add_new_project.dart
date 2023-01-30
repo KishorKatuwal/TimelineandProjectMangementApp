@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
-
-// import 'package:timelineandprojectmanagementapp/constants/utils.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 import '../../../constants/global_variables.dart';
 import '../models/project_management_model.dart';
+import '../models/task_model.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({Key? key}) : super(key: key);
@@ -17,13 +17,27 @@ class _AddNewTaskState extends State<AddNewTask> {
   final TextEditingController _Titlecontroller = TextEditingController();
   late TextEditingController _startDatecontroller;
   late TextEditingController _endDatecontroller;
+  final TextEditingController _descriptionController = TextEditingController();
+  final bool isCompleted = false;
   final _formKey = GlobalKey<FormState>();
   final _allformKey = GlobalKey<FormState>();
   final List<Task> _tasks = [];
   String _newTaskName = "";
   bool _newTaskStatus = false;
-  TextEditingController _taskNameController = TextEditingController();
+  final TextEditingController _taskNameController = TextEditingController();
   DateTime SelectedDate = DateTime.now();
+  final ProjectServices projectServices = ProjectServices();
+
+  void addNewProject() {
+    projectServices.addNewProject(
+        context: context,
+        projectName: _Titlecontroller.text,
+        projectDescription: _descriptionController.text,
+        startDate: _startDatecontroller.text,
+        endDate: _endDatecontroller.text,
+        isCompleted: isCompleted,
+        tasks: _tasks);
+  }
 
   @override
   void initState() {
@@ -104,20 +118,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                   });
                   Navigator.of(context).pop();
                 }
-
-                // if (_newTaskName.isNotEmpty) {
-                //   setState(() {
-                //     _tasks.add(Task(
-                //         id: "",
-                //         taskName: _newTaskName,
-                //         status: _newTaskStatus));
-                //     _newTaskName = "";
-                //     _newTaskStatus = false;
-                //   });
-                //   Navigator.of(context).pop();
-                // } else {
-                //   showSnackBar(context, 'Please enter task details');
-                // }
               },
             ),
           ],
@@ -205,6 +205,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                       padding: const EdgeInsets.only(
                           left: 20, right: 20, top: 10, bottom: 10),
                       child: TextFormField(
+                        controller: _descriptionController,
                         keyboardType: TextInputType.multiline,
                         minLines: 1,
                         maxLines: 8,
@@ -521,6 +522,8 @@ class _AddNewTaskState extends State<AddNewTask> {
                                 if (_tasks.isEmpty) {
                                   showSnackBar(context,
                                       "Please add a Task before creating project");
+                                }else{
+                                  addNewProject();
                                 }
                                 // Navigator.of(context).pop();
                               }
@@ -561,7 +564,6 @@ class _AddNewTaskState extends State<AddNewTask> {
                 ),
               ),
             ),
-
           ),
         ),
       ),

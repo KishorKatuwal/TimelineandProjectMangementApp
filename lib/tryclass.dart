@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 import 'features/project_management/models/project_management_model.dart';
+import 'features/project_management/models/task_model.dart';
 
 class TryScreen extends StatefulWidget {
   static const String routeName = '/try-screen';
@@ -21,7 +22,13 @@ class _TryScreenState extends State<TryScreen> {
   bool _newTaskStatus = false;
 
   void addProject() {
-    projectServices.addNewProject(context: context, projectName: "New Project",tasks: _tasks);
+    projectServices.addNewProject(
+        context: context, projectName: "New Project",
+        projectDescription: "",
+        startDate: "",
+        endDate: "",
+        isCompleted: false,
+        tasks: _tasks);
   }
 
   @override
