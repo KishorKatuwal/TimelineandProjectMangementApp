@@ -2,6 +2,7 @@ const express = require('express');
 const userRouter = express.Router();
 const auth = require("../middlewares/auth");
 const  Events  = require('../models/event');
+const  Projects  = require('../models/projects');
 const User = require('../models/user');
 
 
@@ -51,6 +52,19 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
 
 });
 
+    userRouter.post("/api/add-project", auth, async (req, res) => {
+        try {
+               const { projectName, tasks }= req.body;
+//               console.log(req.body);
+               let user = await User.findById(req.user);
+               user.projects.push({projectName, tasks});
+               //saving to database
+               user = await user.save();
+               res.json(user);
+        } catch (e) {
+            res.status(500).json({error: e.message});
+        }
+    });
 
 
 

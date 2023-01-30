@@ -12,7 +12,9 @@ class UserProvider extends ChangeNotifier {
       type: '',
       token: '',
       password: '',
-      events: []);
+      events: [],
+      projects: [],
+  );
 
   User get user => _user;
 

@@ -11,7 +11,6 @@ import 'package:timelineandprojectmanagementapp/features/schedules/Widget/tab_cl
 import '../../constants/global_variables.dart';
 import '../../features/account/screens/account.dart';
 
-
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
 
@@ -28,8 +27,9 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     // const ProjectManagementScreen(),
-    // const ProjectsPage(),
+    const ProjectsPage(),
     const TasksPage(),
+    // const TryScreen(),
     const EventScreen(),
     const TabClass(),
     const AccountScreen(),
@@ -53,7 +53,7 @@ class _BottomBarState extends State<BottomBar> {
         iconSize: 28,
         onTap: updatePage,
         items: [
-          //for Project
+          //for home
           BottomNavigationBarItem(
             icon: Container(
               width: bottomBarWidth,
@@ -65,6 +65,22 @@ class _BottomBarState extends State<BottomBar> {
                             : GlobalVariables.backgroundColor,
                         width: bottombarBordersWidth,
                       ))),
+              child: const Icon(Icons.home),
+            ),
+            label: 'Dashboard',
+          ),
+          //for Project
+          BottomNavigationBarItem(
+            icon: Container(
+              width: bottomBarWidth,
+              decoration: BoxDecoration(
+                  border: Border(
+                      top: BorderSide(
+                color: _page == 1
+                    ? GlobalVariables.mainColor
+                    : GlobalVariables.backgroundColor,
+                width: bottombarBordersWidth,
+              ))),
               child: const Icon(Icons.add_task_sharp),
             ),
             label: 'Projects',
@@ -76,7 +92,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                   border: Border(
                       top: BorderSide(
-                color: _page == 1
+                color: _page == 2
                     ? GlobalVariables.mainColor
                     : GlobalVariables.backgroundColor,
                 width: bottombarBordersWidth,
@@ -93,7 +109,7 @@ class _BottomBarState extends State<BottomBar> {
               decoration: BoxDecoration(
                   border: Border(
                       top: BorderSide(
-                color: _page == 2
+                color: _page == 3
                     ? GlobalVariables.mainColor
                     : GlobalVariables.backgroundColor,
                 width: bottombarBordersWidth,
@@ -105,13 +121,12 @@ class _BottomBarState extends State<BottomBar> {
 
           //for cart
           BottomNavigationBarItem(
-
             icon: Container(
               width: bottomBarWidth,
               decoration: BoxDecoration(
                   border: Border(
                       top: BorderSide(
-                color: _page == 3
+                color: _page == 4
                     ? GlobalVariables.mainColor
                     : GlobalVariables.backgroundColor,
                 width: bottombarBordersWidth,

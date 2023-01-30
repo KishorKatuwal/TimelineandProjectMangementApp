@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Events = require('./event');
+const Projects = require('./projects');
 
 const userSchema = mongoose.Schema({
   name: {
@@ -48,9 +49,11 @@ const userSchema = mongoose.Schema({
     default: "user",
   },
   //for events
-  events: [Events.schema]
-  //details
+  events: [Events.schema],
+  //for projects
+  projects: [Projects.schema],
 });
+
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
