@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:timelineandprojectmanagementapp/constants/utils.dart';
+
+// import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import '../../../constants/global_variables.dart';
-import 'category_card_screen.dart';
+import '../models/project_management_model.dart';
 
 class AddNewTask extends StatefulWidget {
   const AddNewTask({Key? key}) : super(key: key);
@@ -11,389 +14,554 @@ class AddNewTask extends StatefulWidget {
 }
 
 class _AddNewTaskState extends State<AddNewTask> {
-  late TextEditingController _Titlecontroller;
-  late TextEditingController _Datecontroller;
-  late TextEditingController _StartTime;
-  late TextEditingController _EndTime;
+  final TextEditingController _Titlecontroller = TextEditingController();
+  late TextEditingController _startDatecontroller;
+  late TextEditingController _endDatecontroller;
+  final _formKey = GlobalKey<FormState>();
+  final _allformKey = GlobalKey<FormState>();
+  final List<Task> _tasks = [];
+  String _newTaskName = "";
+  bool _newTaskStatus = false;
+  TextEditingController _taskNameController = TextEditingController();
   DateTime SelectedDate = DateTime.now();
-  String Category = "Meeting";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _Titlecontroller = TextEditingController();
-    _Datecontroller = TextEditingController(
-        text: DateFormat('EEE, MMM d, ' 'yy').format(SelectedDate));
-    _StartTime = TextEditingController(
-        text: DateFormat.jm().format(DateTime.now()));
-    _EndTime = TextEditingController(
-        text: DateFormat.jm().format(DateTime.now().add(
-      const Duration(hours: 1),
-    )));
+    _startDatecontroller = TextEditingController(
+        text: DateFormat('MMM d, ' 'yy').format(SelectedDate));
+    _endDatecontroller = TextEditingController(
+        text: DateFormat('MMM d, ' 'yy').format(SelectedDate));
   }
 
-  _selectDate(BuildContext context) async {
+  _selectDate(BuildContext context, String DateType) async {
     final DateTime? selected = await showDatePicker(
       context: context,
       initialDate: SelectedDate,
-      firstDate: DateTime(2005),
-      lastDate: DateTime(2030),
+      firstDate: DateTime(2020),
+      lastDate: DateTime(2040),
     );
     if (selected != null && selected != SelectedDate) {
       setState(() {
         SelectedDate = selected;
-        _Datecontroller.text =
-            DateFormat('EEE, MMM d, ' 'yy').format(selected);
-      });
-    }
-  }
-
-  _selectTime(BuildContext context, String Timetype) async {
-    final TimeOfDay? result =
-        await showTimePicker(context: context, initialTime: TimeOfDay.now());
-    if (result != null) {
-      setState(() {
-        if (Timetype == "StartTime") {
-          _StartTime.text = result.format(context);
+        if (DateType == "StartDate") {
+          _startDatecontroller.text =
+              DateFormat('MMM d, ' 'yy').format(selected);
         } else {
-          _EndTime.text = result.format(context);
+          _endDatecontroller.text = DateFormat('MMM d, ' 'yy').format(selected);
         }
       });
     }
   }
 
-  _SetCategory(String Category) {
-    setState(() {
-      this.Category = Category;
-    });
+  void _addTask() async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Add Task'),
+          content: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                    decoration: const InputDecoration(labelText: 'Task Name'),
+                    onChanged: (value) {
+                      _newTaskName = value;
+                    },
+                    validator: (val) {
+                      if (val == null || val.isEmpty) {
+                        return "Enter all empty fields!";
+                      }
+                      return null;
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            ElevatedButton(
+              child: const Text('Add'),
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  setState(() {
+                    _tasks.add(Task(
+                        id: "",
+                        taskName: _newTaskName,
+                        status: _newTaskStatus));
+                    _newTaskName = "";
+                    _newTaskStatus = false;
+                  });
+                  Navigator.of(context).pop();
+                }
+
+                // if (_newTaskName.isNotEmpty) {
+                //   setState(() {
+                //     _tasks.add(Task(
+                //         id: "",
+                //         taskName: _newTaskName,
+                //         status: _newTaskStatus));
+                //     _newTaskName = "";
+                //     _newTaskStatus = false;
+                //   });
+                //   Navigator.of(context).pop();
+                // } else {
+                //   showSnackBar(context, 'Please enter task details');
+                // }
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: SafeArea(
-        child: Container(
-          // color: Color.fromRGBO(130, 0, 255, 1),
-          color: GlobalVariables.mainColor,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.only(left: 10, right: 10, top: 20, bottom: 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(Icons.arrow_back,
-                            size: 30, color: Colors.white),
-                      ),
-                      const SizedBox(
-                        width: 50,
-                      ),
-                      const Text(
-                        "Create New Task",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          decoration: TextDecoration.none,
-                        ),
-
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 10, bottom: 10),
-                  child: TextFormField(
-                    controller: _Titlecontroller,
-                    cursorColor: Colors.white,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                    decoration: const InputDecoration(
-                      labelText: "Title",
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      fillColor: Colors.white,
-                      labelStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 10, bottom: 10),
-                  child: TextFormField(
-                    controller: _Datecontroller,
-                    cursorColor: Colors.white,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                    ),
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      labelText: "Date",
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          _selectDate(context);
-                        },
-                        child: const Icon(
-                          Icons.calendar_month_outlined,
-                          color: Colors.white,
-                        ),
-                      ),
-                      enabledBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      focusedBorder: const UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white),
-                      ),
-                      fillColor: Colors.white,
-                      labelStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 40),
-                  padding: const EdgeInsets.only(
-                      left: 20, right: 20, top: 20, bottom: 20),
-                  decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      )),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: TextField(
-                                readOnly: true,
-                                controller: _StartTime,
-                                decoration: InputDecoration(
-                                  labelText: "Date",
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      _selectTime(context, "StartTime");
-                                    },
-                                    child: const Icon(
-                                      Icons.alarm,
-                                      color: Colors.black26,
-                                    ),
-                                  ),
-                                  enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black26),
-                                  ),
-                                  focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black26),
-                                  ),
-                                  fillColor: Colors.black26,
-                                  labelStyle: const TextStyle(
-                                    color: Colors.black26,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
+      child: Scaffold(
+        body: SafeArea(
+          child: Container(
+            // color: Color.fromRGBO(130, 0, 255, 1),
+            color: GlobalVariables.mainColor,
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Form(
+                key: _allformKey,
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.only(
+                          left: 10, right: 10, top: 20, bottom: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: const Icon(Icons.arrow_back,
+                                size: 30, color: Colors.white),
+                          ),
+                          const SizedBox(
+                            width: 50,
+                          ),
+                          const Text(
+                            "Create New Project",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              decoration: TextDecoration.none,
                             ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.4,
-                              child: TextField(
-                                readOnly: true,
-                                controller: _EndTime,
-                                decoration: InputDecoration(
-                                  labelText: "Date",
-                                  suffixIcon: GestureDetector(
-                                    onTap: () {
-                                      _selectTime(context, "EndTime");
-                                    },
-                                    child: const Icon(
-                                      Icons.alarm,
-                                      color: Colors.black26,
-                                    ),
-                                  ),
-                                  enabledBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black26),
-                                  ),
-                                  focusedBorder: const UnderlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Colors.black26),
-                                  ),
-                                  fillColor: Colors.black26,
-                                  labelStyle: const TextStyle(
-                                    color: Colors.black26,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 10, bottom: 20),
-                        child: TextFormField(
-                          keyboardType: TextInputType.multiline,
-                          minLines: 1,
-                          maxLines: 8,
-                          cursorColor: Colors.black26,
-                          style: const TextStyle(
-                            color: Colors.black,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 10, bottom: 10),
+                      child: TextFormField(
+                        controller: _Titlecontroller,
+                        cursorColor: Colors.white,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                        decoration: const InputDecoration(
+                          errorStyle: TextStyle(color: Colors.white),
+                          labelText: "Title",
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          fillColor: Colors.white,
+                          labelStyle: TextStyle(
+                            color: Colors.white,
                             fontSize: 15,
                           ),
-                          decoration: const InputDecoration(
-                            labelText: "Description",
-                            enabledBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
-                            ),
-                            focusedBorder: UnderlineInputBorder(
-                              borderSide: BorderSide(color: Colors.black26),
-                            ),
-                            fillColor: Colors.black26,
-                            labelStyle: TextStyle(
-                              color: Colors.black26,
-                              fontSize: 15,
-                            ),
+                        ),
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return "Enter all empty fields!";
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 10, bottom: 10),
+                      child: TextFormField(
+                        keyboardType: TextInputType.multiline,
+                        minLines: 1,
+                        maxLines: 8,
+                        cursorColor: Colors.black26,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                        ),
+                        decoration: const InputDecoration(
+                          labelText: "Description",
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(color: Colors.white),
+                          ),
+                          fillColor: Colors.white,
+                          labelStyle: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
                           ),
                         ),
+                        validator: (val) {
+                          if (val == null || val.isEmpty) {
+                            return "Enter all empty fields!";
+                          }
+                          return null;
+                        },
                       ),
-                      Container(
-                        padding: const EdgeInsets.only(top: 10, bottom: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "Category",
-                              textAlign: TextAlign.center,
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 40),
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 20, bottom: 20),
+                      decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          )),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, bottom: 20),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    controller: _startDatecontroller,
+                                    decoration: InputDecoration(
+                                      labelText: "Start Date",
+                                      suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          _selectDate(context, "StartDate");
+                                        },
+                                        child: const Icon(
+                                          Icons.calendar_month_outlined,
+                                          color: Colors.black26,
+                                        ),
+                                      ),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black26),
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black26),
+                                      ),
+                                      fillColor: Colors.black26,
+                                      labelStyle: const TextStyle(
+                                        color: Colors.black26,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    validator: (val) {
+                                      if (val == null || val.isEmpty) {
+                                        return "Enter all empty fields!";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.4,
+                                  child: TextFormField(
+                                    readOnly: true,
+                                    controller: _endDatecontroller,
+                                    decoration: InputDecoration(
+                                      labelText: "End Date",
+                                      suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          _selectDate(context, "EndDate");
+                                        },
+                                        child: const Icon(
+                                          Icons.calendar_month_outlined,
+                                          color: Colors.black26,
+                                        ),
+                                      ),
+                                      enabledBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black26),
+                                      ),
+                                      focusedBorder: const UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.black26),
+                                      ),
+                                      fillColor: Colors.black26,
+                                      labelStyle: const TextStyle(
+                                        color: Colors.black26,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    validator: (val) {
+                                      if (val == null || val.isEmpty) {
+                                        return "Enter all empty fields!";
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Text("Tasks",
                               style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                decoration: TextDecoration.none,
+                                  fontSize: 18, fontWeight: FontWeight.bold)),
+                          SizedBox(
+                            height: 150,
+                            width: double.infinity,
+                            child: _tasks.isEmpty
+                                ? const Center(
+                                    child: Text(
+                                      "No tasks are added",
+                                      style: TextStyle(
+                                        color: Colors.black45,
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                  )
+                                : ListView.builder(
+                                    itemCount: _tasks.length,
+                                    itemBuilder: (context, index) {
+                                      return Container(
+                                        margin: const EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 5),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 5),
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          boxShadow: const [
+                                            BoxShadow(
+                                              color: Colors.grey,
+                                              offset: Offset(1, 1),
+                                              blurRadius: 5,
+                                            ),
+                                          ],
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text("Task ${index + 1}: ",
+                                                style: const TextStyle(
+                                                    fontSize: 16)),
+                                            Expanded(
+                                              child: Text(
+                                                  _tasks[index].taskName,
+                                                  style: const TextStyle(
+                                                      fontSize: 16)),
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(
+                                                Icons.edit,
+                                                color: Colors.black,
+                                              ),
+                                              onPressed: () {
+                                                int taskIndex = index;
+                                                Task taskToEdit =
+                                                    _tasks[taskIndex];
+                                                _taskNameController.text =
+                                                    _tasks[taskIndex].taskName;
+
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          "Edit Task"),
+                                                      content: Form(
+                                                        child: Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            TextFormField(
+                                                              controller:
+                                                                  _taskNameController,
+                                                              // initialValue: taskToEdit.taskName,
+                                                              decoration:
+                                                                  const InputDecoration(
+                                                                      labelText:
+                                                                          "Task Name"),
+                                                              validator: (val) {
+                                                                if (val ==
+                                                                        null ||
+                                                                    val.isEmpty) {
+                                                                  return "Enter all empty fields!";
+                                                                }
+                                                                return null;
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      actions: [
+                                                        ElevatedButton(
+                                                          child: const Text(
+                                                              "Cancel"),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                        ElevatedButton(
+                                                          child: const Text(
+                                                              "Save"),
+                                                          onPressed: () {
+                                                            setState(() {
+                                                              Task updatedTask =
+                                                                  Task(
+                                                                id: taskToEdit
+                                                                    .id,
+                                                                status:
+                                                                    taskToEdit
+                                                                        .status,
+                                                                taskName:
+                                                                    _taskNameController
+                                                                        .text,
+                                                              );
+                                                              _tasks[taskIndex] =
+                                                                  updatedTask;
+                                                            });
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                            IconButton(
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.redAccent,
+                                              ),
+                                              onPressed: () {
+                                                setState(() {
+                                                  _tasks.removeAt(index);
+                                                });
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                          ),
+                          const Divider(
+                            height: 1,
+                            color: Colors.black12,
+                            thickness: 2,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: GlobalVariables.mainColor,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                // color: GlobalVariables.mainColor,
+                                child: TextButton(
+                                  child: const Text(
+                                    "+ Add a new Task",
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  onPressed: () {
+                                    _addTask();
+                                  },
+                                ),
                               ),
                             ),
-                            Wrap(
-                              alignment: WrapAlignment.spaceEvenly,
-                              crossAxisAlignment: WrapCrossAlignment.start,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    _SetCategory('Marketing');
-                                  },
-                                  child: Categorcard(
-                                    CategoryText: 'Marketing',
-                                    isActive: Category == 'Marketing',
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _SetCategory('Meeting');
-                                  },
-                                  child: Categorcard(
-                                    CategoryText: 'Meeting',
-                                    isActive: Category == 'Meeting',
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _SetCategory('Study');
-                                  },
-                                  child: Categorcard(
-                                    CategoryText: 'Study',
-                                    isActive: Category == 'Study',
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _SetCategory('Sports');
-                                  },
-                                  child: Categorcard(
-                                    CategoryText: 'Sports',
-                                    isActive: Category == 'Sports',
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _SetCategory('Development');
-                                  },
-                                  child: Categorcard(
-                                    CategoryText: 'Development',
-                                    isActive: Category == 'Development',
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _SetCategory('Family');
-                                  },
-                                  child: Categorcard(
-                                    CategoryText: 'Family',
-                                    isActive: Category == 'Family',
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    _SetCategory('Urgent');
-                                  },
-                                  child: Categorcard(
-                                    CategoryText: 'Urgent',
-                                    isActive: Category == 'Urgent',
-                                  ),
-                                )
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 100,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(15),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          // color: Color.fromRGBO(130, 0, 255, 1),
-                          color: GlobalVariables.mainColor,
-                        ),
-                        alignment: Alignment.center,
-                        child: const Text(
-                          "Create Task",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.normal,
                           ),
-                        ),
-                      )
-                    ],
-                  ),
+                          const SizedBox(
+                            height: 60,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              print("Button Presses");
+                              if (_allformKey.currentState!.validate()) {
+                                if (_tasks.isEmpty) {
+                                  showSnackBar(context,
+                                      "Please add a Task before creating project");
+                                }
+                                // Navigator.of(context).pop();
+                              }
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(15),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                // color: Color.fromRGBO(130, 0, 255, 1),
+                                color: GlobalVariables.mainColor,
+                              ),
+                              alignment: Alignment.center,
+                              child: const Text(
+                                "Create Project",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    Container(
+                      color: Colors.blue,
+                      // height: double.infinity,
+                      width: double.infinity,
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        color: GlobalVariables.mainColor,
+                        height: 50,
+                        width: double.infinity,
+                      ),
+                    )
+                  ],
                 ),
-              ],
+              ),
             ),
+
           ),
         ),
       ),
