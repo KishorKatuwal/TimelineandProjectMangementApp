@@ -27,9 +27,9 @@ class _BottomBarState extends State<BottomBar> {
 
   List<Widget> pages = [
     // const ProjectManagementScreen(),
+    // const TryScreen(),
     const ProjectsPage(),
     const TasksPage(),
-    // const TryScreen(),
     const EventScreen(),
     const TabClass(),
     const AccountScreen(),

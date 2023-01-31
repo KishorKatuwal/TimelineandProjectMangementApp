@@ -58,9 +58,6 @@ class EventServices {
           userProvider.setUserFromModel(user);
           // Navigator.pushNamed(context, BottomBar.routeName);
           Navigator.pushReplacementNamed(context, BottomBar.routeName);
-
-
-
         },
       );
     } catch (e) {

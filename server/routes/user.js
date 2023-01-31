@@ -69,4 +69,19 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
 
 
 
+    userRouter.get('/api/get-projects',auth, async (req, res) => {
+        try {
+            let user = await User.findById(req.user);
+            const userProjects = user.projects;
+            console.log(userProjects);
+            res.json(userProjects);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+
+    });
+
+
+
+
 module.exports = userRouter;

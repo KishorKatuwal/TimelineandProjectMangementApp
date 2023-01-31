@@ -56,4 +56,38 @@ class ProjectServices {
       showSnackBar(context, e.toString());
     }
   }
+
+
+
+
+
+
+  // method for fetching data
+  Future<List<ProjectDataModel>> fetchAllProducts(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<ProjectDataModel> projectList = [];
+    try {
+      http.Response res =
+      await http.get(Uri.parse('$uri/api/get-projects'), headers: {
+        'Content-Type': 'application/json; charset=UTF-8',
+        'x-auth-token': userProvider.user.token,
+      });
+
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            // convert received json response into project data model
+            for (int i = 0; i < jsonDecode(res.body).length; i++) {
+              projectList.add(
+                  ProjectDataModel.fromJson(jsonEncode(jsonDecode(res.body)[i])));
+            }
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+    return projectList;
+  }
+
+
 }
