@@ -1,44 +1,31 @@
 import 'package:flutter/material.dart';
 import '../../../constants/global_variables.dart';
 
-
 class ProgressCard extends StatelessWidget {
-  ProgressCard(
-      {Key? key, required this.ProjectName, required this.CompletedPercent})
-      : super(key: key);
+  ProgressCard({Key? key, required this.ProjectName, required this.CompletedPercent, required this.remainingDays}) : super(key: key);
   late String ProjectName;
   late int CompletedPercent;
+  late int remainingDays;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(top: 10),
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            width: 3.0,
-            margin: const EdgeInsets.only(top: 10),
-            height: 49 * 0.01 * CompletedPercent,
+            padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
             decoration: BoxDecoration(
-              // color: Color.fromARGB(255, 123, 0, 245),
-              color: GlobalVariables.mainColor,
+              color: Colors.white,
               borderRadius: BorderRadius.circular(10),
             ),
-          ),
-          Expanded(
-            child: Container(
-              height: 70,
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Row(children: [
+            child: Row(
+              children: [
                 Container(
                   width: 40,
                   height: 40,
                   decoration: const BoxDecoration(
-                    // color: Color.fromARGB(255, 123, 0, 245),
                     color: GlobalVariables.mainColor,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
@@ -59,22 +46,40 @@ class ProgressCard extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                    const Text(
-                      "2 days ago",
-                      style: TextStyle(
+                     Text(
+                      "$remainingDays days remaining!",
+                      style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 10,
                         fontWeight: FontWeight.w600,
                       ),
-                    )
+                    ),
                   ],
                 ),
-                Expanded(child: Container()),
-                const Icon(
-                  Icons.more_vert_outlined,
-                  color: Colors.grey,
+                // Expanded(child: Container()),
+                // const Icon(
+                //   Icons.more_vert_outlined,
+                //   color: Colors.grey,
+                // ),
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(left: 10),
+            width: double.infinity,
+            height: 5,
+            decoration: BoxDecoration(
+              color: GlobalVariables.mainColor.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: FractionallySizedBox(
+              widthFactor: CompletedPercent / 100,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: GlobalVariables.mainColor,
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ]),
+              ),
             ),
           ),
         ],

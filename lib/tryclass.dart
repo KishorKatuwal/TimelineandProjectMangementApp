@@ -15,95 +15,66 @@ class TryScreen extends StatefulWidget {
 
 class _TryScreenState extends State<TryScreen> {
   final ProjectServices projectServices = ProjectServices();
-  final _formKey = GlobalKey<FormState>();
-  final List<Task> _tasks = [];
-  String _newTaskId = "12";
-  String _newTaskName = "Project";
-  bool _newTaskStatus = false;
+  List<ProjectDataModel> projectModel = [];
+  List<Task> taskModel = [];
 
-  void addProject() {
-    projectServices.addNewProject(
-        context: context, projectName: "New Project",
-        projectDescription: "",
-        startDate: "",
-        endDate: "",
-        isCompleted: false,
-        tasks: _tasks);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getDate();
+  }
+
+  void getDate() async{
+    projectModel = await projectServices.fetchAllProducts(context);
+  }
+
+  void printProject() async {
+   for(int i =0; i<projectModel.length; i++){
+     print(projectModel[i].projectName);
+     print(projectModel[i].startDate);
+     print(projectModel[i].endDate);
+     print(projectModel[i].projectDescription);
+     print(projectModel[i].isCompleted);
+     print(projectModel[i].projectid);
+   }
+  }
+
+  void printTask() async{
+    for(int i =0; i<projectModel.length; i++){
+      taskModel = projectModel[i].tasks;
+      for(int j=0; j<taskModel.length;j++){
+        print(taskModel[i].taskName);
+        print(taskModel[i].id);
+        print(taskModel[i].status);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Project'),
+        title: const Text('Add New Project'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            TextFormField(
-              decoration: InputDecoration(labelText: 'Project Name'),
-              validator: (value) {
-                if (value == "" || value == null) {
-                  return 'Please enter a project name';
-                }
-                return null;
-              },
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _tasks.length,
-                itemBuilder: (context, index) {
-                  return Text(_tasks[0].taskName);
-                },
-              ),
-            ),
-            RaisedButton(
-              onPressed: () {
-                _addNewTask();
-              },
-              child: Text('Add Task'),
-            ),
-            RaisedButton(
-              onPressed: () {
-                addProject();
-              },
-              child: Text('Save'),
-            ),
-          ],
+      body: SizedBox(
+        height: 300,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ElevatedButton(onPressed: () {
+                printProject();
+              }, child: const Text("Print Project")),
+              ElevatedButton(onPressed: () {
+                printTask();
+              }, child: const Text("Print Task")),
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  void _addNewTask() {
-    if (_newTaskName.isEmpty || _newTaskId.isEmpty) {
-// Show an alert dialog here
-      showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text('Error'),
-              content: const Text('Please enter a task name and task id'),
-              actions: <Widget>[
-                FlatButton(
-                  child: Text('OK'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                )
-              ],
-            );
-          });
-    } else {
-      setState(() {
-        _tasks.add(Task(id: "12", status: false, taskName: "new Task"));
-        print(_tasks);
-
-        // _newTaskName = "";
-        // _newTaskId = "";
-        // _newTaskStatus = false;
-      });
-    }
   }
 }

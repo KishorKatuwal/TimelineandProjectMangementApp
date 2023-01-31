@@ -1,16 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/addNewProjectScreen/add_new_project.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/projects_screens/progress_card.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_page.dart';
+import '../../../providers/user_provider.dart';
 import 'overview_scroll.dart';
 
-class ProjectsPage extends StatelessWidget {
+class ProjectsPage extends StatefulWidget {
   const ProjectsPage({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<ProjectsPage> createState() => _ProjectsPageState();
+}
+
+class _ProjectsPageState extends State<ProjectsPage> {
+
+
+  @override
   Widget build(BuildContext context) {
+    final userName = Provider.of<UserProvider>(context).user.name;
     return SafeArea(
       child: SingleChildScrollView(
         child: Container(
@@ -36,12 +47,12 @@ class ProjectsPage extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.add),
+                      icon: const Icon(Icons.add,color: Colors.white,),
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const TasksPage()),
+                              builder: (context) => const AddNewTask()),
                         );
                       },
                     ),
@@ -58,18 +69,18 @@ class ProjectsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
-                    text: const TextSpan(
+                    text:  TextSpan(
                       children: [
-                        TextSpan(
+                        const TextSpan(
                           text: "Hello,",
                           style: TextStyle(
                             color: Colors.black,
                             fontSize: 25,
                           ),
                         ),
-                        TextSpan(
-                          text: "Sriram!",
-                          style: TextStyle(
+                         TextSpan(
+                          text: userName,
+                          style: const TextStyle(
                             color: Colors.black,
                             fontSize: 25,
                             fontWeight: FontWeight.w600,
@@ -79,7 +90,7 @@ class ProjectsPage extends StatelessWidget {
                     ),
                   ),
                   const Text(
-                    "Have a nice day!",
+                    "Stay on schedule, stay on track with our app.",
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 15,
@@ -105,10 +116,10 @@ class ProjectsPage extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 30),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 30),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 30),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 30),
+                  ProgressCard(ProjectName: "Project", CompletedPercent: 30, remainingDays: 5,),
+                  ProgressCard(ProjectName: "Project", CompletedPercent: 50, remainingDays: 5,),
+                  ProgressCard(ProjectName: "Project", CompletedPercent: 30 ,remainingDays: 5,),
+                  ProgressCard(ProjectName: "Project", CompletedPercent: 30, remainingDays: 5,),
                 ],
               ),
             )
