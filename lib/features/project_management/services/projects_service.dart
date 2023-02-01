@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/Provider.dart';
+import '../../../common/widgets/bottom_bar.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/global_variables.dart';
 import '../../../constants/utils.dart';
@@ -49,7 +50,7 @@ class ProjectServices {
               .copyWith(projects: jsonDecode(res.body)['projects']);
           userProvider.setUserFromModel(user);
           // Navigator.pushNamed(context, BottomBar.routeName);
-          // Navigator.pushReplacementNamed(context, BottomBar.routeName);
+          Navigator.pushReplacementNamed(context, BottomBar.routeName);
         },
       );
     } catch (e) {
@@ -87,6 +88,44 @@ class ProjectServices {
       showSnackBar(context, e.toString());
     }
     return projectList;
+  }
+
+
+//updating tasks
+  void updateTask({
+    required BuildContext context,
+    required String projectID,
+    required String taskID,
+    required bool status,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.put(
+        Uri.parse('$uri/api/update-tasks'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'projectId':  projectID,
+          'taskId': taskID,
+          'taskStatus': status,
+        }),
+      );
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            User user = userProvider.user
+                .copyWith(projects: jsonDecode(res.body)['projects']);
+            userProvider.setUserFromModel(user);
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, BottomBar.routeName);
+            // Navigator.pushNamed(context, ViewAddedEventScreen.routeName);
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
   }
 
 

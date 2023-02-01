@@ -73,13 +73,53 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
         try {
             let user = await User.findById(req.user);
             const userProjects = user.projects;
-            console.log(userProjects);
             res.json(userProjects);
         } catch (e) {
             res.status(500).json({ error: e.message });
         }
 
     });
+
+
+
+
+//userRouter.put("/api/update-tasks",auth, async (req, res) => {
+//    try {
+//        const { projectId, taskId, taskStatus } = req.body;
+//        console.log(req.body);
+//        let user = await User.findById(req.user);
+//        let existingProjects = await user.projects._id(req.params.projectId);
+//        let existingTasks = await existingProjects.tasks._id(req.params.taskId);
+//        task.status = req.body.status;
+//
+//       user = await user.save();
+//        res.json(user);
+//    } catch (e) {
+//        res.status(500).json({error: e.message});
+//    }
+//});
+
+
+
+userRouter.put("/api/update-tasks",auth, async (req, res) => {
+try {
+    const { projectId,taskId,taskStatus } = req.body;
+//    console.log(req.body);
+    let user = await User.findById(req.user);
+    let existingProject = user.projects.id(projectId);
+    if (!existingProject) return res.status(404).json({ error: 'Project not found' });
+    let existingTask = existingProject.tasks.id(taskId);
+    if (!existingTask) return res.status(404).json({ error: 'Task not found' });
+    existingTask.status = taskStatus;
+    user.save();
+    res.json(user);
+} catch (e) {
+res.status(500).json({error: e.message});
+}
+});
+
+
+
 
 
 
