@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/view_upcomming_events.dart';
+import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/addNewProjectScreen/add_new_project.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/projects_screens/progress_card.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_page.dart';
 import '../../../providers/user_provider.dart';
+import '../../event/model/event_data_model.dart';
 import 'overview_scroll.dart';
 
 class ProjectsPage extends StatefulWidget {
@@ -17,7 +20,20 @@ class ProjectsPage extends StatefulWidget {
 }
 
 class _ProjectsPageState extends State<ProjectsPage> {
+  final EventServices eventServices = EventServices();
+  List<EventDataModel> upcomingEvents = [];
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUpcomingEvents();
+  }
+
+  void getUpcomingEvents() async {
+    upcomingEvents = await eventServices.getCompletedEvents(context);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +63,10 @@ class _ProjectsPageState extends State<ProjectsPage> {
                       borderRadius: BorderRadius.all(Radius.circular(30)),
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.add,color: Colors.white,),
+                      icon: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                      ),
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -69,7 +88,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
-                    text:  TextSpan(
+                    text: TextSpan(
                       children: [
                         const TextSpan(
                           text: "Hello,",
@@ -78,7 +97,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                             fontSize: 25,
                           ),
                         ),
-                         TextSpan(
+                        TextSpan(
                           text: userName,
                           style: const TextStyle(
                             color: Colors.black,
@@ -109,17 +128,40 @@ class _ProjectsPageState extends State<ProjectsPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text(
-                    "Progress",
+                    "Upcoming Events",
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 30, remainingDays: 5,),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 50, remainingDays: 5,),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 30 ,remainingDays: 5,),
-                  ProgressCard(ProjectName: "Project", CompletedPercent: 30, remainingDays: 5,),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  SizedBox(
+                    height: 190,
+                    child: upcomingEvents.isNotEmpty
+                        ? ListView.builder(
+                            itemCount: upcomingEvents.length,
+                            // itemCount: 10,
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              String date1 = upcomingEvents[index].EventDate;
+                              DateTime date2 = DateTime.now();
+                              Duration difference =
+                                  DateTime.parse(date1).difference(date2);
+                              return ViewUpcomingEvents(
+                                  eventName: upcomingEvents[index].EventName,
+                                  eventSubject: upcomingEvents[index].EventType,
+                                  remainingDays: difference.inDays);
+                            })
+                        : Container(
+                            color: Colors.white,
+                            child: const Center(
+                              child: Text("There are no upcoming Events"),
+                            )),
+                  ),
                 ],
               ),
             )

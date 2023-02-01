@@ -24,7 +24,6 @@ class SchedulesService {
 
       }
     }
-    print(_finaldata.length);
     return _finaldata;
   }
 }

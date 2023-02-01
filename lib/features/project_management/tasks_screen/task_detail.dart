@@ -49,7 +49,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
         setState(() {
           projectDataModal.add(projectData[i]);
         });
-        print(projectDataModal[0].projectName);
+        // print(projectDataModal[0].projectName);
       }
     }
   }
@@ -59,7 +59,8 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     return projectDataModal.isNotEmpty
         ? Scaffold(
             appBar: AppBar(
-              title: Text(projectDataModal[0].projectName),
+              title: const Text("Project Detail"),
+              centerTitle: true,
             ),
             body: Container(
               // color: GlobalVariables.backgroundColor,
@@ -67,73 +68,112 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
-                  children: <Widget>[
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
                     Text(
-                      projectDataModal[0].projectDescription,
+                      'Project Name:',
                       style: Theme.of(context).textTheme.headline6,
                     ),
-                    const SizedBox(height: 8),
+                    Text(
+                      projectDataModal[0].projectName,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Project Description:',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    Text(
+                      projectDataModal[0].projectDescription,
+                      style: Theme.of(context).textTheme.subtitle2,
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Dates:',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                     Text(
                       'Start date: ${projectDataModal[0].startDate}',
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 5),
                     Text(
                       'End date: ${projectDataModal[0].endDate}',
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
-                    SizedBox(height: 16),
+                    const SizedBox(height: 16),
                     Text(
                       'Tasks:',
                       style: Theme.of(context).textTheme.headline6,
                     ),
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 10),
                     Expanded(
                       child: ListView.builder(
                         itemCount: projectDataModal[0].tasks.length,
                         itemBuilder: (context, index) {
                           editedStatus =
                               projectDataModal[0].tasks[index].status;
-                          return ListTile(
-                            title:
-                                Text(projectDataModal[0].tasks[index].taskName),
-                            leading: editedStatus
-                                ? const Icon(
-                                    Icons.check_box,
-                                    color: Colors.green,
-                                  )
-                                : const Icon(
-                                    Icons.check_box_outline_blank,
-                                    color: Colors.black,
-                                  ),
-                            trailing: editedStatus
-                                ? ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        updateTaskToFalse(
-                                            projectDataModal[0].projectid,
-                                            projectDataModal[0]
-                                                .tasks[index]
-                                                .id);
-                                      });
-                                    },
-                                    child: const Text("Set as Incomplete"),
-                                  )
-                                : ElevatedButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        updateTask(
-                                            projectDataModal[0].projectid,
-                                            projectDataModal[0]
-                                                .tasks[index]
-                                                .id);
-                                      });
-                                    },
-                                    child: const Text("Set as Complete"),
-                                  ),
+                          return Card(
+                            child: ListTile(
+                              title: Text(
+                                  projectDataModal[0].tasks[index].taskName,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis),
+                              leading: editedStatus
+                                  ? const Icon(
+                                      Icons.check_box,
+                                      color: Colors.green,
+                                    )
+                                  : const Icon(
+                                      Icons.check_box_outline_blank,
+                                      color: Colors.black,
+                                    ),
+                              trailing: editedStatus
+                                  ? ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          updateTaskToFalse(
+                                              projectDataModal[0].projectid,
+                                              projectDataModal[0]
+                                                  .tasks[index]
+                                                  .id);
+                                        });
+                                      },
+                                      child: const Text("Set as Incomplete"),
+                                    )
+                                  : ElevatedButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          updateTask(
+                                              projectDataModal[0].projectid,
+                                              projectDataModal[0]
+                                                  .tasks[index]
+                                                  .id);
+                                        });
+                                      },
+                                      child: const Text("Set as Complete"),
+                                    ),
+                            ),
                           );
                         },
                       ),
+                    ),
+                    const SizedBox(
+                      height: 145,
+                    ),
+                    Container(
+                      height: 50,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20.0))),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("Set as Completed Project"),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
                     ),
                   ],
                 ),
