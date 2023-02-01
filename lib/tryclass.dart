@@ -44,6 +44,17 @@ class _TryScreenState extends State<TryScreen> {
     navigateToThisPageAgain();
   }
 
+  void updateTaskToFalse(String projectID, String taskID) {
+    setState(() {
+      projectServices.updateTask(
+          context: context,
+          projectID: projectID,
+          taskID: taskID,
+          status: false);
+      navigateToThisPageAgain();
+    });
+  }
+
   void navigateToThisPageAgain() {
     Navigator.push(
       context,
@@ -65,17 +76,6 @@ class _TryScreenState extends State<TryScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-  }
-
-  void updateTaskToFalse(String projectID, String taskID) {
-    setState(() {
-      projectServices.updateTask(
-          context: context,
-          projectID: projectID,
-          taskID: taskID,
-          status: false);
-      navigateToThisPageAgain();
-    });
   }
 
   @override

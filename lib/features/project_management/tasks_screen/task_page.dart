@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_detail.dart';
 import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import '../addNewProjectScreen/add_new_project.dart';
 import '../models/project_management_model.dart';
@@ -28,7 +29,6 @@ class _TasksPageState extends State<TasksPage> {
       // print(_selectedDate);
     });
   }
-
 
   @override
   void initState() {
@@ -183,22 +183,32 @@ class _TasksPageState extends State<TasksPage> {
                               // print(projectModel[index].endDate);
                               return GestureDetector(
                                 onTap: () {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //     builder: (context) => TryScreen(
+                                  //       projectId:
+                                  //           projectModel[index].projectid,
+                                  //       projectName:
+                                  //           projectModel[index].projectName,
+                                  //       projectDescription: projectModel[index]
+                                  //           .projectDescription,
+                                  //       startDate:
+                                  //           projectModel[index].startDate,
+                                  //       endDate: projectModel[index].endDate,
+                                  //       isCompleted:
+                                  //           projectModel[index].isCompleted,
+                                  //       tasks: projectModel[index].tasks,
+                                  //     ),
+                                  //   ),
+                                  // );
+
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => TryScreen(
+                                      builder: (context) => TaskDetailScreen(
                                         projectId:
                                             projectModel[index].projectid,
-                                        projectName:
-                                            projectModel[index].projectName,
-                                        projectDescription: projectModel[index]
-                                            .projectDescription,
-                                        startDate:
-                                            projectModel[index].startDate,
-                                        endDate: projectModel[index].endDate,
-                                        isCompleted:
-                                            projectModel[index].isCompleted,
-                                        tasks: projectModel[index].tasks,
                                       ),
                                     ),
                                   );

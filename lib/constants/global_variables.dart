@@ -13,8 +13,10 @@ class GlobalVariables {
     stops: [0.5, 1.0],
   );
 
-  static const mainColor = Color.fromRGBO(65,105,225,1);
-  static const eventListColor = Color.fromRGBO(0,191,225,1);
+  static const mainColor = Color.fromRGBO(65, 105, 225, 1);
+  // static const mainColor = Colors.purple;
+  static const backgroundColour = Color.fromRGBO(242, 244, 255, 1);
+  static const eventListColor = Color.fromRGBO(0, 191, 225, 1);
   static const secondaryColor = Color.fromRGBO(255, 153, 0, 1);
   static const backgroundColor = Colors.white;
   static const Color greyBackgroundCOlor = Color(0xffebecee);

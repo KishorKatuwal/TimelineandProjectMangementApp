@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/Provider.dart';
 import '../../../common/widgets/bottom_bar.dart';
@@ -10,6 +11,7 @@ import '../../../model/user.dart';
 import '../../../providers/user_provider.dart';
 import '../models/project_management_model.dart';
 import '../models/task_model.dart';
+import '../tasks_screen/task_detail.dart';
 
 class ProjectServices {
   void addNewProject({
@@ -58,18 +60,13 @@ class ProjectServices {
     }
   }
 
-
-
-
-
-
   // method for fetching data
   Future<List<ProjectDataModel>> fetchAllProducts(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<ProjectDataModel> projectList = [];
     try {
       http.Response res =
-      await http.get(Uri.parse('$uri/api/get-projects'), headers: {
+          await http.get(Uri.parse('$uri/api/get-projects'), headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
@@ -78,10 +75,10 @@ class ProjectServices {
           response: res,
           context: context,
           onSuccess: () {
-            // convert received json response into project data model
+            // converting received json response into project data model
             for (int i = 0; i < jsonDecode(res.body).length; i++) {
-              projectList.add(
-                  ProjectDataModel.fromJson(jsonEncode(jsonDecode(res.body)[i])));
+              projectList.add(ProjectDataModel.fromJson(
+                  jsonEncode(jsonDecode(res.body)[i])));
             }
           });
     } catch (e) {
@@ -89,7 +86,6 @@ class ProjectServices {
     }
     return projectList;
   }
-
 
 //updating tasks
   void updateTask({
@@ -107,7 +103,7 @@ class ProjectServices {
           'x-auth-token': userProvider.user.token,
         },
         body: jsonEncode({
-          'projectId':  projectID,
+          'projectId': projectID,
           'taskId': taskID,
           'taskStatus': status,
         }),
@@ -121,12 +117,17 @@ class ProjectServices {
             userProvider.setUserFromModel(user);
             Navigator.pop(context);
             Navigator.pushReplacementNamed(context, BottomBar.routeName);
-            // Navigator.pushNamed(context, ViewAddedEventScreen.routeName);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TaskDetailScreen(
+                  projectId: projectID,
+                ),
+              ),
+            );
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
-
-
 }
