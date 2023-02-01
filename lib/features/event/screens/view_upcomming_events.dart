@@ -1,12 +1,22 @@
 import 'package:flutter/material.dart';
 import '../../../constants/global_variables.dart';
 
-class ProgressCard extends StatelessWidget {
-  ProgressCard({Key? key, required this.ProjectName, required this.CompletedPercent, required this.remainingDays}) : super(key: key);
-  late String ProjectName;
-  late int CompletedPercent;
+class ViewUpcomingEvents extends StatefulWidget {
+  ViewUpcomingEvents(
+      {Key? key,
+      required this.eventName,
+      required this.eventSubject,
+      required this.remainingDays})
+      : super(key: key);
+  late String eventName;
+  late String eventSubject;
   late int remainingDays;
 
+  @override
+  State<ViewUpcomingEvents> createState() => _ViewUpcomingEventsState();
+}
+
+class _ViewUpcomingEventsState extends State<ViewUpcomingEvents> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -27,27 +37,36 @@ class ProgressCard extends StatelessWidget {
                   height: 40,
                   decoration: const BoxDecoration(
                     color: GlobalVariables.mainColor,
+                    // color: Colors.green,
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                   ),
-                  child: const Icon(Icons.assignment, color: Colors.white),
+                  child: const Icon(Icons.event_available, color: Colors.white),
                 ),
                 const SizedBox(
-                  width: 10,
+                  width: 15,
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     Text(
-                      ProjectName,
+                      widget.eventName,
+                      style: const TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    Text(
+                      widget.eventSubject,
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 15,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                     Text(
-                      "$remainingDays days remaining!",
+                    Text(
+                      "${widget.remainingDays} days remaining!",
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 10,
@@ -62,24 +81,6 @@ class ProgressCard extends StatelessWidget {
                   color: Colors.grey,
                 ),
               ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.only(left: 10),
-            width: double.infinity,
-            height: 5,
-            decoration: BoxDecoration(
-              color: GlobalVariables.mainColor.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: FractionallySizedBox(
-              widthFactor: CompletedPercent / 100,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: GlobalVariables.mainColor,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
             ),
           ),
         ],

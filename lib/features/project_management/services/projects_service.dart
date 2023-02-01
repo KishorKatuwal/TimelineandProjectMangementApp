@@ -130,4 +130,31 @@ class ProjectServices {
       showSnackBar(context, e.toString());
     }
   }
+
+
+  //getting pending projects
+
+
+
+
+//getting completed projects
+List<ProjectDataModel> completedProjects = [];
+List<ProjectDataModel> getProjects = [];
+
+  Future<List<ProjectDataModel>> getCompletedProjects(BuildContext context)async{
+    getProjects = await fetchAllProducts(context);
+    for(int i=0; i<getProjects.length;i++){
+      if(getProjects[i].isCompleted==true){
+        completedProjects.add(getProjects[i]);
+      }
+      // print(completedProjects);
+    }
+    return completedProjects;
+  }
+
+
+
+
+
+
 }

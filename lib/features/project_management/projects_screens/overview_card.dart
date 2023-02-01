@@ -2,9 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../constants/global_variables.dart';
 
-class OverviewCard extends StatelessWidget {
-  const OverviewCard({Key? key}) : super(key: key);
+class OverviewCard extends StatefulWidget {
+  final String projectName;
+  final int index;
+  const OverviewCard({Key? key, required this.projectName, required this.index}) : super(key: key);
 
+  @override
+  State<OverviewCard> createState() => _OverviewCardState();
+}
+
+class _OverviewCardState extends State<OverviewCard> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -34,18 +41,22 @@ class OverviewCard extends StatelessWidget {
                 ),
                 child: const Icon(Icons.assignment, color: Colors.white),
               ),
-              const Text(
-                "project",
+               Text(
+                "Project ${widget.index+1}",
                 style: TextStyle(color: Colors.white),
               ),
             ],
           ),
-         const  Text(
-            "Back End Development",
+           Text(
+            widget.projectName,
+            style: TextStyle(color: Colors.white, fontSize: 15),
+          ),
+          const Text(
+            "Remaining Tasks: 2",
             style: TextStyle(color: Colors.white, fontSize: 15),
           ),
           Text(
-            DateFormat.MMMd().format((DateTime.now())),
+            "Due Date: ${DateFormat.MMMd().format((DateTime.now()))}",
             style: const TextStyle(color: Colors.white, fontSize: 15),
           )
         ],

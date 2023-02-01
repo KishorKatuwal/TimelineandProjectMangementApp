@@ -16,9 +16,6 @@ import '../../../model/user.dart';
 import '../../../providers/user_provider.dart';
 
 class EventServices {
-
-
-
   void addNewEvent({
     required BuildContext context,
     required String EventName,
@@ -122,5 +119,26 @@ class EventServices {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
+  }
+
+  //getting upcoming events
+  List<EventDataModel> completedEvents = [];
+  List<EventDataModel> getEvents = [];
+
+  Future<List<EventDataModel>> getCompletedEvents(BuildContext context) async {
+    getEvents = await fetchAllProducts(context);
+    // print(getEvents.length);
+    for (int i = 0; i < getEvents.length; i++) {
+      String date1 = getEvents[i].EventDate;
+      DateTime date2 = DateTime.now();
+      Duration difference = DateTime.parse(date1).difference(date2);
+      int differenceInDays = difference.inDays;
+      if (differenceInDays >= 0) {
+        completedEvents.add(getEvents[i]);
+      }
+    }
+    completedEvents.sort((a, b) => a.EventDate.compareTo(b.EventDate));
+
+    return completedEvents;
   }
 }
