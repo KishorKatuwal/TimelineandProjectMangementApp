@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 import '../models/project_management_model.dart';
 import '../models/task_model.dart';
+import '../tasks_screen/task_detail.dart';
 import 'overview_card.dart';
 
 class OverView extends StatefulWidget {
@@ -102,33 +103,84 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
                       DateTime parsedDate =
                           inputFormat.parse("$originalDate, 00:00:00");
                       String formattedDate = outputFormat.format(parsedDate);
-                      return OverviewCard(
-                        projectName: pendingProjects[index].projectName,
-                        index: index,
-                        remainingTasks: count,
-                        dueDate: formattedDate,
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TaskDetailScreen(
+                                projectId: pendingProjects[index].projectid,
+                              ),
+                            ),
+                          );
+                        },
+                        child: OverviewCard(
+                          projectName: pendingProjects[index].projectName,
+                          index: index,
+                          remainingTasks: count,
+                          dueDate: formattedDate,
+                        ),
                       );
                     }),
                 ListView.builder(
                     itemCount: completedProjects.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
-                      return OverviewCard(
-                        projectName: completedProjects[index].projectName,
-                        index: index,
-                        remainingTasks: 0,
-                        dueDate: "Feb 2",
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TaskDetailScreen(
+                                projectId: completedProjects[index].projectid,
+                              ),
+                            ),
+                          );
+                        },
+                        child: OverviewCard(
+                          projectName: completedProjects[index].projectName,
+                          index: index,
+                          remainingTasks: 0,
+                          dueDate: "noDueDate",
+                        ),
                       );
                     }),
                 ListView.builder(
                     itemCount: projectDataModel.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
-                      return OverviewCard(
-                        projectName: projectDataModel[index].projectName,
-                        index: index,
-                        remainingTasks: 0,
-                        dueDate: "Feb 2",
+                      List<Task> tasks = projectDataModel[index].tasks;
+                      int count = 0;
+                      for (int i = 0; i < tasks.length; i++) {
+                        if (tasks[i].status == false) {
+                          count = count + 1;
+                        }
+                      }
+                      tasks = [];
+                      String originalDate = projectDataModel[index].endDate;
+                      DateFormat inputFormat = DateFormat("MMM dd, yyyy");
+                      DateFormat outputFormat = DateFormat("MMM dd");
+                      DateTime parsedDate =
+                          inputFormat.parse("$originalDate, 00:00:00");
+                      String formattedDate = outputFormat.format(parsedDate);
+
+                      return GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TaskDetailScreen(
+                                projectId: projectDataModel[index].projectid,
+                              ),
+                            ),
+                          );
+                        },
+                        child: OverviewCard(
+                          projectName: projectDataModel[index].projectName,
+                          index: index,
+                          remainingTasks: count,
+                          dueDate: formattedDate,
+                        ),
                       );
                     }),
               ],
