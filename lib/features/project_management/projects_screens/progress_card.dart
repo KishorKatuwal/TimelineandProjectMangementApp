@@ -73,6 +73,7 @@ class ProgressCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
             child: FractionallySizedBox(
+              alignment: Alignment.bottomLeft,
               widthFactor: CompletedPercent / 100,
               child: Container(
                 decoration: BoxDecoration(

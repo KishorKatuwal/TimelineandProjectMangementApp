@@ -63,7 +63,7 @@ class _OverviewCardState extends State<OverviewCard> {
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: widget.dueDate!="noDueDate"?[
               Text(
                 "Remaining Tasks: ${widget.remainingTasks}",
                 style: const TextStyle(color: Colors.white, fontSize: 15),
@@ -71,6 +71,11 @@ class _OverviewCardState extends State<OverviewCard> {
               Text(
                 "Due Date: ${widget.dueDate}",
                 style: const TextStyle(color: Colors.white, fontSize: 15),
+              )
+            ]:[
+              const Text(
+                "Status: Completed",
+                style:  TextStyle(color: Colors.white, fontSize: 15),
               )
             ],
           ),

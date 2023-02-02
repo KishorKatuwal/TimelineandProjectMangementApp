@@ -80,7 +80,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             Padding(
               padding: const EdgeInsets.all(20.0),
@@ -111,7 +111,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                   const Text(
                     "Stay on schedule, stay on track with our app.",
                     style: TextStyle(
-                      color: Colors.grey,
+                      color: Colors.black,
                       fontSize: 15,
                     ),
                   ),
@@ -139,7 +139,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     height: 5,
                   ),
                   SizedBox(
-                    height: 190,
+                    height: 180,
                     child: upcomingEvents.isNotEmpty
                         ? ListView.builder(
                             itemCount: upcomingEvents.length,

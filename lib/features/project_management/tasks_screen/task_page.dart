@@ -7,6 +7,7 @@ import 'package:timelineandprojectmanagementapp/features/project_management/task
 import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import '../addNewProjectScreen/add_new_project.dart';
 import '../models/project_management_model.dart';
+import '../models/task_model.dart';
 import '../projects_screens/progress_card.dart';
 
 class TasksPage extends StatefulWidget {
@@ -26,7 +27,6 @@ class _TasksPageState extends State<TasksPage> {
   void _onDateChange(DateTime date) {
     setState(() {
       _selectedDate = date;
-      // print(_selectedDate);
     });
   }
 
@@ -64,18 +64,17 @@ class _TasksPageState extends State<TasksPage> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            // Navigator.pop(context);
-                          },
-                          child: const Icon(
-                            Icons.arrow_back_rounded,
-                            color: Colors.black,
-                            size: 30,
-                          ),
+                      children: const [
+                         Icon(
+                          Icons.assignment_outlined,
+                          color: Colors.black,
+                          size: 30,
                         ),
-                        const Icon(
+                         Text("User Projects ",style: TextStyle(
+                           fontSize: 23,
+                           fontWeight: FontWeight.w400,
+                         ),),
+                         Icon(
                           Icons.search_rounded,
                           color: Colors.black,
                           size: 30,
@@ -87,7 +86,7 @@ class _TasksPageState extends State<TasksPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          DateFormat('MMM, d').format(_selectedDate),
+                          DateFormat('MMM - d').format(_selectedDate),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 25,
@@ -155,25 +154,13 @@ class _TasksPageState extends State<TasksPage> {
                           fontWeight: FontWeight.w500,
                         ),
                       ),
-                      // SingleChildScrollView(
-                      //   scrollDirection: Axis.vertical,
-                      //   child: Column(children: [
-                      //     ProgressCard(
-                      //         ProjectName: "Project", CompletedPercent: 30),
-                      //     ProgressCard(
-                      //         ProjectName: "Project", CompletedPercent: 100),
-                      //     ProgressCard(
-                      //         ProjectName: "Project", CompletedPercent: 30),
-                      //     ProgressCard(
-                      //         ProjectName: "Project", CompletedPercent: 30),
-                      //   ]),
-                      // ),
                       SizedBox(
                         height: 395,
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: projectModel.length,
                             itemBuilder: (context, index) {
+                              //getting remaining days
                               String date1 = projectModel[index].endDate;
                               DateTime date2 = DateTime.now();
                               DateFormat format = DateFormat("MMM dd, yy");
@@ -181,28 +168,18 @@ class _TasksPageState extends State<TasksPage> {
                               Duration difference = d1.difference(date2);
                               int days = difference.inDays;
                               // print(projectModel[index].endDate);
+                              //getting completed percentage
+                              List<Task> tasks = projectModel[index].tasks;
+                              int count = 0;
+                              for (int i = 0; i < tasks.length; i++) {
+                                if (tasks[i].status == true) {
+                                  count = count + 1;
+                                }
+                              }
+                              double completePercent = (count/tasks.length)*100;
+                              tasks = [];
                               return GestureDetector(
                                 onTap: () {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => TryScreen(
-                                  //       projectId:
-                                  //           projectModel[index].projectid,
-                                  //       projectName:
-                                  //           projectModel[index].projectName,
-                                  //       projectDescription: projectModel[index]
-                                  //           .projectDescription,
-                                  //       startDate:
-                                  //           projectModel[index].startDate,
-                                  //       endDate: projectModel[index].endDate,
-                                  //       isCompleted:
-                                  //           projectModel[index].isCompleted,
-                                  //       tasks: projectModel[index].tasks,
-                                  //     ),
-                                  //   ),
-                                  // );
-
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -215,7 +192,7 @@ class _TasksPageState extends State<TasksPage> {
                                 },
                                 child: ProgressCard(
                                   ProjectName: projectModel[index].projectName,
-                                  CompletedPercent: 30,
+                                  CompletedPercent:  completePercent.toInt(),
                                   remainingDays: days,
                                 ),
                               );
