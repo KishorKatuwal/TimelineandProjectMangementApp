@@ -132,15 +132,24 @@ class ProjectServices {
   }
 
 
+  List<ProjectDataModel> completedProjects = [];
+  List<ProjectDataModel> pendingProjects = [];
+  List<ProjectDataModel> getProjects = [];
   //getting pending projects
-
+  Future<List<ProjectDataModel>> getPendingProjects(BuildContext context)async{
+    getProjects = await fetchAllProducts(context);
+    for(int i=0; i<getProjects.length;i++){
+      if(getProjects[i].isCompleted==false){
+        pendingProjects.add(getProjects[i]);
+      }
+    }
+    pendingProjects.sort((a, b) => a.endDate.compareTo(b.endDate));
+    return pendingProjects;
+  }
 
 
 
 //getting completed projects
-List<ProjectDataModel> completedProjects = [];
-List<ProjectDataModel> getProjects = [];
-
   Future<List<ProjectDataModel>> getCompletedProjects(BuildContext context)async{
     getProjects = await fetchAllProducts(context);
     for(int i=0; i<getProjects.length;i++){

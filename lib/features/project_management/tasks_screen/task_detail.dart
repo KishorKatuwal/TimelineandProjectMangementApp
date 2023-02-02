@@ -103,7 +103,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                     ),
                     const SizedBox(height: 16),
                     Text(
-                      'Tasks:',
+                      'Total Tasks: ${projectDataModal[0].tasks.length}',
                       style: Theme.of(context).textTheme.headline6,
                     ),
                     const SizedBox(height: 10),
