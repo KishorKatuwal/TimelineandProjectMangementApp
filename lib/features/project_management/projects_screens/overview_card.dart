@@ -5,7 +5,16 @@ import '../../../constants/global_variables.dart';
 class OverviewCard extends StatefulWidget {
   final String projectName;
   final int index;
-  const OverviewCard({Key? key, required this.projectName, required this.index}) : super(key: key);
+  final int remainingTasks;
+  final String dueDate;
+
+  const OverviewCard(
+      {Key? key,
+      required this.projectName,
+      required this.index,
+      required this.remainingTasks,
+      required this.dueDate})
+      : super(key: key);
 
   @override
   State<OverviewCard> createState() => _OverviewCardState();
@@ -20,9 +29,9 @@ class _OverviewCardState extends State<OverviewCard> {
       width: 180,
       height: 250,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
+        borderRadius: BorderRadius.circular(20.0),
         // color: GlobalVariables.mainColor,
-          color: const Color.fromRGBO(112, 141, 246, 1.0),
+        color: const Color.fromRGBO(112, 141, 246, 1.0),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,24 +50,30 @@ class _OverviewCardState extends State<OverviewCard> {
                 ),
                 child: const Icon(Icons.assignment, color: Colors.white),
               ),
-               Text(
-                "Project ${widget.index+1}",
-                style: TextStyle(color: Colors.white),
+              Text(
+                "Project ${widget.index + 1}",
+                style: const TextStyle(color: Colors.white),
               ),
             ],
           ),
-           Text(
-            widget.projectName,
-            style: TextStyle(color: Colors.white, fontSize: 15),
-          ),
-          const Text(
-            "Remaining Tasks: 2",
-            style: TextStyle(color: Colors.white, fontSize: 15),
-          ),
           Text(
-            "Due Date: ${DateFormat.MMMd().format((DateTime.now()))}",
-            style: const TextStyle(color: Colors.white, fontSize: 15),
-          )
+            widget.projectName,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.w400),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Remaining Tasks: ${widget.remainingTasks}",
+                style: const TextStyle(color: Colors.white, fontSize: 15),
+              ),
+              Text(
+                "Due Date: ${widget.dueDate}",
+                style: const TextStyle(color: Colors.white, fontSize: 15),
+              )
+            ],
+          ),
         ],
       ),
     );

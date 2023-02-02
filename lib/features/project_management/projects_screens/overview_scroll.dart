@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 import '../models/project_management_model.dart';
+import '../models/task_model.dart';
 import 'overview_card.dart';
 
 class OverView extends StatefulWidget {
@@ -15,6 +17,7 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
   final ProjectServices projectServices = ProjectServices();
   List<ProjectDataModel> projectDataModel = [];
   List<ProjectDataModel> completedProjects = [];
+  List<ProjectDataModel> pendingProjects = [];
 
   @override
   void initState() {
@@ -22,6 +25,7 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
     super.initState();
     getData();
     getCompletedProjects();
+    getPendingProjects();
   }
 
   void getData() async {
@@ -29,8 +33,13 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
     setState(() {});
   }
 
-  void getCompletedProjects()async{
+  void getCompletedProjects() async {
     completedProjects = await projectServices.getCompletedProjects(context);
+    setState(() {});
+  }
+
+  void getPendingProjects() async {
+    pendingProjects = await projectServices.getPendingProjects(context);
     setState(() {});
   }
 
@@ -59,13 +68,13 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
             unselectedLabelColor: Colors.grey.shade400,
             tabs: const [
               Tab(
-                text: "Projects",
-              ),
-              Tab(
                 text: "Pending Projects",
               ),
               Tab(
                 text: "Completed Projects",
+              ),
+              Tab(
+                text: "All Projects",
               ),
             ],
           ),
@@ -76,22 +85,52 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
               controller: tabController,
               children: [
                 ListView.builder(
+                    itemCount: pendingProjects.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      List<Task> tasks = pendingProjects[index].tasks;
+                      int count = 0;
+                      for (int i = 0; i < tasks.length; i++) {
+                        if (tasks[i].status == false) {
+                          count = count + 1;
+                        }
+                      }
+                      tasks = [];
+                      String originalDate = pendingProjects[index].endDate;
+                      DateFormat inputFormat = DateFormat("MMM dd, yyyy");
+                      DateFormat outputFormat = DateFormat("MMM dd");
+                      DateTime parsedDate =
+                          inputFormat.parse("$originalDate, 00:00:00");
+                      String formattedDate = outputFormat.format(parsedDate);
+                      return OverviewCard(
+                        projectName: pendingProjects[index].projectName,
+                        index: index,
+                        remainingTasks: count,
+                        dueDate: formattedDate,
+                      );
+                    }),
+                ListView.builder(
+                    itemCount: completedProjects.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, int index) {
+                      return OverviewCard(
+                        projectName: completedProjects[index].projectName,
+                        index: index,
+                        remainingTasks: 0,
+                        dueDate: "Feb 2",
+                      );
+                    }),
+                ListView.builder(
                     itemCount: projectDataModel.length,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int index) {
                       return OverviewCard(
-                        projectName: projectDataModel[index].projectName,index: index,
+                        projectName: projectDataModel[index].projectName,
+                        index: index,
+                        remainingTasks: 0,
+                        dueDate: "Feb 2",
                       );
                     }),
-                const Text("Projects 1"),
-            ListView.builder(
-                itemCount: completedProjects.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return OverviewCard(
-                    projectName: completedProjects[index].projectName,index: index,
-                  );
-                }),
               ],
             ),
           )
