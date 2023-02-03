@@ -1,4 +1,3 @@
-console.log("hello world");
 //importing packages
 const express = require('express');
 const mongoose = require('mongoose');

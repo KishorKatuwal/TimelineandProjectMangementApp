@@ -26,7 +26,7 @@ class FeedbackCategoryCard extends StatelessWidget {
           categoryText,
           style: TextStyle(
             color: !isActive ? Colors.blue : Colors.white,
-            fontSize: 15,
+            fontSize: 14,
           ),
         ));
   }

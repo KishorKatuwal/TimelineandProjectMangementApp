@@ -16,6 +16,7 @@ import '../../../model/user.dart';
 import '../../../providers/user_provider.dart';
 
 class EventServices {
+
   void addNewEvent({
     required BuildContext context,
     required String EventName,
