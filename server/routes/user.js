@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const auth = require("../middlewares/auth");
 const  Events  = require('../models/event');
 const  Projects  = require('../models/projects');
+const  Feedback  = require('../models/feedback');
 const User = require('../models/user');
 
 
@@ -83,22 +84,6 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
 
 
 
-//userRouter.put("/api/update-tasks",auth, async (req, res) => {
-//    try {
-//        const { projectId, taskId, taskStatus } = req.body;
-//        console.log(req.body);
-//        let user = await User.findById(req.user);
-//        let existingProjects = await user.projects._id(req.params.projectId);
-//        let existingTasks = await existingProjects.tasks._id(req.params.taskId);
-//        task.status = req.body.status;
-//
-//       user = await user.save();
-//        res.json(user);
-//    } catch (e) {
-//        res.status(500).json({error: e.message});
-//    }
-//});
-
 
 
 userRouter.put("/api/update-tasks",auth, async (req, res) => {
@@ -116,6 +101,23 @@ try {
 } catch (e) {
 res.status(500).json({error: e.message});
 }
+});
+
+
+
+
+//giving feedback
+userRouter.post('/api/give-feedback',auth, async(req,res)=>{
+try{
+    const {userId, userEmail, feedbackType, description} = req.body;
+    let feedback = new Feedback({userId, userEmail, feedbackType, description});
+    feedback = await feedback.save();
+    res.json(feedback);
+}catch(e){
+    res.status(500).json({error: e.message});
+
+}
+
 });
 
 
