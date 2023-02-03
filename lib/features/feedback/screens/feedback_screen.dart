@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_categorycard.dart';
+import 'package:timelineandprojectmanagementapp/features/feedback/services/feedback_service.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
+import '../../../providers/user_provider.dart';
 
 class FeedbackScreen extends StatefulWidget {
   static const String routeName = '/feedback-screen';
@@ -17,16 +20,41 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   final _userEmailController = TextEditingController();
   final _feedbackTypeController = TextEditingController();
   final _descriptionController = TextEditingController();
+  final FeedbackService feedbackService = FeedbackService();
   String category = "Message";
 
   _setCategory(String newCategory) {
     setState(() {
       category = newCategory;
+      _feedbackTypeController.text=category;
     });
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _descriptionController.dispose();
+    _feedbackTypeController.dispose();
+    _userEmailController.dispose();
+  }
+
+
+  void provideFeedback(String userId){
+    feedbackService.provideFeedback(
+        context: context,
+        userId: userId,
+        userEmail: _userEmailController.text,
+        feedbackType: _feedbackTypeController.text,
+        description: _descriptionController.text);
+  }
+
+
+
+
+  @override
   Widget build(BuildContext context) {
+    String id = Provider.of<UserProvider>(context).user.id;
     return Scaffold(
         appBar: AppBar(
           title: const Text("Feedback"),
@@ -148,7 +176,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       text: "Provide Feedback",
                       onTap: () {
                         if (_provideFeedbackFormKey.currentState!.validate()) {
-                          print(category);
+                          print(_feedbackTypeController.text);
+                          provideFeedback(id);
                         }
                       },
                     ),
