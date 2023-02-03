@@ -24,8 +24,7 @@ class ProjectsPage extends StatefulWidget {
 class _ProjectsPageState extends State<ProjectsPage> {
   final EventServices eventServices = EventServices();
   List<EventDataModel> upcomingEvents = [];
-  final GlobalKey<ScaffoldState> _scaffoldKey =  GlobalKey<ScaffoldState>();
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -45,6 +44,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     return Scaffold(
       key: _scaffoldKey,
       drawer: const AppDrawer(),
+      drawerEnableOpenDragGesture: false,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

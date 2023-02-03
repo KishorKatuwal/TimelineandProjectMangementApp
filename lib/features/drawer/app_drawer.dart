@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 
+import '../feedback/screens/feedback_screen.dart';
+
 class AppDrawer extends StatelessWidget {
   const AppDrawer({Key? key}) : super(key: key);
 
@@ -65,19 +67,24 @@ class AppDrawer extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 150,
+              height: 190,
             ),
             const Divider(
               height: 3,
               thickness: 3,
               color: Colors.black45,
             ),
-            const ListTile(
-              leading: Icon(Icons.feedback_outlined),
-              title: Text(
-                "Provide Feedback",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
+            GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, FeedbackScreen.routeName);
+              },
+              child: const ListTile(
+                leading: Icon(Icons.feedback_outlined),
+                title: Text(
+                  "Provide Feedback",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -90,7 +97,7 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
             ),
-           const ListTile(
+            const ListTile(
               leading: Icon(Icons.info_outline),
               title: Text(
                 "About App",
