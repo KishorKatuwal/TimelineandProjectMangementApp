@@ -8,7 +8,7 @@ import '../../../constants/utils.dart';
 import '../../../providers/user_provider.dart';
 
 class FeedbackService {
-  void addNewEvent({
+  void provideFeedback({
     required BuildContext context,
     required String userId,
     required String userEmail,
@@ -26,7 +26,7 @@ class FeedbackService {
           description: description);
 
       http.Response res = await http.post(
-        Uri.parse('$uri/api/add-event'),
+        Uri.parse('$uri/api/give-feedback'),
         headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'x-auth-token': userProvider.user.token,
