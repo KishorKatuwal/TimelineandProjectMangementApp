@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/Provider.dart';
@@ -52,7 +51,8 @@ class ProjectServices {
               .copyWith(projects: jsonDecode(res.body)['projects']);
           userProvider.setUserFromModel(user);
           // Navigator.pushNamed(context, BottomBar.routeName);
-          Navigator.pushReplacementNamed(context, BottomBar.routeName);
+          Navigator.pushReplacementNamed(context, BottomBar.routeName,
+              arguments: 0);
         },
       );
     } catch (e) {
@@ -116,7 +116,8 @@ class ProjectServices {
                 .copyWith(projects: jsonDecode(res.body)['projects']);
             userProvider.setUserFromModel(user);
             Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, BottomBar.routeName);
+            Navigator.pushReplacementNamed(context, BottomBar.routeName,
+                arguments: 0);
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -131,15 +132,16 @@ class ProjectServices {
     }
   }
 
-
   List<ProjectDataModel> completedProjects = [];
   List<ProjectDataModel> pendingProjects = [];
   List<ProjectDataModel> getProjects = [];
+
   //getting pending projects
-  Future<List<ProjectDataModel>> getPendingProjects(BuildContext context)async{
+  Future<List<ProjectDataModel>> getPendingProjects(
+      BuildContext context) async {
     getProjects = await fetchAllProducts(context);
-    for(int i=0; i<getProjects.length;i++){
-      if(getProjects[i].isCompleted==false){
+    for (int i = 0; i < getProjects.length; i++) {
+      if (getProjects[i].isCompleted == false) {
         pendingProjects.add(getProjects[i]);
       }
     }
@@ -147,23 +149,16 @@ class ProjectServices {
     return pendingProjects;
   }
 
-
-
 //getting completed projects
-  Future<List<ProjectDataModel>> getCompletedProjects(BuildContext context)async{
+  Future<List<ProjectDataModel>> getCompletedProjects(
+      BuildContext context) async {
     getProjects = await fetchAllProducts(context);
-    for(int i=0; i<getProjects.length;i++){
-      if(getProjects[i].isCompleted==true){
+    for (int i = 0; i < getProjects.length; i++) {
+      if (getProjects[i].isCompleted == true) {
         completedProjects.add(getProjects[i]);
       }
       // print(completedProjects);
     }
     return completedProjects;
   }
-
-
-
-
-
-
 }

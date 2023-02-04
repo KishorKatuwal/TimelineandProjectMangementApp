@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:timelineandprojectmanagementapp/features/discussion/screens/discussion.dart';
 
 import '../feedback/screens/feedback_screen.dart';
 
@@ -21,7 +22,7 @@ class AppDrawer extends StatelessWidget {
                   "Timeline and Project Management App",
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 23,
+                      fontSize: 20,
                       color: Colors.white),
                 ),
               ),
@@ -63,6 +64,20 @@ class AppDrawer extends StatelessWidget {
                 "View Projects",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.pushNamed(context, Discussion.routeName);
+              },
+              child: const ListTile(
+                leading: Icon(Icons.chat),
+                title: Text(
+                  "Classroom Discussion",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),

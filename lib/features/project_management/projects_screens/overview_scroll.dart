@@ -24,24 +24,6 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
   void initState() {
     tabController = TabController(length: 3, vsync: this, initialIndex: 0);
     super.initState();
-    getData();
-    getCompletedProjects();
-    getPendingProjects();
-  }
-
-  void getData() async {
-    projectDataModel = await projectServices.fetchAllProducts(context);
-    setState(() {});
-  }
-
-  void getCompletedProjects() async {
-    completedProjects = await projectServices.getCompletedProjects(context);
-    setState(() {});
-  }
-
-  void getPendingProjects() async {
-    pendingProjects = await projectServices.getPendingProjects(context);
-    setState(() {});
   }
 
   @override
@@ -85,104 +67,173 @@ class _OverViewState extends State<OverView> with TickerProviderStateMixin {
             child: TabBarView(
               controller: tabController,
               children: [
-                ListView.builder(
-                    itemCount: pendingProjects.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      List<Task> tasks = pendingProjects[index].tasks;
-                      int count = 0;
-                      for (int i = 0; i < tasks.length; i++) {
-                        if (tasks[i].status == false) {
-                          count = count + 1;
-                        }
-                      }
-                      tasks = [];
-                      String originalDate = pendingProjects[index].endDate;
-                      DateFormat inputFormat = DateFormat("MMM dd, yyyy");
-                      DateFormat outputFormat = DateFormat("MMM dd");
-                      DateTime parsedDate =
-                          inputFormat.parse("$originalDate, 00:00:00");
-                      String formattedDate = outputFormat.format(parsedDate);
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailScreen(
-                                projectId: pendingProjects[index].projectid,
-                              ),
-                            ),
-                          );
-                        },
-                        child: OverviewCard(
-                          projectName: pendingProjects[index].projectName,
-                          index: index,
-                          remainingTasks: count,
-                          dueDate: formattedDate,
-                        ),
+                FutureBuilder(
+                  future: projectServices.getPendingProjects(context),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       );
-                    }),
-                ListView.builder(
-                    itemCount: completedProjects.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailScreen(
-                                projectId: completedProjects[index].projectid,
-                              ),
-                            ),
-                          );
-                        },
-                        child: OverviewCard(
-                          projectName: completedProjects[index].projectName,
-                          index: index,
-                          remainingTasks: 0,
-                          dueDate: "noDueDate",
-                        ),
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text("An error occurred: ${snapshot.error}"),
                       );
-                    }),
-                ListView.builder(
-                    itemCount: projectDataModel.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, int index) {
-                      List<Task> tasks = projectDataModel[index].tasks;
-                      int count = 0;
-                      for (int i = 0; i < tasks.length; i++) {
-                        if (tasks[i].status == false) {
-                          count = count + 1;
-                        }
-                      }
-                      tasks = [];
-                      String originalDate = projectDataModel[index].endDate;
-                      DateFormat inputFormat = DateFormat("MMM dd, yyyy");
-                      DateFormat outputFormat = DateFormat("MMM dd");
-                      DateTime parsedDate =
-                          inputFormat.parse("$originalDate, 00:00:00");
-                      String formattedDate = outputFormat.format(parsedDate);
+                    } else if (!snapshot.hasData || snapshot.data.isEmpty) {
+                      return const Center(
+                        child: Text("No Pending Projects!"),
+                      );
+                    } else {
+                      pendingProjects = snapshot.data;
+                      return ListView.builder(
+                          itemCount: pendingProjects.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            List<Task> tasks = pendingProjects[index].tasks;
+                            int count = 0;
+                            for (int i = 0; i < tasks.length; i++) {
+                              if (tasks[i].status == false) {
+                                count = count + 1;
+                              }
+                            }
+                            tasks = [];
+                            String originalDate =
+                                pendingProjects[index].endDate;
+                            DateFormat inputFormat = DateFormat("MMM dd, yyyy");
+                            DateFormat outputFormat = DateFormat("MMM dd");
+                            DateTime parsedDate =
+                                inputFormat.parse("$originalDate, 00:00:00");
+                            String formattedDate =
+                                outputFormat.format(parsedDate);
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TaskDetailScreen(
+                                      projectId:
+                                          pendingProjects[index].projectid,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: OverviewCard(
+                                projectName: pendingProjects[index].projectName,
+                                index: index,
+                                remainingTasks: count,
+                                dueDate: formattedDate,
+                              ),
+                            );
+                          });
+                    }
+                  },
+                ),
+                FutureBuilder(
+                  future: projectServices.getCompletedProjects(context),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text("An error occurred: ${snapshot.error}"),
+                      );
+                    } else if (!snapshot.hasData|| snapshot.data.isEmpty) {
+                      return const Center(
+                        child: Text("No Completed Projects!"),
+                      );
+                    } else {
+                      completedProjects = snapshot.data;
+                      return ListView.builder(
+                          itemCount: completedProjects.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TaskDetailScreen(
+                                      projectId:
+                                          completedProjects[index].projectid,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: OverviewCard(
+                                projectName:
+                                    completedProjects[index].projectName,
+                                index: index,
+                                remainingTasks: 0,
+                                dueDate: "noDueDate",
+                              ),
+                            );
+                          });
+                    }
+                  },
+                ),
+                FutureBuilder(
+                  future: projectServices.fetchAllProducts(context),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text("An error occurred: ${snapshot.error}"),
+                      );
+                    } else if (!snapshot.hasData|| snapshot.data.isEmpty) {
+                      return const Center(
+                        child: Text("No Projects are added!"),
+                      );
+                    } else {
+                      projectDataModel = snapshot.data;
+                      return ListView.builder(
+                          itemCount: projectDataModel.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, int index) {
+                            List<Task> tasks = projectDataModel[index].tasks;
+                            int count = 0;
+                            for (int i = 0; i < tasks.length; i++) {
+                              if (tasks[i].status == false) {
+                                count = count + 1;
+                              }
+                            }
+                            tasks = [];
+                            String originalDate =
+                                projectDataModel[index].endDate;
+                            DateFormat inputFormat = DateFormat("MMM dd, yyyy");
+                            DateFormat outputFormat = DateFormat("MMM dd");
+                            DateTime parsedDate =
+                                inputFormat.parse("$originalDate, 00:00:00");
+                            String formattedDate =
+                                outputFormat.format(parsedDate);
 
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TaskDetailScreen(
-                                projectId: projectDataModel[index].projectid,
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TaskDetailScreen(
+                                      projectId:
+                                          projectDataModel[index].projectid,
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: OverviewCard(
+                                projectName:
+                                    projectDataModel[index].projectName,
+                                index: index,
+                                remainingTasks: count,
+                                dueDate: formattedDate,
                               ),
-                            ),
-                          );
-                        },
-                        child: OverviewCard(
-                          projectName: projectDataModel[index].projectName,
-                          index: index,
-                          remainingTasks: count,
-                          dueDate: formattedDate,
-                        ),
-                      );
-                    }),
+                            );
+                          });
+                    }
+                  },
+                ),
               ],
             ),
           )

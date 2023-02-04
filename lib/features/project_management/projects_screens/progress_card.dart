@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import '../../../constants/global_variables.dart';
 
 class ProgressCard extends StatelessWidget {
-  ProgressCard({Key? key, required this.ProjectName, required this.CompletedPercent, required this.remainingDays}) : super(key: key);
+  ProgressCard(
+      {Key? key,
+      required this.ProjectName,
+      required this.CompletedPercent,
+      required this.remainingDays})
+      : super(key: key);
   late String ProjectName;
   late int CompletedPercent;
   late int remainingDays;
@@ -46,7 +51,7 @@ class ProgressCard extends StatelessWidget {
                         fontWeight: FontWeight.w500,
                       ),
                     ),
-                     Text(
+                    Text(
                       "$remainingDays days remaining!",
                       style: const TextStyle(
                         color: Colors.grey,
@@ -57,9 +62,17 @@ class ProgressCard extends StatelessWidget {
                   ],
                 ),
                 Expanded(child: Container()),
-                const Icon(
-                  Icons.more_vert_outlined,
-                  color: Colors.grey,
+                PopupMenuButton(
+                  icon: const Icon(
+                    Icons.more_vert,
+                    color: Colors.grey,
+                  ),
+                  itemBuilder: (context) => [
+                    PopupMenuItem(
+                      onTap: () {},
+                      child: const Text("Delete"),
+                    ),
+                  ],
                 ),
               ],
             ),

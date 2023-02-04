@@ -30,17 +30,17 @@ class _TasksPageState extends State<TasksPage> {
     });
   }
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getDate();
-  }
-
-  void getDate() async {
-    projectModel = await projectServices.fetchAllProducts(context);
-    setState(() {});
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //   super.initState();
+  //   getDate();
+  // }
+  //
+  // void getDate() async {
+  //   projectModel = await projectServices.fetchAllProducts(context);
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -156,47 +156,67 @@ class _TasksPageState extends State<TasksPage> {
                       ),
                       SizedBox(
                         height: 395,
-                        child: ListView.builder(
-                            shrinkWrap: true,
-                            itemCount: projectModel.length,
-                            itemBuilder: (context, index) {
-                              //getting remaining days
-                              String date1 = projectModel[index].endDate;
-                              DateTime date2 = DateTime.now();
-                              DateFormat format = DateFormat("MMM dd, yy");
-                              DateTime d1 = format.parse(date1);
-                              Duration difference = d1.difference(date2);
-                              int days = difference.inDays;
-                              // print(projectModel[index].endDate);
-                              //getting completed percentage
-                              List<Task> tasks = projectModel[index].tasks;
-                              int count = 0;
-                              for (int i = 0; i < tasks.length; i++) {
-                                if (tasks[i].status == true) {
-                                  count = count + 1;
-                                }
-                              }
-                              double completePercent = (count/tasks.length)*100;
-                              tasks = [];
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => TaskDetailScreen(
-                                        projectId:
-                                            projectModel[index].projectid,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: ProgressCard(
-                                  ProjectName: projectModel[index].projectName,
-                                  CompletedPercent:  completePercent.toInt(),
-                                  remainingDays: days,
-                                ),
+                        child: FutureBuilder(
+                          future: projectServices.fetchAllProducts(context),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
                               );
-                            }),
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                child: Text("An error occurred: ${snapshot.error}"),
+                              );
+                            } else if (!snapshot.hasData|| snapshot.data.isEmpty) {
+                              return const Center(
+                                child: Text("No Projects are added till now!"),
+                              );
+                            } else {
+                              projectModel = snapshot.data;
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: projectModel.length,
+                                  itemBuilder: (context, index) {
+                                    //getting remaining days
+                                    String date1 = projectModel[index].endDate;
+                                    DateTime date2 = DateTime.now();
+                                    DateFormat format = DateFormat("MMM dd, yy");
+                                    DateTime d1 = format.parse(date1);
+                                    Duration difference = d1.difference(date2);
+                                    int days = difference.inDays;
+                                    // print(projectModel[index].endDate);
+                                    //getting completed percentage
+                                    List<Task> tasks = projectModel[index].tasks;
+                                    int count = 0;
+                                    for (int i = 0; i < tasks.length; i++) {
+                                      if (tasks[i].status == true) {
+                                        count = count + 1;
+                                      }
+                                    }
+                                    double completePercent = (count/tasks.length)*100;
+                                    tasks = [];
+                                    return GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => TaskDetailScreen(
+                                              projectId:
+                                              projectModel[index].projectid,
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                      child: ProgressCard(
+                                        ProjectName: projectModel[index].projectName,
+                                        CompletedPercent:  completePercent.toInt(),
+                                        remainingDays: days,
+                                      ),
+                                    );
+                                  });
+                            }
+                          },
+                        ),
                       )
                     ],
                   ),

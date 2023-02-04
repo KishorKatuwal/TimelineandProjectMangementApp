@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 
-class FeedbackCategoryCard extends StatelessWidget {
-  const FeedbackCategoryCard({
+class CategoryCard extends StatelessWidget {
+  const CategoryCard({
     Key? key,
     required  this.categoryText,
     required  this.isActive,
