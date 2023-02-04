@@ -53,7 +53,7 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
             return Center(
               child: Text("An error occurred: ${snapshot.error}"),
             );
-          } else if (!snapshot.hasData) {
+          } else if (!snapshot.hasData|| snapshot.data.isEmpty) {
             return const Center(
               child: Text("No Events are added"),
             );
@@ -64,14 +64,16 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(
+                    top: 4,
                     right: 8,
                     left: 8,
-                    bottom: 2
+                    bottom: 4
                   ),
                   child: Container(
                     padding: const EdgeInsets.only(
                       left: 10,
                       right: 10,
+                      // bottom: 10
                     ),
                     decoration: const BoxDecoration(
                       color: Colors.white,

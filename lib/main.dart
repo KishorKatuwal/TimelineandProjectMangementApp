@@ -33,7 +33,6 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement initState
     super.initState();
     authService.getUserData(context);
-
   }
 
   @override
@@ -50,8 +49,10 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (settings) => generateRoute(settings),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
           ? Provider.of<UserProvider>(context).user.type == 'user'
-          ? const BottomBar()
-          : const AdminScreen()
+              ? const BottomBar(
+                  pageIndex: 0,
+                )
+              : const AdminScreen()
           : const LoginScreen(),
     );
   }

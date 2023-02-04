@@ -27,18 +27,6 @@ class _ProjectsPageState extends State<ProjectsPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getUpcomingEvents();
-  }
-
-  void getUpcomingEvents() async {
-    upcomingEvents = await eventServices.getCompletedEvents(context);
-    setState(() {});
-  }
-
-  @override
   Widget build(BuildContext context) {
     final userName = Provider.of<UserProvider>(context).user.name;
     return Scaffold(
@@ -152,28 +140,46 @@ class _ProjectsPageState extends State<ProjectsPage> {
                     ),
                     SizedBox(
                       height: 180,
-                      child: upcomingEvents.isNotEmpty
-                          ? ListView.builder(
-                              itemCount: upcomingEvents.length,
-                              // itemCount: 10,
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemBuilder: (BuildContext context, int index) {
-                                String date1 = upcomingEvents[index].EventDate;
-                                DateTime date2 = DateTime.now();
-                                Duration difference =
-                                    DateTime.parse(date1).difference(date2);
-                                return ViewUpcomingEvents(
-                                    eventName: upcomingEvents[index].EventName,
-                                    eventSubject:
-                                        upcomingEvents[index].EventType,
-                                    remainingDays: difference.inDays);
-                              })
-                          : Container(
-                              color: Colors.white,
-                              child: const Center(
-                                child: Text("There are no upcoming Events"),
-                              )),
+                      child: FutureBuilder(
+                        future: eventServices.getUpcomingEvents(context),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(
+                              child:
+                                  Text("An error occurred: ${snapshot.error}"),
+                            );
+                          } else if (!snapshot.hasData ||
+                              snapshot.data.isEmpty) {
+                            return const Center(
+                              child: Text("No Events are added"),
+                            );
+                          } else {
+                            upcomingEvents = snapshot.data;
+                            return ListView.builder(
+                                itemCount: upcomingEvents.length,
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (BuildContext context, int index) {
+                                  String date1 =
+                                      upcomingEvents[index].EventDate;
+                                  DateTime date2 = DateTime.now();
+                                  Duration difference =
+                                      DateTime.parse(date1).difference(date2);
+                                  return ViewUpcomingEvents(
+                                      eventName:
+                                          upcomingEvents[index].EventName,
+                                      eventSubject:
+                                          upcomingEvents[index].EventType,
+                                      remainingDays: difference.inDays);
+                                });
+                          }
+                        },
+                      ),
                     ),
                   ],
                 ),

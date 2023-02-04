@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/Provider.dart';
-import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_categorycard.dart';
+import 'package:timelineandprojectmanagementapp/common/widgets/category_card.dart';
 import 'package:timelineandprojectmanagementapp/features/feedback/services/feedback_service.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
@@ -101,7 +101,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           onTap: () {
                             _setCategory('Message');
                           },
-                          child: FeedbackCategoryCard(
+                          child: CategoryCard(
                             categoryText: 'Message',
                             isActive: category == 'Message',
                           ),
@@ -110,7 +110,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           onTap: () {
                             _setCategory('Improvement');
                           },
-                          child: FeedbackCategoryCard(
+                          child: CategoryCard(
                             categoryText: 'Improvement',
                             isActive: category == 'Improvement',
                           ),
@@ -119,7 +119,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           onTap: () {
                             _setCategory('Suggestions');
                           },
-                          child: FeedbackCategoryCard(
+                          child: CategoryCard(
                             categoryText: 'Suggestions',
                             isActive: category == 'Suggestions',
                           ),
@@ -128,7 +128,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           onTap: () {
                             _setCategory('Questions');
                           },
-                          child: FeedbackCategoryCard(
+                          child: CategoryCard(
                             categoryText: 'Questions',
                             isActive: category == 'Questions',
                           ),
@@ -137,7 +137,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           onTap: () {
                             _setCategory('Bug Report');
                           },
-                          child: FeedbackCategoryCard(
+                          child: CategoryCard(
                             categoryText: 'Bug Report',
                             isActive: category == 'Bug Report',
                           ),
@@ -146,7 +146,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           onTap: () {
                             _setCategory('New Feature');
                           },
-                          child: FeedbackCategoryCard(
+                          child: CategoryCard(
                             categoryText: 'New Feature',
                             isActive: category == 'New Feature',
                           ),

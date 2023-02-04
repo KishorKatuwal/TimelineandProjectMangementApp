@@ -5,7 +5,6 @@ import 'package:timelineandprojectmanagementapp/constants/global_variables.dart'
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/services/schedules_service.dart';
 
-import '../../../providers/user_provider.dart';
 
 class SchedulesPage extends StatefulWidget {
   final String Weekday;
@@ -25,7 +24,6 @@ class _SchedulesPageState extends State<SchedulesPage> {
 
   void gettingData() async {
     _data = await schedulesService.loadListFromCSV(widget.Weekday, widget.Group);
-    print(_data);
     setState(() {});
   }
 

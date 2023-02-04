@@ -54,8 +54,7 @@ class EventServices {
           User user = userProvider.user
               .copyWith(events: jsonDecode(res.body)['events']);
           userProvider.setUserFromModel(user);
-          // Navigator.pushNamed(context, BottomBar.routeName);
-          Navigator.pushReplacementNamed(context, BottomBar.routeName);
+          Navigator.pushReplacementNamed(context, BottomBar.routeName,arguments: 2);
         },
       );
     } catch (e) {
@@ -114,7 +113,7 @@ class EventServices {
                 .copyWith(events: jsonDecode(res.body)['events']);
             userProvider.setUserFromModel(user);
             Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, BottomBar.routeName);
+            Navigator.pushReplacementNamed(context, BottomBar.routeName,arguments: 2);
             Navigator.pushNamed(context, ViewAddedEventScreen.routeName);
           });
     } catch (e) {
@@ -123,10 +122,10 @@ class EventServices {
   }
 
   //getting upcoming events
-  List<EventDataModel> completedEvents = [];
+  List<EventDataModel> upcomingEvents = [];
   List<EventDataModel> getEvents = [];
 
-  Future<List<EventDataModel>> getCompletedEvents(BuildContext context) async {
+  Future<List<EventDataModel>> getUpcomingEvents(BuildContext context) async {
     getEvents = await fetchAllProducts(context);
     // print(getEvents.length);
     for (int i = 0; i < getEvents.length; i++) {
@@ -135,11 +134,11 @@ class EventServices {
       Duration difference = DateTime.parse(date1).difference(date2);
       int differenceInDays = difference.inDays;
       if (differenceInDays >= 0) {
-        completedEvents.add(getEvents[i]);
+        upcomingEvents.add(getEvents[i]);
       }
     }
-    completedEvents.sort((a, b) => a.EventDate.compareTo(b.EventDate));
+    upcomingEvents.sort((a, b) => a.EventDate.compareTo(b.EventDate));
 
-    return completedEvents;
+    return upcomingEvents;
   }
 }

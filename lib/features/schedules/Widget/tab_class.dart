@@ -19,7 +19,6 @@ class _TabClassState extends State<TabClass> {
   @override
   Widget build(BuildContext context) {
     String UserGroup = Provider.of<UserProvider>(context).user.group.trim();
-    print(UserGroup);
     return DefaultTabController(
       length: 7,
       initialIndex: formattedDate == "SUN"

@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:provider/Provider.dart';
-import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/projects_screens/projects_page.dart';
-import 'package:timelineandprojectmanagementapp/features/project_management/screens/project_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_page.dart';
-import 'package:timelineandprojectmanagementapp/tryclass.dart';
-import 'package:timelineandprojectmanagementapp/features/schedules/screens/schedules.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/Widget/tab_class.dart';
 import '../../constants/global_variables.dart';
 import '../../features/account/screens/account.dart';
 
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
+  final int pageIndex;
 
-  const BottomBar({Key? key}) : super(key: key);
+  const BottomBar({Key? key, required this.pageIndex}) : super(key: key);
 
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _page = 0;
+  late int _page ;
   double bottomBarWidth = 42;
   double bottombarBordersWidth = 5;
 
+
+  @override
+  void initState() {
+    super.initState();
+     _page = widget.pageIndex;
+  }
   List<Widget> pages = [
-    // const ProjectManagementScreen(),
-    // const TryScreen(),
     const ProjectsPage(),
     const TasksPage(),
     const EventScreen(),

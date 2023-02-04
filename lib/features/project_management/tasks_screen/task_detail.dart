@@ -180,8 +180,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
               ),
             ),
           )
-        : const Center(
-            child: CircularProgressIndicator(),
-          );
+        : Container(
+      color: const Color.fromRGBO(242, 244, 255, 1),
+          child: const Center(
+              child: CircularProgressIndicator(),
+            ),
+        );
   }
 }
