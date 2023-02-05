@@ -44,6 +44,8 @@ dependencies:
   table_calendar: ^3.0.8
   date_picker_timeline: ^1.2.3
   syncfusion_flutter_datepicker: ^20.4.44
+  socket_io_client: ^2.0.1
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

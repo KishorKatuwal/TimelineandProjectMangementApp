@@ -4,7 +4,8 @@ import 'package:timelineandprojectmanagementapp/features/account/screens/account
 import 'package:timelineandprojectmanagementapp/features/admin/screens/admin_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
-import 'package:timelineandprojectmanagementapp/features/discussion/screens/discussion.dart';
+import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/discussion/screens/discussion_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_screen.dart';
@@ -35,9 +36,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const AccountScreen());
 
-    case Discussion.routeName:
+    case DiscussionScreen.routeName:
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const Discussion());
+          settings: routeSettings, builder: (_) => const DiscussionScreen());
+
+      case GroupScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const GroupScreen());
 
     case BottomBar.routeName:
       var pageIndex = routeSettings.arguments as int;

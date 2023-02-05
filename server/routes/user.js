@@ -4,6 +4,7 @@ const auth = require("../middlewares/auth");
 const  Events  = require('../models/event');
 const  Projects  = require('../models/projects');
 const  Feedback  = require('../models/feedback');
+const  Discussion  = require('../models/discussion');
 const User = require('../models/user');
 
 
@@ -119,6 +120,35 @@ try{
 }
 
 });
+
+
+
+//message
+userRouter.post('/api/send-message',auth, async(req,res)=>{
+try{
+    const {message, messageTime, userId, userName, userGroup, userYear} = req.body;
+    let discussion = new Discussion({message, messageTime, userId, userName, userGroup, userYear});
+    discussion = await discussion.save();
+    res.json(discussion);
+}catch(e){
+    res.status(500).json({error: e.message});
+
+}
+
+});
+
+
+
+
+    userRouter.get('/api/get-messages',auth, async (req, res) => {
+        try {
+            const discussion = await Discussion.find({});
+            res.json(discussion);
+        } catch (e) {
+            res.status(500).json({ error: e.message });
+        }
+
+    });
 
 
 
