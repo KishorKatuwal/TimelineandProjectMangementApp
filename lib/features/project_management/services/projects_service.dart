@@ -157,7 +157,6 @@ class ProjectServices {
       if (getProjects[i].isCompleted == true) {
         completedProjects.add(getProjects[i]);
       }
-      // print(completedProjects);
     }
     return completedProjects;
   }

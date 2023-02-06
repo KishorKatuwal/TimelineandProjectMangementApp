@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
 import '../feedback/screens/feedback_screen.dart';
 
 class AppDrawer extends StatelessWidget {
-  const AppDrawer({Key? key}) : super(key: key);
+   AppDrawer({Key? key}) : super(key: key);
+
+  final AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -132,12 +135,17 @@ class AppDrawer extends StatelessWidget {
                   ),
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.logout),
-                title: Text(
-                  "Log Out",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
+              GestureDetector(
+                onTap: (){
+                  authService.logOut(context);
+                },
+                child: const ListTile(
+                  leading: Icon(Icons.logout),
+                  title: Text(
+                    "Log Out",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

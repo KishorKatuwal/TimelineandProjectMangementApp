@@ -10,7 +10,7 @@ class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
   final int pageIndex;
 
-  const BottomBar({Key? key, required this.pageIndex}) : super(key: key);
+  const BottomBar({Key? key,  required this.pageIndex}) : super(key: key);
 
   @override
   State<BottomBar> createState() => _BottomBarState();
