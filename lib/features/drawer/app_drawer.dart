@@ -84,7 +84,7 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               const SizedBox(
-                height: 165,
+                height: 105,
               ),
               const Divider(
                 height: 3,
@@ -102,6 +102,15 @@ class AppDrawer extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
+                  ),
+                ),
+              ),
+              const ListTile(
+                leading: Icon(Icons.key),
+                title: Text(
+                  "Change Password",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
