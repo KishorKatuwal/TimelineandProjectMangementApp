@@ -31,8 +31,8 @@ class _GroupScreenState extends State<GroupScreen> {
 
   void getPreviousMessage() async {
     discussionModel = await discussionService.getMessages(context);
+    connect();
     setState(() {
-      connect();
     });
   }
 
@@ -46,36 +46,17 @@ class _GroupScreenState extends State<GroupScreen> {
     socket!.on("sendMsgServer", (msg) {
       print(msg);
       print("reached here");
-      // if (msg["userId"] != widget.id) {
-      // discussionModel.add(DiscussionModel(
-      //     messageId: msg["messageId"],
-      //     message: msg["message"],
-      //     messageTime: msg["messageTime"],
-      //     userId: msg["userId"],
-      //     userName: msg["userName"],
-      //     userGroup: msg["userGroup"],
-      //     userYear: msg["userYear"]));
-      setState(() {
-        getPreviousMessage();
-      });
-      // }
+      if (mounted) {
+        setState(() {
+          getPreviousMessage();
+        });
+      }
+
     });
-    setState(() {});
   }
 
   void sendMsg(String msg, String userName, String userId, String userGroup,
       String userYear) {
-    // DiscussionModel ownMsg = DiscussionModel(
-    //     messageId: "",
-    //     message: msg,
-    //     messageTime: "myTime",
-    //     userId: "userId",
-    //     userName: userName,
-    //     userGroup: "userGroup",
-    //     userYear: "userYear");
-    //
-    // discussionModel.add(ownMsg);
-
     socket!.emit('send', {
       'messageId': '',
       'message': msg,

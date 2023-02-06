@@ -138,7 +138,6 @@ class EventServices {
       }
     }
     upcomingEvents.sort((a, b) => a.EventDate.compareTo(b.EventDate));
-
     return upcomingEvents;
   }
 }
