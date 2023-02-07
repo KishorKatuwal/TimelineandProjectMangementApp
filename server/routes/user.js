@@ -7,7 +7,7 @@ const  Feedback  = require('../models/feedback');
 const  Discussion  = require('../models/discussion');
 const User = require('../models/user');
 
-
+//adding events
 userRouter.post("/api/add-event", auth, async (req, res) => {
     try {
            const { EventName, EventDate, EventTime, Subject, Description, EventType }= req.body;
@@ -23,6 +23,8 @@ userRouter.post("/api/add-event", auth, async (req, res) => {
     }
 });
 
+
+//fetching events
 userRouter.get('/api/get-events',auth, async (req, res) => {
     try {
         let user = await User.findById(req.user);
@@ -35,7 +37,7 @@ userRouter.get('/api/get-events',auth, async (req, res) => {
 
 });
 
-
+//deleting events
 userRouter.delete("/api/delete-events",auth, async (req, res) => {
     try {
         const { EventID } = req.body;
@@ -54,6 +56,7 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
 
 });
 
+//adding project
     userRouter.post("/api/add-project", auth, async (req, res) => {
         try {
                const { projectName,projectDescription,startDate,endDate,isCompleted,
@@ -70,7 +73,7 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
     });
 
 
-
+//getting all the projects
     userRouter.get('/api/get-projects',auth, async (req, res) => {
         try {
             let user = await User.findById(req.user);
@@ -86,7 +89,7 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
 
 
 
-
+//updating task
 userRouter.put("/api/update-tasks",auth, async (req, res) => {
 try {
     const { projectId,taskId,taskStatus } = req.body;
@@ -123,7 +126,7 @@ try{
 
 
 
-//message
+//adding message
 userRouter.post('/api/send-message',auth, async(req,res)=>{
 try{
     const {message, messageTime, userId, userName, userGroup, userYear} = req.body;
@@ -139,7 +142,7 @@ try{
 
 
 
-
+//getting messages
     userRouter.get('/api/get-messages',auth, async (req, res) => {
         try {
             const discussion = await Discussion.find({});
@@ -152,6 +155,21 @@ try{
 
 
 
+//editing user information
+userRouter.put("/api/update-user-details",auth, async (req, res) => {
+try {
+    const { name,group,faculty,year } = req.body;
+    let user = await User.findById(req.user);
+    user.name = name;
+    user.group = group;
+    user.faculty = faculty;
+    user.year = year;
+    user.save();
+    res.json(user);
+} catch (e) {
+res.status(500).json({error: e.message});
+}
+});
 
 
 

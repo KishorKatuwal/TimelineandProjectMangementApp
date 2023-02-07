@@ -76,10 +76,12 @@ class DisplayDetails extends StatelessWidget {
               ),
             ],
           ),
-          const SizedBox(
+           completed=="noValue"?const SizedBox(
+            height: 0,
+          ):const SizedBox(
             height: 15,
           ),
-          Row(
+          completed=="noValue"?Row():Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children:  [
               Text(
