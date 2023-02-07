@@ -67,7 +67,7 @@ class _DiscussionScreenState extends State<DiscussionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userName = Provider.of<UserProvider>(context).user.name;
+    final userName = Provider.of<UserProvider>(context).user.firstName;
     final userId = Provider.of<UserProvider>(context).user.id;
     final userYear = Provider.of<UserProvider>(context).user.year;
     final userGroup = Provider.of<UserProvider>(context).user.group;

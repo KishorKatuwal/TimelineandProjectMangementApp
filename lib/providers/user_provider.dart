@@ -3,17 +3,18 @@ import 'package:timelineandprojectmanagementapp/model/user.dart';
 
 class UserProvider extends ChangeNotifier {
   User _user = User(
-      id: '',
-      name: '',
-      email: '',
-      group: '',
-      faculty: '',
-      year: '',
-      type: '',
-      token: '',
-      password: '',
-      events: [],
-      projects: [],
+    id: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    group: '',
+    faculty: '',
+    year: '',
+    type: '',
+    token: '',
+    password: '',
+    events: [],
+    projects: [],
   );
 
   User get user => _user;

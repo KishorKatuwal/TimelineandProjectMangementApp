@@ -28,7 +28,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final userName = Provider.of<UserProvider>(context).user.name;
+    final userName = Provider.of<UserProvider>(context).user.firstName;
     return Scaffold(
       key: _scaffoldKey,
       drawer:  AppDrawer(),

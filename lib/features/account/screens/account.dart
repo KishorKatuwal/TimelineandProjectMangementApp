@@ -45,6 +45,9 @@ class _AccountScreenState extends State<AccountScreen> {
   }
 
   void getAllData() async {
+    setState(() {
+      finalLoading = true;
+    });
     getPendingProj = await projectServices.getPendingProjects(context);
     getUpcomingEve = await eventServices.getUpcomingEvents(context);
     setState(() {
@@ -56,15 +59,14 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final name = Provider.of<UserProvider>(context).user.name;
+    final name = Provider.of<UserProvider>(context).user.firstName;
+    final lName = Provider.of<UserProvider>(context).user.lastName;
     final email = Provider.of<UserProvider>(context).user.email;
     final group = Provider.of<UserProvider>(context).user.group;
-    // final faculty = Provider.of<UserProvider>(context).user.faculty;
     final year = Provider.of<UserProvider>(context).user.year;
     final totalProjects =
         Provider.of<UserProvider>(context).user.projects.length;
     final totalEvents = Provider.of<UserProvider>(context).user.events.length;
-
     final faculty = context.watch<UserProvider>().user.faculty;
 
     return Scaffold(
@@ -84,7 +86,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       MaterialPageRoute(
                           builder: (context) => EditUserDetails(
                                 firstName: name,
-                                lastName: "noLastName",
+                                lastName: lName,
                                 year: year,
                                 group: group,
                                 faculty: faculty,
@@ -118,51 +120,51 @@ class _AccountScreenState extends State<AccountScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Center(
-                      child: Column(
-                        children: [
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          const CircleAvatar(
-                            radius: 40,
-                            child: Icon(
-                              Icons.person,
-                              size: 60,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 4,
-                          ),
-                          Text(
-                            name,
-                            maxLines: 1,
-                            style: const TextStyle(
-                                fontSize: 20,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600),
-                          ),
-                          Text(
-                            email,
-                            maxLines: 1,
-                            style: const TextStyle(
-                                fontSize: 17,
-                                color: Colors.black45,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 25,
-                    ),
+                    // Center(
+                    //   child: Column(
+                    //     children: [
+                    //       const SizedBox(
+                    //         height: 10,
+                    //       ),
+                    //       const CircleAvatar(
+                    //         radius: 40,
+                    //         child: Icon(
+                    //           Icons.person,
+                    //           size: 60,
+                    //         ),
+                    //       ),
+                    //       const SizedBox(
+                    //         height: 4,
+                    //       ),
+                    //       Text(
+                    //         name,
+                    //         maxLines: 1,
+                    //         style: const TextStyle(
+                    //             fontSize: 20,
+                    //             color: Colors.black,
+                    //             fontWeight: FontWeight.w600),
+                    //       ),
+                    //       Text(
+                    //         email,
+                    //         maxLines: 1,
+                    //         style: const TextStyle(
+                    //             fontSize: 17,
+                    //             color: Colors.black45,
+                    //             fontWeight: FontWeight.w500),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 25,
+                    // ),
                     DisplayDetails(
                       title: "User Details",
-                      completed: "noValue",
-                      completedValue: "noValue",
-                      pending: "Email",
-                      pendingValue: email,
-                      total: "User Name",
+                      completed: "Email",
+                      completedValue: email,
+                      pending: "Last Name",
+                      pendingValue: lName,
+                      total: "First Name",
                       totalValue: name,
                     ),
                     const SizedBox(

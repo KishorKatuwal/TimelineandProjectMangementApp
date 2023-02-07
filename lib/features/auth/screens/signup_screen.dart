@@ -17,7 +17,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final _signUpFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _groupController = TextEditingController();
   String category = 'Year1';
   String facultyValue = "Computing";
@@ -28,7 +29,8 @@ class _SignupScreenState extends State<SignupScreen> {
     _emailController.dispose();
     _passwordController.dispose();
     _groupController.dispose();
-    _nameController.dispose();
+    _firstNameController.dispose();
+    _lastNameController.dispose();
   }
 
   void signUpUser() {
@@ -36,7 +38,8 @@ class _SignupScreenState extends State<SignupScreen> {
       context: context,
       email: _emailController.text,
       password: _passwordController.text,
-      name: _nameController.text,
+      firstName: _firstNameController.text,
+      lastName: _lastNameController.text,
       faculty: facultyValue,
       group: _groupController.text.toUpperCase(),
       year: category,
@@ -73,7 +76,12 @@ class _SignupScreenState extends State<SignupScreen> {
                     height: 35,
                   ),
                   CustomTextField(
-                      controller: _nameController, hintText: "Full Name"),
+                      controller: _firstNameController, hintText: "First Name"),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  CustomTextField(
+                      controller: _lastNameController, hintText: "Last Name"),
                   const SizedBox(
                     height: 15,
                   ),

@@ -42,7 +42,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     getData();
   }
 
-  void getData() async {
+  void getData()  async{
     final projectData = await projectServices.fetchAllProducts(context);
     for (int i = 0; i < projectData.length; i++) {
       if (projectData[i].projectid == widget.projectId) {

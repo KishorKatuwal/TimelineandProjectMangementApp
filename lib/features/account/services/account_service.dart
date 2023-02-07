@@ -13,7 +13,8 @@ import '../../../providers/user_provider.dart';
 class AccountService {
   void updateUserDetails({
     required BuildContext context,
-    required String name,
+    required String firstName,
+    required String lastName,
     required String group,
     required String faculty,
     required String year,
@@ -27,7 +28,8 @@ class AccountService {
           'x-auth-token': userProvider.user.token,
         },
         body: jsonEncode({
-          'name': name,
+          'firstName': firstName,
+          'lastName': lastName,
           'group': group,
           'faculty': faculty,
           'year': year,
@@ -37,9 +39,10 @@ class AccountService {
           response: res,
           context: context,
           onSuccess: () {
+            showSnackBar(context, "Successfully edited!!");
             User user = userProvider.user.copyWith(
               group: jsonDecode(res.body)['group'],
-              name: jsonDecode(res.body)['name'],
+              firstName: jsonDecode(res.body)['firstName'],
               faculty: jsonDecode(res.body)['faculty'],
               year: jsonDecode(res.body)['year'],
             );
