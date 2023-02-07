@@ -158,9 +158,10 @@ try{
 //editing user information
 userRouter.put("/api/update-user-details",auth, async (req, res) => {
 try {
-    const { name,group,faculty,year } = req.body;
+    const { firstName,lastName,group,faculty,year } = req.body;
     let user = await User.findById(req.user);
-    user.name = name;
+    user.firstName = firstName;
+    user.lastName = lastName;
     user.group = group;
     user.faculty = faculty;
     user.year = year;

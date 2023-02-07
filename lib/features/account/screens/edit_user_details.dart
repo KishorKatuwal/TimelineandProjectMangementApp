@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/account/services/account_service.dart';
 
 import '../../../common/widgets/custom_button.dart';
@@ -32,6 +33,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
   final TextEditingController _groupController = TextEditingController();
   late String category;
   late String facultyValue;
+  bool buttonLoader = true;
 
   @override
   void initState() {
@@ -40,7 +42,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
     category = widget.year;
     facultyValue = widget.faculty;
     _firstNameController.text = widget.firstName;
-    _lastNameController.text = widget.firstName;
+    _lastNameController.text = widget.lastName;
     _groupController.text = widget.group;
   }
 
@@ -50,6 +52,16 @@ class _EditUserDetailsState extends State<EditUserDetails> {
     _groupController.dispose();
     _firstNameController.dispose();
     _lastNameController.dispose();
+  }
+
+  void updateUserDetails() {
+    accountService.updateUserDetails(
+        context: context,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        group: _groupController.text,
+        faculty: facultyValue,
+        year: category);
   }
 
   List<String> yearCategories = [
@@ -164,14 +176,24 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                     text: "Edit Details",
                     onTap: () {
                       if (_editFormKey.currentState!.validate()) {
-                        accountService.updateUserDetails(
-                            context: context,
-                            name: _firstNameController.text,
-                            group: _groupController.text,
-                            faculty: facultyValue,
-                            year: category);
+                        if (_firstNameController.text == widget.firstName &&
+                            _lastNameController.text == widget.firstName &&
+                            _groupController.text == widget.group &&
+                            facultyValue == widget.faculty &&
+                            category == widget.year) {
+                          showSnackBar(context, "Same details Provided!!");
+                        } else {
+                          updateUserDetails();
+                          _firstNameController.clear();
+                          _lastNameController.clear();
+                          _groupController.clear();
+                          setState(() {
+                            buttonLoader = false;
+                          });
+                        }
                       }
                     },
+                    loader: buttonLoader,
                   ),
                   const SizedBox(
                     height: 5,

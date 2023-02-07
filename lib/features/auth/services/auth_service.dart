@@ -20,7 +20,8 @@ class AuthService {
     required BuildContext context,
     required String email,
     required String password,
-    required String name,
+    required String firstName,
+    required String lastName,
     required String group,
     required String faculty,
     required String year,
@@ -28,7 +29,8 @@ class AuthService {
     try {
       User user = User(
         id: '',
-        name: name,
+        firstName: firstName,
+        lastName: lastName,
         email: email,
         group: group,
         faculty: faculty,
@@ -56,6 +58,7 @@ class AuthService {
             context,
             'Account created! Login with the same credentials!',
           );
+          Navigator.pop(context);
         },
       );
     } catch (e) {
@@ -64,8 +67,7 @@ class AuthService {
     }
   }
 
-  //funtion to signin user
-  //function  for signup user
+  //function  for sign in user
   void signInUser({
     required BuildContext context,
     required String email,
