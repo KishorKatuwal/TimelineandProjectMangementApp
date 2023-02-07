@@ -4,10 +4,47 @@ import 'package:timelineandprojectmanagementapp/features/auth/services/auth_serv
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
 import '../feedback/screens/feedback_screen.dart';
 
-class AppDrawer extends StatelessWidget {
-   AppDrawer({Key? key}) : super(key: key);
+class AppDrawer extends StatefulWidget {
+  const AppDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<AppDrawer> createState() => _AppDrawerState();
+}
+
+class _AppDrawerState extends State<AppDrawer> {
   final AuthService authService = AuthService();
+
+
+  void _showDeleteAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Do want to Log out?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text(
+                "No",
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+            ),
+            TextButton(
+              onPressed: () {
+                authService.logOut(context);
+              },
+              child: const Text(
+                "Yes",
+                style: TextStyle(fontSize: 18, color: Colors.red),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +109,7 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: (){
+                onTap: () {
                   // Navigator.pushNamed(context, DiscussionScreen.routeName);
                   Navigator.pushNamed(context, GroupScreen.routeName);
                 },
@@ -136,8 +173,8 @@ class AppDrawer extends StatelessWidget {
                 ),
               ),
               GestureDetector(
-                onTap: (){
-                  authService.logOut(context);
+                onTap: () {
+                  _showDeleteAlertDialog();
                 },
                 child: const ListTile(
                   leading: Icon(Icons.logout),
