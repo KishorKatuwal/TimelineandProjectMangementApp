@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/Provider.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/addNewProjectScreen/add_new_project.dart';
 import '../../../common/widgets/bottom_bar.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/global_variables.dart';
@@ -160,4 +161,87 @@ class ProjectServices {
     }
     return completedProjects;
   }
+
+  void deleteProject({
+    required BuildContext context,
+    required String projectId,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.delete(
+        Uri.parse('$uri/api/delete-project'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'projectId': projectId,
+        }),
+      );
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            User user = userProvider.user
+                .copyWith(projects: jsonDecode(res.body)['projects']);
+            userProvider.setUserFromModel(user);
+            Navigator.pop(context);
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+
+  //update project status
+  void updateProjectStatus({
+    required BuildContext context,
+    required String projectID,
+    required bool status,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.put(
+        Uri.parse('$uri/api/update-project-status'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'projectId': projectID,
+          'projectStatus': status,
+        }),
+      );
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            User user = userProvider.user
+                .copyWith(projects: jsonDecode(res.body)['projects']);
+            userProvider.setUserFromModel(user);
+            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, BottomBar.routeName,
+                arguments: 0);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => TaskDetailScreen(
+                  projectId: projectID,
+                ),
+              ),
+            );
+          });
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+
+
+
+
+
+
+
+
 }

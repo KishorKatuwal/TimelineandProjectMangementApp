@@ -1,10 +1,15 @@
+import 'dart:convert';
+
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_detail.dart';
 import 'package:timelineandprojectmanagementapp/tryclass.dart';
+import '../../../providers/user_provider.dart';
+import '../../event/model/event_data_model.dart';
 import '../addNewProjectScreen/add_new_project.dart';
 import '../models/project_management_model.dart';
 import '../models/task_model.dart';
@@ -22,6 +27,7 @@ class TasksPage extends StatefulWidget {
 class _TasksPageState extends State<TasksPage> {
   final ProjectServices projectServices = ProjectServices();
   List<ProjectDataModel> projectModel = [];
+  List<ProjectDataModel> projectData = [];
   DateTime _selectedDate = DateTime.now();
 
   void _onDateChange(DateTime date) {
@@ -30,20 +36,27 @@ class _TasksPageState extends State<TasksPage> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   // TODO: implement initState
-  //   super.initState();
-  //   getDate();
-  // }
-  //
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // getDate();
+  }
+
   // void getDate() async {
   //   projectModel = await projectServices.fetchAllProducts(context);
   //   setState(() {});
   // }
 
+  void deleteProject(String projectId) {
+    setState(() {
+      projectServices.deleteProject(context: context, projectId: projectId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final getLength = context.watch<UserProvider>().user.projects.length;
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -65,16 +78,19 @@ class _TasksPageState extends State<TasksPage> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: const [
-                         Icon(
+                        Icon(
                           Icons.assignment_outlined,
                           color: Colors.black,
                           size: 30,
                         ),
-                         Text("User Projects ",style: TextStyle(
-                           fontSize: 23,
-                           fontWeight: FontWeight.w400,
-                         ),),
-                         Icon(
+                        Text(
+                          "User Projects ",
+                          style: TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        Icon(
                           Icons.search_rounded,
                           color: Colors.black,
                           size: 30,
@@ -159,15 +175,18 @@ class _TasksPageState extends State<TasksPage> {
                         child: FutureBuilder(
                           future: projectServices.fetchAllProducts(context),
                           builder: (context, AsyncSnapshot snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
                               return const Center(
                                 child: CircularProgressIndicator(),
                               );
                             } else if (snapshot.hasError) {
                               return Center(
-                                child: Text("An error occurred: ${snapshot.error}"),
+                                child: Text(
+                                    "An error occurred: ${snapshot.error}"),
                               );
-                            } else if (!snapshot.hasData|| snapshot.data.isEmpty) {
+                            } else if (!snapshot.hasData ||
+                                snapshot.data.isEmpty) {
                               return const Center(
                                 child: Text("No Projects are added till now!"),
                               );
@@ -180,36 +199,42 @@ class _TasksPageState extends State<TasksPage> {
                                     //getting remaining days
                                     String date1 = projectModel[index].endDate;
                                     DateTime date2 = DateTime.now();
-                                    DateFormat format = DateFormat("MMM dd, yy");
+                                    DateFormat format =
+                                        DateFormat("MMM dd, yy");
                                     DateTime d1 = format.parse(date1);
                                     Duration difference = d1.difference(date2);
                                     int days = difference.inDays;
                                     // print(projectModel[index].endDate);
                                     //getting completed percentage
-                                    List<Task> tasks = projectModel[index].tasks;
+                                    List<Task> tasks =
+                                        projectModel[index].tasks;
                                     int count = 0;
                                     for (int i = 0; i < tasks.length; i++) {
                                       if (tasks[i].status == true) {
                                         count = count + 1;
                                       }
                                     }
-                                    double completePercent = (count/tasks.length)*100;
+                                    double completePercent =
+                                        (count / tasks.length) * 100;
                                     tasks = [];
                                     return GestureDetector(
                                       onTap: () {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => TaskDetailScreen(
+                                            builder: (context) =>
+                                                TaskDetailScreen(
                                               projectId:
-                                              projectModel[index].projectid,
+                                                  projectModel[index].projectid,
                                             ),
                                           ),
                                         );
                                       },
                                       child: ProgressCard(
-                                        ProjectName: projectModel[index].projectName,
-                                        CompletedPercent:  completePercent.toInt(),
+                                        ProjectName:
+                                            projectModel[index].projectName,
+                                        CompletedPercent:
+                                            completePercent.toInt(),
                                         remainingDays: days,
                                       ),
                                     );
@@ -217,7 +242,7 @@ class _TasksPageState extends State<TasksPage> {
                             }
                           },
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
