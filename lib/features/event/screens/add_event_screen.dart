@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
+import 'package:timelineandprojectmanagementapp/notification/notification_service.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
 
@@ -15,14 +16,21 @@ class AddEventScreen extends StatefulWidget {
 
 class _AddEventScreenState extends State<AddEventScreen> {
   final _addEventFormKey = GlobalKey<FormState>();
+  final NotificationService notificationService = NotificationService();
   final _eventNameController = TextEditingController();
   final _eventDateController = TextEditingController();
   final _descriptionController = TextEditingController();
   final _subjectController = TextEditingController();
   final _eventTimeController = TextEditingController();
   final _eventTypeController = TextEditingController();
-
   final EventServices eventServices = EventServices();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    notificationService.initialiseNotifications();
+  }
 
   @override
   void dispose() {
@@ -154,6 +162,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       if (_addEventFormKey.currentState!.validate()) {
                         print("Button Pressed");
                         addNewEvent();
+                        notificationService.scheduleEventNotification(112, 6, 2,
+                            _eventNameController.text, _subjectController.text);
                       }
                     },
                   ),

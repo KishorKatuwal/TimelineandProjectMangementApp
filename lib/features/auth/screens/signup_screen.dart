@@ -58,6 +58,19 @@ class _SignupScreenState extends State<SignupScreen> {
     'Networking',
   ];
 
+
+  bool loader = true;
+  Future<void> runMethodForDuration() async {
+    setState(() {
+      loader=false;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+    signUpUser();
+    setState(() {
+      loader=true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,9 +179,10 @@ class _SignupScreenState extends State<SignupScreen> {
                   ),
                   CustomButton(
                     text: "Sign Up",
+                    loader: loader,
                     onTap: () {
                       if (_signUpFormKey.currentState!.validate()) {
-                        signUpUser();
+                        runMethodForDuration();
                       }
                     },
                   ),

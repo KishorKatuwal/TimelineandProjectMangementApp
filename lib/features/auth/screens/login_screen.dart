@@ -6,6 +6,7 @@ import 'package:timelineandprojectmanagementapp/features/auth/services/auth_serv
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
+
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -14,7 +15,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _signInFormKey = GlobalKey<FormState>();
-  final AuthService authService= AuthService();
+  final AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -25,6 +26,18 @@ class _LoginScreenState extends State<LoginScreen> {
     _passwordController.dispose();
   }
 
+  bool loader = true;
+
+  Future<void> runMethodForDuration() async {
+    setState(() {
+      loader = false;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+    signInUser();
+    setState(() {
+      loader = true;
+    });
+  }
 
   void signInUser() {
     authService.signInUser(
@@ -32,8 +45,6 @@ class _LoginScreenState extends State<LoginScreen> {
         email: _emailController.text,
         password: _passwordController.text);
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -70,15 +81,20 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 15,
                   ),
                   CustomTextField(
-                      controller: _passwordController, hintText: "Password", obText: true,),
+                    controller: _passwordController,
+                    hintText: "Password",
+                    obText: true,
+                  ),
                   const SizedBox(
                     height: 25,
                   ),
                   CustomButton(
                     text: "Log in",
+                    loader: loader,
                     onTap: () {
                       if (_signInFormKey.currentState!.validate()) {
-                        signInUser();
+                        runMethodForDuration();
+                        // signInUser();
                       }
                     },
                   ),

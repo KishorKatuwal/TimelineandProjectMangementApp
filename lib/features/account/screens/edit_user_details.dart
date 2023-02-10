@@ -177,7 +177,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                     onTap: () {
                       if (_editFormKey.currentState!.validate()) {
                         if (_firstNameController.text == widget.firstName &&
-                            _lastNameController.text == widget.firstName &&
+                            _lastNameController.text == widget.lastName &&
                             _groupController.text == widget.group &&
                             facultyValue == widget.faculty &&
                             category == widget.year) {

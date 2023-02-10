@@ -17,6 +17,9 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   List<ProjectDataModel> projectDataModal = [];
   List<ProjectDataModel> projectData = [];
   late bool editedStatus;
+  bool deleteLoader = false;
+  bool completedLoader = false;
+  bool statusLoader = false;
 
   void updateTask(String projectID, String taskID) {
     setState(() {
@@ -35,6 +38,15 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     });
   }
 
+  void deleteProject(String projectId) {
+    projectServices.deleteProject(context: context, projectId: projectId);
+  }
+
+  void updateProjectStatus(String projectId, bool status) {
+    projectServices.updateProjectStatus(
+        context: context, projectID: projectId, status: status);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,14 +54,13 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
     getData();
   }
 
-  void getData()  async{
+  void getData() async {
     final projectData = await projectServices.fetchAllProducts(context);
     for (int i = 0; i < projectData.length; i++) {
       if (projectData[i].projectid == widget.projectId) {
         setState(() {
           projectDataModal.add(projectData[i]);
         });
-        // print(projectDataModal[0].projectName);
       }
     }
   }
@@ -87,6 +98,20 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                       projectDataModal[0].projectDescription,
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
+                    const SizedBox(height: 10),
+                    Text(
+                      'Project Status:',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    projectDataModal[0].isCompleted
+                        ? Text(
+                            "Completed",
+                            style: Theme.of(context).textTheme.subtitle2,
+                          )
+                        : Text(
+                            "Not Completed",
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
                     const SizedBox(height: 10),
                     Text(
                       'Dates:',
@@ -137,9 +162,12 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                               projectDataModal[0]
                                                   .tasks[index]
                                                   .id);
+                                          statusLoader= true;
                                         });
                                       },
-                                      child: const Text("Set as Incomplete"),
+                                      child: statusLoader
+                                          ? const CircularProgressIndicator()
+                                          : const Text("Set as Incomplete"),
                                     )
                                   : ElevatedButton(
                                       onPressed: () {
@@ -149,9 +177,12 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                               projectDataModal[0]
                                                   .tasks[index]
                                                   .id);
+                                          statusLoader=true;
                                         });
                                       },
-                                      child: const Text("Set as Complete"),
+                                      child: statusLoader
+                                          ? const CircularProgressIndicator()
+                                          : const Text("Set as Complete"),
                                     ),
                             ),
                           );
@@ -168,8 +199,86 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                           borderRadius:
                               BorderRadius.all(Radius.circular(20.0))),
                       child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text("Set as Completed Project"),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.redAccent,
+                        ),
+                        onPressed: () {
+                          deleteProject(projectDataModal[0].projectid);
+                          setState(() {
+                            deleteLoader = true;
+                          });
+                        },
+                        child: deleteLoader
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: const [
+                                  Icon(Icons.delete),
+                                  Text(
+                                    "Delete Project",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  )
+                                ],
+                              ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      height: 50,
+                      width: double.infinity,
+                      decoration: const BoxDecoration(
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(20.0))),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (projectDataModal[0].isCompleted) {
+                            updateProjectStatus(
+                                projectDataModal[0].projectid, false);
+                          } else {
+                            updateProjectStatus(
+                                projectDataModal[0].projectid, true);
+                          }
+                          setState(() {
+                            completedLoader = true;
+                          });
+                        },
+                        child: completedLoader
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: projectDataModal[0].isCompleted
+                                    ? [
+                                        const Icon(Icons.remove_done_outlined),
+                                        const Text(
+                                          "Set as Incomplete",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      ]
+                                    : [
+                                        const Icon(Icons.check_circle_outline),
+                                        const Text(
+                                          "Set as Completed",
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        )
+                                      ],
+                              ),
                       ),
                     ),
                     const SizedBox(
@@ -181,10 +290,10 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
             ),
           )
         : Container(
-      color: const Color.fromRGBO(242, 244, 255, 1),
-          child: const Center(
+            color: const Color.fromRGBO(242, 244, 255, 1),
+            child: const Center(
               child: CircularProgressIndicator(),
             ),
-        );
+          );
   }
 }

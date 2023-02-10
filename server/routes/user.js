@@ -86,6 +86,26 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
     });
 
 
+    //deleting events
+    userRouter.delete("/api/delete-project",auth, async (req, res) => {
+        try {
+            const { projectId } = req.body;
+            let user = await User.findById(req.user);
+            const existingProjects = await user.projects;
+           for(let i=0; i<existingProjects.length; i++){
+            if(existingProjects[i]._id==projectId){
+                user.projects.splice(i, 1);
+            }
+            }
+           user = await user.save();
+            res.json(user);
+        } catch (e) {
+            res.status(500).json({error: e.message});
+        }
+
+    });
+
+
 
 
 
@@ -106,6 +126,25 @@ try {
 res.status(500).json({error: e.message});
 }
 });
+
+
+
+
+//updating project status
+userRouter.put("/api/update-project-status",auth, async (req, res) => {
+try {
+    const { projectId,projectStatus } = req.body;
+    let user = await User.findById(req.user);
+    let existingProject = user.projects.id(projectId);
+    if (!existingProject) return res.status(404).json({ error: 'Project not found' });
+    existingProject.isCompleted= projectStatus;
+    user.save();
+    res.json(user);
+} catch (e) {
+res.status(500).json({error: e.message});
+}
+});
+
 
 
 

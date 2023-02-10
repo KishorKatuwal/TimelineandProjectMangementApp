@@ -1,76 +1,76 @@
-﻿Day,Time,Class Type,Module Code,Module Title,Lecturer,Group,Block,Room
-SUN,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C1,Alumni,SR05 - Subash Shrestha
-SUN,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C3,Alumni,SR06 - Abiral Subedi
-SUN,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C13,Nepal,TR01 - Kantipur
-SUN,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C11,Nepal,TR02 - Patan
-SUN,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C8,Skill,Lab 01 - Sarun Dahal
-SUN,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C5,Skill,Lab 08 - Vijay Pathak
-SUN,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C2,Alumni,SR05 - Subash Shrestha
-SUN,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C4,Alumni,SR06 - Abiral Subedi
-SUN,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C10,Nepal,TR01 - Kantipur
-SUN,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C12,Nepal,TR02 - Patan
-SUN,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C15,Skill,Lab 01 - Sarun Dahal
-SUN,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C7,Skill,Lab 08 - Vijay Pathak
-MON,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C7,Alumni,SR05 - Subash Shrestha
-MON,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C6,Alumni,SR06 - Abiral Subedi
-MON,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C12,Nepal,TR01 - Kantipur
-MON,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C10,Nepal,TR02 - Patan
-MON,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C9,Skill,Lab 01 - Sarun Dahal
-MON,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C4,Skill,Lab 08 - Vijay Pathak
-MON,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C8,Alumni,SR05 - Subash Shrestha
-MON,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C1,Alumni,SR06 - Abiral Subedi
-MON,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C11,Nepal,TR01 - Kantipur
-MON,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C13,Nepal,TR02 - Patan
-MON,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C14,Skill,Lab 01 - Sarun Dahal
-MON,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C3,Skill,Lab 08 - Vijay Pathak
-TUE,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C5,Alumni,SR05 - Subash Shrestha
-TUE,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C8,Alumni,SR06 - Abiral Subedi
-TUE,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C9,Nepal,TR01 - Kantipur
-TUE,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C14,Nepal,TR02 - Patan
-TUE,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C13,Skill,Lab 01 - Sarun Dahal
-TUE,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C2,Skill,Lab 08 - Vijay Pathak
-TUE,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C6,Alumni,SR05 - Subash Shrestha
-TUE,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C7,Alumni,SR06 - Abiral Subedi
-TUE,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C15,Nepal,TR02 - Patan
-TUE,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C11,Skill,Lab 01 - Sarun Dahal
-TUE,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C1,Skill,Lab 08 - Vijay Pathak
-WED,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C3,Alumni,SR05 - Subash Shrestha
-WED,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C5,Alumni,SR06 - Abiral Subedi
-WED,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C15,Nepal,TR01 - Kantipur
-WED,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C9,Nepal,TR02 - Patan
-WED,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C12,Skill,Lab 01 - Sarun Dahal
-WED,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C6,Skill,Lab 08 - Vijay Pathak
-WED,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C4,Alumni,SR05 - Subash Shrestha
-WED,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C2,Alumni,SR06 - Abiral Subedi
-WED,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C14,Nepal,TR01 - Kantipur
-WED,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C10,Skill,Lab 01 - Sarun Dahal
-FRI,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C1,Kumari,Hall 01
-FRI,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C2,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C3,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C4,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C5,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C6,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C7,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C8,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C9,Kumari,Hall 01
-THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C10,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C1,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C2,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C3,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C4,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C5,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C6,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C7,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C8,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C9,Kumari,Hall 01
-THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C10,Kumari,Hall 01
-FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C11,London,LT03 - Westminster Palace
-FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C12,London,LT03 - Westminster Palace
-FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C13,London,LT03 - Westminster Palace
-FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C14,London,LT03 - Westminster Palace
-FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C15,London,LT03 - Westminster Palace
-THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C11,London,LT02 - Kensington Palace
-THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C12,London,LT02 - Kensington Palace
-THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C13,London,LT02 - Kensington Palace
-THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C14,London,LT02 - Kensington Palace
-THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C15,London,LT02 - Kensington Palace
+﻿Day,Time,Class Type,Module Code,Module Title,Lecturer,Group,Block,Room,Nhour,Nminute,Nday
+SUN,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C1,Alumni,SR05 - Subash Shrestha,6,50,7
+SUN,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C3,Alumni,SR06 - Abiral Subedi,6,50,7
+SUN,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C13,Nepal,TR01 - Kantipur,6,50,7
+SUN,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C11,Nepal,TR02 - Patan,6,50,7
+SUN,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C8,Skill,Lab 01 - Sarun Dahal,6,50,7
+SUN,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C5,Skill,Lab 08 - Vijay Pathak,6,50,7
+SUN,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C2,Alumni,SR05 - Subash Shrestha,8,50,7
+SUN,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C4,Alumni,SR06 - Abiral Subedi,8,50,7
+SUN,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C10,Nepal,TR01 - Kantipur,8,50,7
+SUN,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C12,Nepal,TR02 - Patan,8,50,7
+SUN,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C15,Skill,Lab 01 - Sarun Dahal,8,50,7
+SUN,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C7,Skill,Lab 08 - Vijay Pathak,8,50,7
+MON,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C7,Alumni,SR05 - Subash Shrestha,6,50,1
+MON,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C6,Alumni,SR06 - Abiral Subedi,6,50,1
+MON,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C12,Nepal,TR01 - Kantipur,6,50,1
+MON,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C10,Nepal,TR02 - Patan,6,50,1
+MON,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C9,Skill,Lab 01 - Sarun Dahal,6,50,1
+MON,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C4,Skill,Lab 08 - Vijay Pathak,6,50,1
+MON,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C8,Alumni,SR05 - Subash Shrestha,8,50,1
+MON,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C1,Alumni,SR06 - Abiral Subedi,8,50,1
+MON,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C11,Nepal,TR01 - Kantipur,8,50,1
+MON,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C13,Nepal,TR02 - Patan,8,50,1
+MON,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C14,Skill,Lab 01 - Sarun Dahal,8,50,1
+MON,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C3,Skill,Lab 08 - Vijay Pathak,8,50,1
+TUE,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C5,Alumni,SR05 - Subash Shrestha,6,50,2
+TUE,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C8,Alumni,SR06 - Abiral Subedi,6,50,2
+TUE,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C9,Nepal,TR01 - Kantipur,6,50,2
+TUE,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C14,Nepal,TR02 - Patan,6,50,2
+TUE,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C13,Skill,Lab 01 - Sarun Dahal,6,50,2
+TUE,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C2,Skill,Lab 08 - Vijay Pathak,6,50,2
+TUE,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C6,Alumni,SR05 - Subash Shrestha,8,50,2
+TUE,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C7,Alumni,SR06 - Abiral Subedi,8,50,2
+TUE,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C15,Nepal,TR02 - Patan,8,50,2
+TUE,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C11,Skill,Lab 01 - Sarun Dahal,8,50,2
+TUE,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C1,Skill,Lab 08 - Vijay Pathak,8,50,2
+WED,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Lekhnath Katuwal,C3,Alumni,SR05 - Subash Shrestha,6,50,3
+WED,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C5,Alumni,SR06 - Abiral Subedi,6,50,3
+WED,07:00 AM - 09:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C15,Nepal,TR01 - Kantipur,6,50,3
+WED,07:00 AM - 09:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C9,Nepal,TR02 - Patan,6,50,3
+WED,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C12,Skill,Lab 01 - Sarun Dahal,6,50,3
+WED,07:00 AM - 09:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C6,Skill,Lab 08 - Vijay Pathak,6,50,3
+WED,09:00 AM - 11:00 AM,Workshop,CC6001NI,Advanced Database Systems Development,Mr. Krishna Prasad Acharya,C4,Alumni,SR05 - Subash Shrestha,8,50,3
+WED,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Abhishek Humagain,C2,Alumni,SR06 - Abiral Subedi,8,50,3
+WED,09:00 AM - 11:00 AM,Workshop,CS6004NI,Application Development,Mr. Samyush Maharjan,C14,Nepal,TR01 - Kantipur,8,50,3
+WED,09:00 AM - 11:00 AM,Workshop,CU6051NI,Artificial Intelligence,Mr. Sarun Dahal,C10,Skill,Lab 01 - Sarun Dahal,8,50,3
+FRI,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C1,Kumari,Hall 01,8,20,4
+FRI,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C2,Kumari,Hall 01,9,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C3,Kumari,Hall 01,6,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C4,Kumari,Hall 01,6,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C5,Kumari,Hall 01,6,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C6,Kumari,Hall 01,6,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C7,Kumari,Hall 01,6,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C8,Kumari,Hall 01,6,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C9,Kumari,Hall 01,6,50,4
+THU,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C10,Kumari,Hall 01,6,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C1,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C2,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C3,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C4,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C5,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C6,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C7,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C8,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C9,Kumari,Hall 01,9,50,4
+THU,10:00 AM - 11:30 AM,Lecture,CU6051NI,Artificial Intelligence,Mr. Bibek Khanal,C10,Kumari,Hall 01,9,50,4
+FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C11,London,LT03 - Westminster Palace,6,50,5
+FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C12,London,LT03 - Westminster Palace,6,50,5
+FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C13,London,LT03 - Westminster Palace,6,50,5
+FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C14,London,LT03 - Westminster Palace,6,50,5
+FRI,07:00 AM - 08:30 AM,Lecture,CC6001NI,Advanced Database Systems Development,Mr. Rohit Panday,C15,London,LT03 - Westminster Palace,6,50,5
+THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C11,London,LT02 - Kensington Palace,8,20,4
+THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C12,London,LT02 - Kensington Palace,8,20,4
+THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C13,London,LT02 - Kensington Palace,8,20,4
+THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C14,London,LT02 - Kensington Palace,8,20,4
+THU,08:30 AM - 10:00 AM,Lecture,CS6004NI,Application Development,Mr. Himalay Sunuwar,C15,London,LT02 - Kensington Palace,8,20,4

@@ -62,18 +62,7 @@ class ProgressCard extends StatelessWidget {
                   ],
                 ),
                 Expanded(child: Container()),
-                PopupMenuButton(
-                  icon: const Icon(
-                    Icons.more_vert,
-                    color: Colors.grey,
-                  ),
-                  itemBuilder: (context) => [
-                    PopupMenuItem(
-                      onTap: () {},
-                      child: const Text("Delete"),
-                    ),
-                  ],
-                ),
+                const Icon(Icons.more_vert),
               ],
             ),
           ),

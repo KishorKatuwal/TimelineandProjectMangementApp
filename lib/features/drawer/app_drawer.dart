@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
+import 'package:timelineandprojectmanagementapp/notification/notfication_try.dart';
 import '../feedback/screens/feedback_screen.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -13,7 +14,6 @@ class AppDrawer extends StatefulWidget {
 
 class _AppDrawerState extends State<AppDrawer> {
   final AuthService authService = AuthService();
-
 
   void _showDeleteAlertDialog() {
     showDialog(
@@ -154,9 +154,15 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.settings),
-                title: Text(
+              ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationTryScreen()));
+                },
+                leading: const Icon(Icons.settings),
+                title: const Text(
                   "Settings",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
