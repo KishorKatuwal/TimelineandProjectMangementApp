@@ -52,7 +52,9 @@ class ProgressCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "$remainingDays days remaining!",
+                      remainingDays > 0
+                          ? "$remainingDays days remaining!"
+                          : "Project on due!",
                       style: const TextStyle(
                         color: Colors.grey,
                         fontSize: 10,
