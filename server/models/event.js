@@ -14,7 +14,7 @@ const eventSchema = mongoose.Schema({
       type: String,
       required: true,
     },
-   Subject :{
+   Repeat :{
           type: String,
           required: true,
         },

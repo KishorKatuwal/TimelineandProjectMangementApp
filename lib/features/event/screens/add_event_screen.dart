@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 import 'package:timelineandprojectmanagementapp/notification/notification_service.dart';
+import '../../../common/widgets/category_card.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
 
@@ -20,17 +21,36 @@ class _AddEventScreenState extends State<AddEventScreen> {
   final _eventNameController = TextEditingController();
   final _eventDateController = TextEditingController();
   final _descriptionController = TextEditingController();
-  final _subjectController = TextEditingController();
+  final _repeatController = TextEditingController();
   final _eventTimeController = TextEditingController();
   final _eventTypeController = TextEditingController();
   final EventServices eventServices = EventServices();
+  String eventRepeatValue = "Once";
+  String category = "Event";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     notificationService.initialiseNotifications();
+    _repeatController.text = eventRepeatValue;
+    _eventTypeController.text = category;
   }
+
+  _setCategory(String newCategory) {
+    setState(() {
+      category = newCategory;
+      _eventTypeController.text = category;
+    });
+  }
+
+  List<String> eventTypeCategories = [
+    'Once',
+    'EveryDay',
+    'Weekly',
+    'Monthly',
+    'Yearly',
+  ];
 
   @override
   void dispose() {
@@ -40,7 +60,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _eventNameController.dispose();
     _eventDateController.dispose();
     _eventTimeController.dispose();
-    _subjectController.dispose();
+    _repeatController.dispose();
     _descriptionController.dispose();
   }
 
@@ -50,7 +70,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         EventName: _eventNameController.text,
         EventDate: _eventDateController.text,
         EventTime: _eventTimeController.text,
-        Subject: _subjectController.text,
+        Repeat: _repeatController.text,
         Description: _descriptionController.text,
         EventType: _eventTypeController.text);
   }
@@ -138,13 +158,137 @@ class _AddEventScreenState extends State<AddEventScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  CustomTextField(
-                      controller: _eventTypeController, hintText: "Event Type"),
+                  Container(
+                    margin: const EdgeInsets.only(right: 200),
+                    child: const Text(
+                      "Event Type",
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Wrap(
+                    alignment: WrapAlignment.spaceEvenly,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          _setCategory('Event');
+                        },
+                        child: CategoryCard(
+                          categoryText: 'Event',
+                          isActive: category == 'Event',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _setCategory('Holiday');
+                        },
+                        child: CategoryCard(
+                          categoryText: 'Holiday',
+                          isActive: category == 'Holiday',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _setCategory('Birthday');
+                        },
+                        child: CategoryCard(
+                          categoryText: 'Birthday',
+                          isActive: category == 'Birthday',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _setCategory('Exam');
+                        },
+                        child: CategoryCard(
+                          categoryText: 'Exam',
+                          isActive: category == 'Exam',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _setCategory('Assignment Due Date');
+                        },
+                        child: CategoryCard(
+                          categoryText: 'Assignment Due Date',
+                          isActive: category == 'Assignment Due Date',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _setCategory('Class');
+                        },
+                        child: CategoryCard(
+                          categoryText: 'Class',
+                          isActive: category == 'Class',
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          _setCategory('Others');
+                        },
+                        child: CategoryCard(
+                          categoryText: 'Others',
+                          isActive: category == 'Others',
+                        ),
+                      ),
+                    ],
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
-                  CustomTextField(
-                      controller: _subjectController, hintText: "Subject"),
+                  Container(
+                    margin: const EdgeInsets.only(right: 300),
+                    child: const Text(
+                      "Repeat",
+                      style: TextStyle(
+                          fontSize: 17,
+                          color: Colors.black45,
+                          fontWeight: FontWeight.w400),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.only(
+                      right: 10,
+                      left: 10,
+                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(2),
+                        border: Border.all(
+                            color: Colors.black38,
+                            width: 1,
+                            style: BorderStyle.solid)),
+                    child: DropdownButton(
+                      alignment: Alignment.centerLeft,
+                      isExpanded: true,
+                      elevation: 0,
+                      value: eventRepeatValue,
+                      borderRadius: BorderRadius.circular(10),
+                      icon: const Icon(Icons.keyboard_arrow_down),
+                      items: eventTypeCategories.map((String item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          child: Text(item),
+                        );
+                      }).toList(),
+                      onChanged: (String? newVal) {
+                        setState(() {
+                          eventRepeatValue = newVal!;
+                          _repeatController.text = eventRepeatValue;
+                        });
+                      },
+                    ),
+                  ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -162,8 +306,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       if (_addEventFormKey.currentState!.validate()) {
                         print("Button Pressed");
                         addNewEvent();
-                        notificationService.scheduleEventNotification(112, 6, 2,
-                            _eventNameController.text, _subjectController.text);
+                        // notificationService.scheduleEventNotification(112, 6, 2,
+                        //     _eventNameController.text, _subjectController.text);
                       }
                     },
                   ),

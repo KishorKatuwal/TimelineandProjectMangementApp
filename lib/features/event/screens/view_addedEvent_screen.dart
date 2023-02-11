@@ -110,8 +110,8 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                                   text: eventModel[index].EventTime,
                                   headText: "Event Time: "),
                               CommonText(
-                                  text: eventModel[index].Subject,
-                                  headText: "Event Subject: "),
+                                  text: eventModel[index].Repeat,
+                                  headText: "Event Repeat: "),
                               CommonText(
                                   text: eventModel[index].EventType,
                                   headText: "Event Type: "),

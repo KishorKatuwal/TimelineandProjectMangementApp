@@ -10,9 +10,9 @@ const User = require('../models/user');
 //adding events
 userRouter.post("/api/add-event", auth, async (req, res) => {
     try {
-           const { EventName, EventDate, EventTime, Subject, Description, EventType }= req.body;
+           const { EventName, EventDate, EventTime, Repeat, Description, EventType }= req.body;
            let user = await User.findById(req.user);
-           user.events.push({EventName, EventDate, EventTime, Subject, Description, EventType });
+           user.events.push({EventName, EventDate, EventTime, Repeat, Description, EventType });
            //saving to database
            user = await user.save();
            //product = await product.save();

@@ -22,7 +22,7 @@ class EventServices {
     required String EventName,
     required String EventDate,
     required String EventTime,
-    required String Subject,
+    required String Repeat,
     required String Description,
     required String EventType,
   }) async {
@@ -34,7 +34,7 @@ class EventServices {
           EventName: EventName,
           EventDate: EventDate,
           EventTime: EventTime,
-          Subject: Subject,
+          Repeat: Repeat,
           Description: Description,
           EventType: EventType);
 

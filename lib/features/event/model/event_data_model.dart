@@ -5,7 +5,7 @@ class EventDataModel {
   final String EventName;
   final String EventDate;
   final String EventTime;
-  final String Subject;
+  final String Repeat;
   final String Description;
   final String EventType;
 
@@ -14,7 +14,7 @@ class EventDataModel {
     required this.EventName,
     required this.EventDate,
     required this.EventTime,
-    required this.Subject,
+    required this.Repeat,
     required this.Description,
     required this.EventType,
   });
@@ -25,7 +25,7 @@ class EventDataModel {
     result.addAll({'EventName': EventName});
     result.addAll({'EventDate': EventDate});
     result.addAll({'EventTime': EventTime});
-    result.addAll({'Subject': Subject});
+    result.addAll({'Repeat': Repeat});
     result.addAll({'Description': Description});
     result.addAll({'EventType': EventType});
 
@@ -38,7 +38,7 @@ class EventDataModel {
       EventName: map['EventName'] ?? '',
       EventDate: map['EventDate'] ?? '',
       EventTime: map['EventTime'] ?? '',
-      Subject: map['Subject'] ?? '',
+      Repeat: map['Repeat'] ?? '',
       Description: map['Description'] ?? '',
       EventType: map['EventType'] ?? '',
     );
