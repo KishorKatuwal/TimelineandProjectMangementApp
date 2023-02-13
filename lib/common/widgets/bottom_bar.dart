@@ -49,7 +49,7 @@ class _BottomBarState extends State<BottomBar> {
         currentIndex: _page,
         selectedItemColor: GlobalVariables.mainColor,
         unselectedItemColor: GlobalVariables.unselectedNavBarColor,
-        backgroundColor: GlobalVariables.backgroundColor,
+        backgroundColor: GlobalVariables.backgroundColour,
         iconSize: 28,
         onTap: updatePage,
         items: [
@@ -62,7 +62,7 @@ class _BottomBarState extends State<BottomBar> {
                       top: BorderSide(
                         color: _page == 0
                             ? GlobalVariables.mainColor
-                            : GlobalVariables.backgroundColor,
+                            : GlobalVariables.backgroundColour,
                         width: bottombarBordersWidth,
                       ))),
               child: const Icon(Icons.home),
@@ -78,7 +78,7 @@ class _BottomBarState extends State<BottomBar> {
                       top: BorderSide(
                 color: _page == 1
                     ? GlobalVariables.mainColor
-                    : GlobalVariables.backgroundColor,
+                    : GlobalVariables.backgroundColour,
                 width: bottombarBordersWidth,
               ))),
               child: const Icon(Icons.add_task_sharp),
@@ -94,7 +94,7 @@ class _BottomBarState extends State<BottomBar> {
                       top: BorderSide(
                 color: _page == 2
                     ? GlobalVariables.mainColor
-                    : GlobalVariables.backgroundColor,
+                    : GlobalVariables.backgroundColour,
                 width: bottombarBordersWidth,
               ))),
               child: const Icon(Icons.event_outlined),
@@ -111,7 +111,7 @@ class _BottomBarState extends State<BottomBar> {
                       top: BorderSide(
                 color: _page == 3
                     ? GlobalVariables.mainColor
-                    : GlobalVariables.backgroundColor,
+                    : GlobalVariables.backgroundColour,
                 width: bottombarBordersWidth,
               ))),
               child: const Icon(Icons.menu_book_outlined),
@@ -128,7 +128,7 @@ class _BottomBarState extends State<BottomBar> {
                       top: BorderSide(
                 color: _page == 4
                     ? GlobalVariables.mainColor
-                    : GlobalVariables.backgroundColor,
+                    : GlobalVariables.backgroundColour,
                 width: bottombarBordersWidth,
               ))),
               child: const Icon(Icons.person_outline_outlined),

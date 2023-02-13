@@ -11,6 +11,7 @@ import 'package:timelineandprojectmanagementapp/features/event/screens/event_scr
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
+import 'package:timelineandprojectmanagementapp/settings/settings.dart';
 import 'features/auth/screens/auth_screen.dart';
 import 'features/home/screens/home_screen.dart';
 
@@ -40,14 +41,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const DiscussionScreen());
 
-      case GroupScreen.routeName:
+    case GroupScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const GroupScreen());
 
     case BottomBar.routeName:
       var pageIndex = routeSettings.arguments as int;
       return MaterialPageRoute(
-          settings: routeSettings, builder: (_) =>  BottomBar(pageIndex: pageIndex));
+          settings: routeSettings,
+          builder: (_) => BottomBar(pageIndex: pageIndex));
 
     case AdminScreen.routeName:
       return MaterialPageRoute(
@@ -68,6 +70,10 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case FeedbackScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FeedbackScreen());
+
+      case SettingsScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const SettingsScreen());
 
     case ViewAddedEventScreen.routeName:
       return MaterialPageRoute(

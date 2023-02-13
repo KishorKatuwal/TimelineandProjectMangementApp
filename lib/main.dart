@@ -41,7 +41,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Timeline and Project Management App',
       theme: ThemeData(
-          scaffoldBackgroundColor: GlobalVariables.backgroundColor,
+          scaffoldBackgroundColor: GlobalVariables.backgroundColour,
           colorScheme:
               const ColorScheme.light(primary: GlobalVariables.mainColor),
           appBarTheme: const AppBarTheme(

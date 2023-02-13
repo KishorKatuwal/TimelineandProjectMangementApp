@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
@@ -27,6 +29,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   final EventServices eventServices = EventServices();
   String eventRepeatValue = "Once";
   String category = "Event";
+  late int hour;
+  late int minute;
 
   @override
   void initState() {
@@ -46,7 +50,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   List<String> eventTypeCategories = [
     'Once',
-    'EveryDay',
+    'Daily',
     'Weekly',
     'Monthly',
     'Yearly',
@@ -64,15 +68,27 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _descriptionController.dispose();
   }
 
-  void addNewEvent() {
+  void addNewEvent(int year, int month, int day, int weekDay) {
     eventServices.addNewEvent(
-        context: context,
-        EventName: _eventNameController.text,
-        EventDate: _eventDateController.text,
-        EventTime: _eventTimeController.text,
-        Repeat: _repeatController.text,
-        Description: _descriptionController.text,
-        EventType: _eventTypeController.text);
+      context: context,
+      EventName: _eventNameController.text,
+      EventDate: _eventDateController.text,
+      EventTime: _eventTimeController.text,
+      Repeat: _repeatController.text,
+      Description: _descriptionController.text,
+      EventType: _eventTypeController.text,
+      year: year,
+      month: month,
+      day: day,
+      weekDay: weekDay,
+      hour: hour,
+      minute: minute,
+    );
+    print(year);
+    print(month);
+    print(day);
+    print(hour);
+    print(minute);
   }
 
   void openDatePicker() async {
@@ -83,7 +99,6 @@ class _AddEventScreenState extends State<AddEventScreen> {
         lastDate: DateTime(2101));
     if (pickedDate != null) {
       String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-
       setState(() {
         _eventDateController.text = formattedDate;
       });
@@ -97,9 +112,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
     );
     if (pickedTime != null) {
       String formattedTime = pickedTime.format(context);
-      print(formattedTime);
       setState(() {
         _eventTimeController.text = formattedTime;
+        hour = pickedTime.hour;
+        minute = pickedTime.minute;
       });
     }
   }
@@ -304,10 +320,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     text: "Add Event",
                     onTap: () {
                       if (_addEventFormKey.currentState!.validate()) {
-                        print("Button Pressed");
-                        addNewEvent();
-                        // notificationService.scheduleEventNotification(112, 6, 2,
-                        //     _eventNameController.text, _subjectController.text);
+                        DateTime date =
+                            DateTime.parse(_eventDateController.text);
+                        addNewEvent(
+                            date.year, date.month, date.day, date.weekday);
                       }
                     },
                   ),

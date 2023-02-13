@@ -12,6 +12,7 @@ class GroupScreen extends StatefulWidget {
   static const String routeName = '/group-screen';
 
   const GroupScreen({Key? key}) : super(key: key);
+
   @override
   State<GroupScreen> createState() => _GroupScreenState();
 }
@@ -32,8 +33,7 @@ class _GroupScreenState extends State<GroupScreen> {
   void getPreviousMessage() async {
     discussionModel = await discussionService.getMessages(context);
     connect();
-    setState(() {
-    });
+    setState(() {});
   }
 
   void connect() {
@@ -42,16 +42,13 @@ class _GroupScreenState extends State<GroupScreen> {
       "autoConnect": false,
     });
     socket!.connect();
-    print("we are here");
     socket!.on("sendMsgServer", (msg) {
       print(msg);
-      print("reached here");
       if (mounted) {
         setState(() {
           getPreviousMessage();
         });
       }
-
     });
   }
 
@@ -85,6 +82,7 @@ class _GroupScreenState extends State<GroupScreen> {
         children: [
           Expanded(
             child: ListView.builder(
+              reverse: true,
                 itemCount: discussionModel.length,
                 itemBuilder: (context, index) {
                   if (discussionModel[index].userId == userId) {

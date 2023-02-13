@@ -3,7 +3,8 @@ import 'package:timelineandprojectmanagementapp/constants/global_variables.dart'
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
 import 'package:timelineandprojectmanagementapp/notification/notfication_try.dart';
-import '../feedback/screens/feedback_screen.dart';
+import '../features/feedback/screens/feedback_screen.dart';
+import '../settings/settings.dart';
 
 class AppDrawer extends StatefulWidget {
   const AppDrawer({Key? key}) : super(key: key);
@@ -145,9 +146,15 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.key),
-                title: Text(
+              ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationTryScreen()));
+                },
+                leading: const Icon(Icons.key),
+                title: const Text(
                   "Change Password",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -156,10 +163,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationTryScreen()));
+                  Navigator.pushNamed(context, SettingsScreen.routeName);
                 },
                 leading: const Icon(Icons.settings),
                 title: const Text(

@@ -45,7 +45,7 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
           CustomButton(
               text: "Show Notification",
               onTap: () {
-                notificationService.sendNotification(
+                notificationService.showNotificationNow(
                     0, "This is title", "THis is body");
               }),
           const SizedBox(
@@ -54,8 +54,9 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
           CustomButton(
               text: "Schedule Notification",
               onTap: () {
-                notificationService.scheduleNotification(
-                    0, "THis is asfsd", "sfsadfsad");
+                notificationService.scheduleNotificationOnce(
+                    16, 2023, 2, 12, 10, 38, "THis is asfsd", "sfsadfsad");
+                print("Schedule notification button pressed");
               }),
           const SizedBox(
             height: 20,
@@ -64,18 +65,35 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
               text: "Set Notification for Class",
               onTap: () {
                 for (int i = 0; i < _data.length; i++) {
-                  notificationService.showNotificationForClass(
-                      i, _data[i][9], _data[i][10], _data[i][11]);
+                  notificationService.scheduleNotificationForClass(
+                      i,
+                      _data[i][11],
+                      _data[i][9],
+                      _data[i][10],
+                      "Class Notification",
+                      "This is my first class Notification");
                 }
               }),
           const SizedBox(
             height: 20,
           ),
+          CustomButton(text: "Print pending notifications", onTap: () {}),
+          const SizedBox(
+            height: 20,
+          ),
           CustomButton(
-              text: "Print pending notifications",
+              text: "Print Time",
               onTap: () {
-                }
-              ),
+                notificationService.printTime();
+              }),
+          const SizedBox(
+            height: 20,
+          ),
+          CustomButton(
+              text: "Cancel All notifications",
+              onTap: () {
+                notificationService.cancelAllNotification();
+              }),
         ],
       ),
     );
