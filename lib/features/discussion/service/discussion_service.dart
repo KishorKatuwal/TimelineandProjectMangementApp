@@ -20,7 +20,6 @@ class DiscussionService {
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
 
-
     try {
       DiscussionModel discussionModel = DiscussionModel(
           messageId: "",
@@ -56,16 +55,15 @@ class DiscussionService {
   Future<List<DiscussionModel>> getMessages(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<DiscussionModel> messageList = [];
+    // List<DiscussionModel>? reversedList = [];
     try {
       http.Response res =
           await http.get(Uri.parse('$uri/api/get-messages'), headers: {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
-
       // discussionProvider.setDiscussion(res.body);
-
-        httpErrorHandle(
+      httpErrorHandle(
           response: res,
           context: context,
           onSuccess: () {
@@ -78,6 +76,6 @@ class DiscussionService {
     } catch (e) {
       showSnackBar(context, e.toString());
     }
-    return messageList;
+    return messageList.reversed.toList();
   }
 }

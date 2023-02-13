@@ -6,6 +6,7 @@ import 'package:timelineandprojectmanagementapp/features/event/model/ecent_try_m
 import 'package:http/http.dart' as http;
 import 'package:timelineandprojectmanagementapp/features/event/model/event_data_model.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
+import 'package:timelineandprojectmanagementapp/notification/notification_service.dart';
 import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
@@ -16,6 +17,7 @@ import '../../../model/user.dart';
 import '../../../providers/user_provider.dart';
 
 class EventServices {
+  NotificationService notificationService = NotificationService();
 
   void addNewEvent({
     required BuildContext context,
@@ -25,9 +27,15 @@ class EventServices {
     required String Repeat,
     required String Description,
     required String EventType,
+    required int year,
+    required int month,
+    required int day,
+    required int weekDay,
+    required int hour,
+    required int minute,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-
+    notificationService.initialiseNotifications();
     try {
       EventDataModel eventDataModel = EventDataModel(
           EventID: '',
@@ -54,7 +62,29 @@ class EventServices {
           User user = userProvider.user
               .copyWith(events: jsonDecode(res.body)['events']);
           userProvider.setUserFromModel(user);
-          Navigator.pushReplacementNamed(context, BottomBar.routeName,arguments: 2);
+          Navigator.pushReplacementNamed(context, BottomBar.routeName,
+              arguments: 2);
+          if (Repeat == "Once") {
+            notificationService.scheduleNotificationOnce(
+                123, year, month, day, hour, minute, EventName, EventType);
+            print("Notification added Once");
+          } else if (Repeat == "Daily") {
+            notificationService.scheduleDailyEventNotification(
+                123, hour, minute, EventName, EventType);
+            print("Notification added Daily");
+          } else if (Repeat == "Weekly") {
+            notificationService.scheduleWeeklyNotification(123, year, month,
+                day, weekDay, hour, minute, EventName, EventType);
+            print("Notification added Weekly");
+          } else if (Repeat == "Monthly") {
+            notificationService.scheduleMonthlyNotification(123, year, month,
+                day, weekDay, hour, minute, EventName, EventType);
+            print("Notification added Monthly");
+          } else {
+            notificationService.scheduleYearlyNotification(123, year, month,
+                day, weekDay, hour, minute, EventName, EventType);
+            print("Notification added Yearly");
+          }
         },
       );
     } catch (e) {
@@ -113,7 +143,8 @@ class EventServices {
                 .copyWith(events: jsonDecode(res.body)['events']);
             userProvider.setUserFromModel(user);
             Navigator.pop(context);
-            Navigator.pushReplacementNamed(context, BottomBar.routeName,arguments: 2);
+            Navigator.pushReplacementNamed(context, BottomBar.routeName,
+                arguments: 2);
             Navigator.pushNamed(context, ViewAddedEventScreen.routeName);
           });
     } catch (e) {

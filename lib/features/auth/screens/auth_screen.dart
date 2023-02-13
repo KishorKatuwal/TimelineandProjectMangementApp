@@ -74,7 +74,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
                 ListTile(
                   tileColor: _auth == Auth.signup
-                      ? GlobalVariables.backgroundColor
+                      ? GlobalVariables.backgroundColour
                       : GlobalVariables.greyBackgroundCOlor,
                   title: const Text(
                     'Create Account',
@@ -94,7 +94,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 if (_auth == Auth.signup)
                   Container(
                     padding: const EdgeInsets.all(8),
-                    color: GlobalVariables.backgroundColor,
+                    color: GlobalVariables.backgroundColour,
                     child: Form(
                       key: _signUpFormKey,
                       child: Column(
@@ -137,7 +137,7 @@ class _AuthScreenState extends State<AuthScreen> {
                   ),
                 ListTile(
                   tileColor: _auth == Auth.signin
-                      ? GlobalVariables.backgroundColor
+                      ? GlobalVariables.backgroundColour
                       : GlobalVariables.greyBackgroundCOlor,
                   title: const Text(
                     'Sign-In.',
@@ -157,7 +157,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 if (_auth == Auth.signin)
                   Container(
                     padding: const EdgeInsets.all(8),
-                    color: GlobalVariables.backgroundColor,
+                    color: GlobalVariables.backgroundColour,
                     child: Form(
                       key: _signInFormKey,
                       child: Column(
