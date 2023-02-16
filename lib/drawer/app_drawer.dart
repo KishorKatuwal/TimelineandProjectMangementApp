@@ -3,6 +3,7 @@ import 'package:timelineandprojectmanagementapp/constants/global_variables.dart'
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
 import 'package:timelineandprojectmanagementapp/notification/notfication_try.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../features/feedback/screens/feedback_screen.dart';
 import '../settings/settings.dart';
 
@@ -82,7 +83,12 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              const ListTile(
+               ListTile(
+                onTap: ()async{
+                  final Uri resultUrl =
+                  Uri.parse("https://evision.londonmet.ac.uk/urd/sits.urd/run/siw_lgn");
+                  await launchUrl(resultUrl);
+                },
                 leading: Icon(Icons.school_outlined),
                 title: Text(
                   "View Results",

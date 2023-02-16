@@ -22,6 +22,8 @@ class NotificationService {
 
   Future<void> _configureLocalTimeZone() async {
     tz.initializeTimeZones();
+    // final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
+    // tz.setLocalLocation(tz.getLocation(timeZoneName!));
   }
 
   //cancel all notification
@@ -63,37 +65,90 @@ class NotificationService {
     );
   }
 
-  void showNotificationNow(int id, String title, String body) async {
+  void showNotificationNow(int id) async {
     AndroidNotificationDetails androidNotificationDetails =
-        const AndroidNotificationDetails('channelId', 'channelName',
-            priority: Priority.high, importance: Importance.max);
+        const AndroidNotificationDetails(
+      'channelId',
+      'channelName',
+      priority: Priority.high,
+      importance: Importance.max,
+      playSound: true,
+      enableVibration: true,
+    );
     NotificationDetails notificationDetails =
         NotificationDetails(android: androidNotificationDetails);
     await _flutterLocalNotificationsPlugin.show(
       id,
-      title,
-      body,
+      "Class Information",
+      "Slide up to See class details",
       notificationDetails,
     );
   }
 
   //method for sending notification weekly
-  Future<void> scheduleNotificationForClass(int id, int weekDay, int hour,
-      int minute, String title, String body) async {
+  Future<void> scheduleNotificationForClass(
+      int id,
+      int weekDay,
+      int hour,
+      int minute,
+      String subjectName,
+      String time,
+      String location,
+      String teacherName,
+      String classType) async {
+    BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+      '<br>Subject : $subjectName<br>'
+      '<br>Time : $time<br>'
+      '<br>ClassRoom : $location<br>'
+      '<br>Teacher :  $teacherName<br>'
+      '<br>Class Type :  $classType<br>',
+      htmlFormatBigText: true,
+      contentTitle: '<b>Class Information<b>',
+      htmlFormatContentTitle: true,
+      summaryText: 'summary <i>text</i>',
+      htmlFormatSummaryText: true,
+    );
+    const String channelID = 'ccc';
+    const String channelDesc = '103';
+    const String channelName = '102';
+    var androidNotificationChannel = const AndroidNotificationChannel(
+      channelID,
+      channelName,
+      description: channelDesc,
+    );
+    await _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(androidNotificationChannel);
+
     await _flutterLocalNotificationsPlugin.zonedSchedule(
         id,
-        title,
-        body,
+        "Class Information",
+        "Slide up to seeDetails",
         instanceOFClassTime(hour, minute, weekDay),
-        const NotificationDetails(
-          android: AndroidNotificationDetails('weekly notification channel id',
-              'weekly notification channel name',
-              channelDescription: 'weekly notificationdescription'),
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            channelID,
+            channelName,
+            channelDescription: channelDesc,
+            styleInformation: bigTextStyleInformation,
+            playSound: true,
+            importance: Importance.max,
+            priority: Priority.high,
+          ),
         ),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.wallClockTime,
         matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
+  }
+
+  //delete class notifications
+  Future<void> deleteNotificationsByChannelId(String channelId) async {
+    await _flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.deleteNotificationChannel(channelId);
   }
 
   tz.TZDateTime instanceOFClassTime(int hour, int minute, int weekDay) {
@@ -112,25 +167,6 @@ class NotificationService {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     return scheduledDate;
-  }
-
-  //method for setting notification for class
-  void showNotificationForClass(
-      int id, int hour, int minute, int classDay) async {
-    await _flutterLocalNotificationsPlugin.zonedSchedule(
-        id,
-        'weekly scheduled notification title',
-        'weekly scheduled notification body',
-        _nextInstanceOfMondayTenAM(hour, minute, classDay),
-        const NotificationDetails(
-          android: AndroidNotificationDetails('weekly notification channel id',
-              'weekly notification channel name',
-              channelDescription: 'weekly notificationdescription'),
-        ),
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-            UILocalNotificationDateInterpretation.wallClockTime,
-        matchDateTimeComponents: DateTimeComponents.dayOfWeekAndTime);
   }
 
   //method for getting notification once only
@@ -265,24 +301,6 @@ class NotificationService {
     final tz.TZDateTime now = ktmTime();
     tz.TZDateTime scheduledDate =
         tz.TZDateTime(ktmLocation(), year, month, day, hour, minute, 0);
-    if (scheduledDate.isBefore(now)) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
-
-  tz.TZDateTime _nextInstanceOfMondayTenAM(int hour, int minute, int classDay) {
-    tz.TZDateTime scheduledDate = _nextInstanceOfTenAM(hour, minute);
-    while (scheduledDate.weekday != classDay) {
-      scheduledDate = scheduledDate.add(const Duration(days: 1));
-    }
-    return scheduledDate;
-  }
-
-  tz.TZDateTime _nextInstanceOfTenAM(int hour, int minute) {
-    late final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minute);
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
