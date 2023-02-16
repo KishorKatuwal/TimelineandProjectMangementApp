@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timelineandprojectmanagementapp/admin/admin_feedback/screens/admin_feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
 import 'package:timelineandprojectmanagementapp/features/account/screens/account.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
@@ -51,10 +52,6 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => BottomBar(pageIndex: pageIndex));
 
-    case AdminScreen.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const AdminScreen());
-
     case AddEventScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const AddEventScreen());
@@ -71,7 +68,7 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const FeedbackScreen());
 
-      case SettingsScreen.routeName:
+    case SettingsScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const SettingsScreen());
 
@@ -79,6 +76,15 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => const ViewAddedEventScreen());
+
+    //for admin
+    case AdminScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const AdminScreen());
+
+    case AdminFeedbackScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const AdminFeedbackScreen());
 
     default:
       return MaterialPageRoute(

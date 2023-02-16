@@ -22,8 +22,6 @@ userRouter.post("/api/add-event", auth, async (req, res) => {
         res.status(500).json({error: e.message});
     }
 });
-
-
 //fetching events
 userRouter.get('/api/get-events',auth, async (req, res) => {
     try {
@@ -36,7 +34,6 @@ userRouter.get('/api/get-events',auth, async (req, res) => {
     }
 
 });
-
 //deleting events
 userRouter.delete("/api/delete-events",auth, async (req, res) => {
     try {
@@ -55,7 +52,6 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
     }
 
 });
-
 //adding project
     userRouter.post("/api/add-project", auth, async (req, res) => {
         try {
@@ -71,8 +67,6 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
             res.status(500).json({error: e.message});
         }
     });
-
-
 //getting all the projects
     userRouter.get('/api/get-projects',auth, async (req, res) => {
         try {
@@ -84,8 +78,6 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
         }
 
     });
-
-
     //deleting events
     userRouter.delete("/api/delete-project",auth, async (req, res) => {
         try {
@@ -102,13 +94,7 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
         } catch (e) {
             res.status(500).json({error: e.message});
         }
-
     });
-
-
-
-
-
 //updating task
 userRouter.put("/api/update-tasks",auth, async (req, res) => {
 try {
@@ -126,10 +112,6 @@ try {
 res.status(500).json({error: e.message});
 }
 });
-
-
-
-
 //updating project status
 userRouter.put("/api/update-project-status",auth, async (req, res) => {
 try {
@@ -158,10 +140,10 @@ try{
     res.json(feedback);
 }catch(e){
     res.status(500).json({error: e.message});
-
 }
-
 });
+
+//retrieving feedback
 
 
 
