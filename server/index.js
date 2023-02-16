@@ -7,6 +7,7 @@ const {createServer} = require('http');
 //importing from other files
 const authRouter = require("./routes/auth");
 const userRouter = require('./routes/user');
+const adminRouter = require('./routes/admin');
 
 //importing discussion Model
 const  Discussion  = require('./models/discussion');
@@ -18,10 +19,12 @@ const DB = "mongodb+srv://kishor:laptop@cluster0.lp56wr2.mongodb.net/?retryWrite
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
+
 //middleware
 app.use(express.json());
 app.use(authRouter);
 app.use(userRouter);
+app.use(adminRouter);
 
 //connecting to the database
 mongoose.set("strictQuery", false);
@@ -39,7 +42,6 @@ io.on("connection",(socket)=>{
         console.log(msg);
 //        socket.emit("sendMsgServer", {...msg, messageTime:"otherTime"})
     io.to("discussion_group").emit("sendMsgServer", {...msg, messageTime:"otherTime"});
-
        let discussion = new Discussion({
        message:msg.message,
        messageTime:msg.messageTime,
@@ -52,9 +54,6 @@ io.on("connection",(socket)=>{
            console.error(error);
          } else {
            console.log("Message saved successfully.");
-           // Emit a newMessage event to all connected clients
-//           io.to("discussion_group").emit("sendMsgServer",
-//           {...msg, messageTime:"otherTime"});
          }
        });
     });

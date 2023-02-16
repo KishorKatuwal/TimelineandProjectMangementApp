@@ -89,8 +89,8 @@ class _AppDrawerState extends State<AppDrawer> {
                   Uri.parse("https://evision.londonmet.ac.uk/urd/sits.urd/run/siw_lgn");
                   await launchUrl(resultUrl);
                 },
-                leading: Icon(Icons.school_outlined),
-                title: Text(
+                leading: const Icon(Icons.school_outlined),
+                title: const Text(
                   "View Results",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
