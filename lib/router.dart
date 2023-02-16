@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
 import 'package:timelineandprojectmanagementapp/features/account/screens/account.dart';
-import 'package:timelineandprojectmanagementapp/features/admin/screens/admin_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
@@ -12,6 +11,7 @@ import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedba
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/settings/settings.dart';
+import 'admin/screens/admin_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
 import 'features/home/screens/home_screen.dart';
 

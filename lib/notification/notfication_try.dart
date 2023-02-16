@@ -45,8 +45,7 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
           CustomButton(
               text: "Show Notification",
               onTap: () {
-                notificationService.showNotificationNow(
-                    0, "This is title", "THis is body");
+                notificationService.showNotificationNow(50);
               }),
           const SizedBox(
             height: 20,
@@ -64,14 +63,18 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
           CustomButton(
               text: "Set Notification for Class",
               onTap: () {
-                for (int i = 0; i < _data.length; i++) {
+                for (int i = 0; i<_data.length; i++) {
                   notificationService.scheduleNotificationForClass(
-                      i,
-                      _data[i][11],
-                      _data[i][9],
-                      _data[i][10],
-                      "Class Notification",
-                      "This is my first class Notification");
+                    i,
+                    _data[i][11],
+                    _data[i][9],
+                    _data[i][10],
+                    _data[i][4],
+                    _data[i][1],
+                    _data[i][7] + "" + _data[i][8],
+                    _data[i][5],
+                    _data[i][3],
+                  );
                 }
               }),
           const SizedBox(
@@ -85,6 +88,16 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
               text: "Print Time",
               onTap: () {
                 notificationService.printTime();
+              }),
+          const SizedBox(
+            height: 20,
+          ),
+          CustomButton(
+              text: "Cancel Class Notifications",
+              onTap: () {
+                 notificationService
+                    .deleteNotificationsByChannelId('ccc');
+                print("nothing happened");
               }),
           const SizedBox(
             height: 20,

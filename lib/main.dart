@@ -8,7 +8,7 @@ import 'package:timelineandprojectmanagementapp/features/home/screens/home_scree
 import 'package:timelineandprojectmanagementapp/features/schedules/services/schedules_service.dart';
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
 import 'package:timelineandprojectmanagementapp/router.dart';
-import 'features/admin/screens/admin_screen.dart';
+import 'admin/screens/admin_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
 
 void main() {

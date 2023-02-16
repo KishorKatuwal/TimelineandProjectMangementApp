@@ -10,9 +10,10 @@ import 'package:timelineandprojectmanagementapp/features/home/screens/home_scree
 import 'package:timelineandprojectmanagementapp/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
+import '../../../admin/screens/admin_screen.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/utils.dart';
-import '../../admin/screens/admin_screen.dart';
+
 
 class AuthService {
   //function  for signup user
