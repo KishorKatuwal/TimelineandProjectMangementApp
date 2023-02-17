@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/admin/admin_feedback/screens/view_feedback_screen.dart';
+import 'package:timelineandprojectmanagementapp/admin/view_users/screens/view_user_screen.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
 import 'package:timelineandprojectmanagementapp/features/account/screens/account.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
@@ -12,7 +13,7 @@ import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedba
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/settings/settings.dart';
-import 'admin/screens/admin_screen.dart';
+import 'admin/main_screen/admin_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
 import 'features/home/screens/home_screen.dart';
 
@@ -82,9 +83,13 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const AdminScreen());
 
-      case ViewFeedbackScreen.routeName:
+    case ViewFeedbackScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ViewFeedbackScreen());
+
+    case ViewUserScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const ViewUserScreen());
 
     default:
       return MaterialPageRoute(

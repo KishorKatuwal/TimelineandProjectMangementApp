@@ -6,11 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
-import 'package:timelineandprojectmanagementapp/features/home/screens/home_screen.dart';
 import 'package:timelineandprojectmanagementapp/model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
-import '../../../admin/screens/admin_screen.dart';
+import '../../../admin/main_screen/admin_screen.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/utils.dart';
 
@@ -115,19 +114,15 @@ class AuthService {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
-
       if (token == null) {
         prefs.setString('x-auth-token', '');
       }
-
       var tokenRes = await http.post(Uri.parse('$uri/tokenIsValid'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
             'x-auth-token': token!
           });
-
       var response = jsonDecode(tokenRes.body);
-
       if (response == true) {
         //get the user data
         http.Response userRes = await http.get(Uri.parse('$uri/'),

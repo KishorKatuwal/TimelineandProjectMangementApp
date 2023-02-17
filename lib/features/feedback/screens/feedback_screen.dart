@@ -8,9 +8,7 @@ import '../../../providers/user_provider.dart';
 
 class FeedbackScreen extends StatefulWidget {
   static const String routeName = '/feedback-screen';
-
   const FeedbackScreen({Key? key}) : super(key: key);
-
   @override
   State<FeedbackScreen> createState() => _FeedbackScreenState();
 }
@@ -22,14 +20,18 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   final _descriptionController = TextEditingController();
   final FeedbackService feedbackService = FeedbackService();
   String category = "Message";
-
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _feedbackTypeController.text = category;
+  }
   _setCategory(String newCategory) {
     setState(() {
       category = newCategory;
       _feedbackTypeController.text=category;
     });
   }
-
   @override
   void dispose() {
     // TODO: implement dispose
@@ -38,8 +40,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     _feedbackTypeController.dispose();
     _userEmailController.dispose();
   }
-
-
   void provideFeedback(String userId){
     feedbackService.provideFeedback(
         context: context,
@@ -48,10 +48,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         feedbackType: _feedbackTypeController.text,
         description: _descriptionController.text);
   }
-
-
-
-
   @override
   Widget build(BuildContext context) {
     String id = Provider.of<UserProvider>(context).user.id;
@@ -176,7 +172,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       text: "Provide Feedback",
                       onTap: () {
                         if (_provideFeedbackFormKey.currentState!.validate()) {
-                          print(_feedbackTypeController.text);
                           provideFeedback(id);
                         }
                       },
