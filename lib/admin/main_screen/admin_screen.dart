@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/admin/admin_feedback/screens/view_feedback_screen.dart';
+import 'package:timelineandprojectmanagementapp/admin/view_users/screens/view_user_screen.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 
@@ -60,7 +61,9 @@ class _AdminScreenState extends State<AdminScreen> {
           crossAxisCount: 2,
           children: [
             GestureDetector(
-              onTap: (){},
+              onTap: () {
+                Navigator.pushNamed(context, ViewUserScreen.routeName);
+              },
               child: Container(
                   decoration: BoxDecoration(
                     color: GlobalVariables.mainColor,
@@ -85,7 +88,7 @@ class _AdminScreenState extends State<AdminScreen> {
                   )),
             ),
             GestureDetector(
-              onTap: (){
+              onTap: () {
                 Navigator.pushNamed(context, ViewFeedbackScreen.routeName);
               },
               child: Container(
