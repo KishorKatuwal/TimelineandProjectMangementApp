@@ -6,7 +6,6 @@ import 'package:timelineandprojectmanagementapp/features/event/model/event_data_
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
-
 import '../../../providers/user_provider.dart';
 import '../../project_management/models/project_management_model.dart';
 
