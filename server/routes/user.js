@@ -6,6 +6,7 @@ const  Projects  = require('../models/projects');
 const  Feedback  = require('../models/feedback');
 const  Discussion  = require('../models/discussion');
 const User = require('../models/user');
+const bcryptjs = require("bcryptjs");
 
 //adding events
 userRouter.post("/api/add-event", auth, async (req, res) => {
@@ -192,6 +193,32 @@ try {
 res.status(500).json({error: e.message});
 }
 });
+
+
+//changing password
+userRouter.put("/api/change-password",auth, async (req, res) => {
+try {
+    const { previousPassword,newPassword } = req.body;
+    let user = await User.findById(req.user);
+    const hashedPassword = await bcryptjs.hash(newPassword, 8);
+    const isMatchNew = await bcryptjs.compare(previousPassword, hashedPassword);
+    if(isMatchNew){
+        return res.status(400)
+        .json({msg: "You are using the same password!"});
+    }
+    const isMatch = await bcryptjs.compare(previousPassword, user.password);
+    if(!isMatch){
+        return res.status(400)
+        .json({msg: "Previous Password didn't matched"});
+    }
+    user.password = hashedPassword;
+    user.save();
+    res.json(user);
+} catch (e) {
+res.status(500).json({error: e.message});
+}
+});
+
 
 
 

@@ -15,6 +15,7 @@ import 'package:timelineandprojectmanagementapp/features/event/screens/view_even
 import 'package:timelineandprojectmanagementapp/settings/settings.dart';
 import 'admin/main_screen/admin_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
+import 'features/change_passwprd/screen/change_password_screen.dart';
 import 'features/home/screens/home_screen.dart';
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
@@ -77,6 +78,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => const ViewAddedEventScreen());
+
+      case ChangePasswordScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => const ChangePasswordScreen());
 
     //for admin
     case AdminScreen.routeName:

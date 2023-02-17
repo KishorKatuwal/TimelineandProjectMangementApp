@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
+import 'package:timelineandprojectmanagementapp/features/change_passwprd/screen/change_password_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
 import 'package:timelineandprojectmanagementapp/notification/notfication_try.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -83,10 +84,10 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-               ListTile(
-                onTap: ()async{
-                  final Uri resultUrl =
-                  Uri.parse("https://evision.londonmet.ac.uk/urd/sits.urd/run/siw_lgn");
+              ListTile(
+                onTap: () async {
+                  final Uri resultUrl = Uri.parse(
+                      "https://evision.londonmet.ac.uk/urd/sits.urd/run/siw_lgn");
                   await launchUrl(resultUrl);
                 },
                 leading: const Icon(Icons.school_outlined),
@@ -154,10 +155,7 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
               ListTile(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationTryScreen()));
+                  Navigator.pushNamed(context, ChangePasswordScreen.routeName);
                 },
                 leading: const Icon(Icons.key),
                 title: const Text(
@@ -179,7 +177,13 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              const ListTile(
+              ListTile(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const NotificationTryScreen()));
+                },
                 leading: Icon(Icons.info_outline),
                 title: Text(
                   "About App",
