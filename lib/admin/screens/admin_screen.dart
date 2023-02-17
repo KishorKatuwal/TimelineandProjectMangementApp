@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:timelineandprojectmanagementapp/admin/admin_feedback/screens/admin_feedback_screen.dart';
+import 'package:timelineandprojectmanagementapp/admin/admin_feedback/screens/view_feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 
@@ -86,7 +86,7 @@ class _AdminScreenState extends State<AdminScreen> {
             ),
             GestureDetector(
               onTap: (){
-                Navigator.pushNamed(context, AdminFeedbackScreen.routeName);
+                Navigator.pushNamed(context, ViewFeedbackScreen.routeName);
               },
               child: Container(
                   decoration: BoxDecoration(

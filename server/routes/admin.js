@@ -14,6 +14,17 @@ adminRouter.get('/admin/get-feedback', admin, async (req, res) => {
     }
 });
 
+//deleting feedback
+adminRouter.post('/admin/delete-feedback', admin, async (req, res) => {
+    try {
+        const { id } = req.body;
+        let feedback = await Feedback.findByIdAndDelete(id);
+        res.json(feedback);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 
 
 
