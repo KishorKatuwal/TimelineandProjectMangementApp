@@ -3,6 +3,7 @@ import 'package:timelineandprojectmanagementapp/constants/global_variables.dart'
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/change_passwprd/screen/change_password_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/exam/screen/exam_screen.dart';
 import 'package:timelineandprojectmanagementapp/notification/notfication_try.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../features/feedback/screens/feedback_screen.dart';
@@ -75,9 +76,10 @@ class _AppDrawerState extends State<AppDrawer> {
                 height: 3,
                 thickness: 3,
               ),
-              const ListTile(
-                leading: Icon(Icons.newspaper),
-                title: Text(
+              ListTile(
+                onTap: () => Navigator.pushNamed(context, ExamScreen.routeName),
+                leading: const Icon(Icons.newspaper),
+                title: const Text(
                   "View Exam",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

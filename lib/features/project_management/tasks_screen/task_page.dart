@@ -131,7 +131,7 @@ class _TasksPageState extends State<TasksPage> {
                                   size: 20,
                                 ),
                                 Text(
-                                  "Add task",
+                                  "Add Project",
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 13,

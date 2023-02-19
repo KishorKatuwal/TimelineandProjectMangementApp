@@ -9,6 +9,7 @@ import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens
 import 'package:timelineandprojectmanagementapp/features/discussion/screens/discussion_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/event_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/exam/screen/exam_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
@@ -83,6 +84,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => const ChangePasswordScreen());
+
+    case ExamScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings,
+          builder: (_) => const ExamScreen());
 
     //for admin
     case AdminScreen.routeName:

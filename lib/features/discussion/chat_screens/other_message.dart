@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 
 class OtherMessage extends StatelessWidget {
   final String userName;
@@ -19,7 +20,7 @@ class OtherMessage extends StatelessWidget {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15),
           ),
-          color: Colors.purple,
+          color: GlobalVariables.mainColor,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: Column(
@@ -31,7 +32,7 @@ class OtherMessage extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Colors.yellow,
+                    color: Colors.white,
                   ),
                 ),
                 const SizedBox(

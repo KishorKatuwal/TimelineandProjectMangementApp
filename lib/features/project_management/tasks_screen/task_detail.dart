@@ -190,7 +190,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                       ),
                     ),
                     const SizedBox(
-                      height: 145,
+                      height: 90,
                     ),
                     Container(
                       height: 50,
