@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
+import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
-
 import '../model/event_data_model.dart';
 
 class EventScreen extends StatefulWidget {
@@ -91,7 +91,11 @@ class _EventScreenState extends State<EventScreen> {
                 children: [
                   TableCalendar(
                     calendarStyle: const CalendarStyle(
-                        weekendTextStyle: TextStyle(color: Colors.red)),
+                      weekendTextStyle: TextStyle(color: Colors.red),
+                      markerDecoration: BoxDecoration(
+                          color: GlobalVariables.mainColor,
+                          shape: BoxShape.circle),
+                    ),
                     firstDay: DateTime(2023),
                     lastDay: DateTime(2024),
                     focusedDay: _focusedDay,
@@ -179,10 +183,6 @@ class _EventScreenState extends State<EventScreen> {
                     child: CustomButton(
                         text: "View Your Events",
                         onTap: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => const TryScreen()),
-                          // );
                           Navigator.pushNamed(
                               context, ViewAddedEventScreen.routeName);
                         }),

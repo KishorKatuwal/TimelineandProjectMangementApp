@@ -24,7 +24,6 @@ class ProjectServices {
     required List<Task> tasks,
   }) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-
     try {
       ProjectDataModel projectDataModel = ProjectDataModel(
           projectid: "",
@@ -34,7 +33,6 @@ class ProjectServices {
           endDate: endDate,
           isCompleted: isCompleted,
           tasks: tasks);
-
       http.Response res = await http.post(
         Uri.parse('$uri/api/add-project'),
         headers: {

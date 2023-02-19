@@ -133,7 +133,7 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                                 children: const [
                                   Icon(
                                     Icons.edit_calendar,
-                                    color: Colors.yellow,
+                                    color: Colors.white,
                                   ),
                                   SizedBox(width: 10),
                                   Text("Edit Event"),
