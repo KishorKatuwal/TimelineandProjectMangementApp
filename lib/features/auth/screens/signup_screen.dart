@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
+import 'package:timelineandprojectmanagementapp/features/change_passwprd/widget/password_textfiled.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String routeName = '/signup-screen';
@@ -58,16 +59,16 @@ class _SignupScreenState extends State<SignupScreen> {
     'Networking',
   ];
 
-
   bool loader = true;
+
   Future<void> runMethodForDuration() async {
     setState(() {
-      loader=false;
+      loader = false;
     });
     await Future.delayed(const Duration(seconds: 1));
     signUpUser();
     setState(() {
-      loader=true;
+      loader = true;
     });
   }
 
@@ -103,8 +104,12 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  CustomTextField(
-                      controller: _passwordController, hintText: "Password", obText: true,),
+                  PasswordTextField(
+                    controller: _passwordController,
+                    hintText: "Password",
+                    obText: true,
+                    label: "Password",
+                  ),
                   const SizedBox(
                     height: 15,
                   ),

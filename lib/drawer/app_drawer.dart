@@ -100,24 +100,6 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              const ListTile(
-                leading: Icon(Icons.calendar_month_outlined),
-                title: Text(
-                  "View Events",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              const ListTile(
-                leading: Icon(Icons.assignment_outlined),
-                title: Text(
-                  "View Projects",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
               GestureDetector(
                 onTap: () {
                   // Navigator.pushNamed(context, DiscussionScreen.routeName);
@@ -134,7 +116,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               const SizedBox(
-                height: 105,
+                height: 200,
               ),
               const Divider(
                 height: 3,
@@ -186,8 +168,8 @@ class _AppDrawerState extends State<AppDrawer> {
                       MaterialPageRoute(
                           builder: (context) => const NotificationTryScreen()));
                 },
-                leading: Icon(Icons.info_outline),
-                title: Text(
+                leading: const Icon(Icons.info_outline),
+                title: const Text(
                   "About App",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,

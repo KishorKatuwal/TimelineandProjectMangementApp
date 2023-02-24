@@ -3,6 +3,7 @@ import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dar
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
+import 'package:timelineandprojectmanagementapp/features/change_passwprd/widget/password_textfiled.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
@@ -69,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     height: 40,
                   ),
                   const Text(
-                    'Login In with your Account',
+                    'Login with your Account',
                     style: TextStyle(fontSize: 23, color: Colors.black87),
                   ),
                   const SizedBox(
@@ -80,11 +81,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  CustomTextField(
-                    controller: _passwordController,
-                    hintText: "Password",
-                    obText: true,
-                  ),
+                  PasswordTextField(controller: _passwordController,
+                      label: "Password",
+                      hintText: "Password",
+                      obText: true),
                   const SizedBox(
                     height: 25,
                   ),

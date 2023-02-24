@@ -91,6 +91,13 @@ class _EventScreenState extends State<EventScreen> {
                 children: [
                   TableCalendar(
                     calendarStyle: const CalendarStyle(
+                      todayDecoration: BoxDecoration(
+                          color: Color.fromRGBO(112, 141, 246, 1.0),
+                          shape: BoxShape.circle),
+                      selectedDecoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        shape: BoxShape.circle,
+                      ),
                       weekendTextStyle: TextStyle(color: Colors.red),
                       markerDecoration: BoxDecoration(
                           color: GlobalVariables.mainColor,
