@@ -6,30 +6,24 @@ import '../../../constants/global_variables.dart';
 
 class ExamScreen extends StatefulWidget {
   static const String routeName = '/exam-screen';
-
   const ExamScreen({Key? key}) : super(key: key);
-
   @override
   State<ExamScreen> createState() => _ExamScreenState();
 }
 
 class _ExamScreenState extends State<ExamScreen> {
   final ExamServices examServices = ExamServices();
-
   List<List<dynamic>> _data = [];
-
   void gettingData() async {
     _data = await examServices.loadListFromCSV(context);
     setState(() {});
   }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     gettingData();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

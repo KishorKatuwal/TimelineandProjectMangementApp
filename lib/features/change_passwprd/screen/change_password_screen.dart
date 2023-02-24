@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/change_passwprd/services/change_password_service.dart';
+import 'package:timelineandprojectmanagementapp/features/change_passwprd/widget/password_textfiled.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   static const String routeName = '/change-password-screen';
@@ -54,111 +55,27 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             key: _changePasswordFormKey,
             child: Column(
               children: [
-                TextFormField(
-                  controller: _previousPasswordController,
-                  obscureText: _obscureText1,
-                  decoration: InputDecoration(
-                    label: const Text("Previous Password"),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black38,
-                      ),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black38,
-                      ),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureText1 ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscureText1 = !_obscureText1;
-                        });
-                      },
-                    ),
-                  ),
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return "Enter Your Previous Password";
-                    }
-                    return null;
-                  },
-                ),
+                PasswordTextField(
+                    controller: _previousPasswordController,
+                    label: "Previous Password",
+                    hintText: "Previous Password",
+                    obText: true),
                 const SizedBox(
                   height: 15,
                 ),
-                TextFormField(
-                  controller: _newPasswordController,
-                  obscureText: _obscureText2,
-                  decoration: InputDecoration(
-                    label: const Text("New Password"),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black38,
-                      ),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black38,
-                      ),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureText2 ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscureText2 = !_obscureText2;
-                        });
-                      },
-                    ),
-                  ),
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return "Enter Your New Password";
-                    }
-                    return null;
-                  },
-                ),
+                PasswordTextField(
+                    controller: _newPasswordController,
+                    label: "New Password",
+                    hintText: "New Password",
+                    obText: true),
                 const SizedBox(
                   height: 15,
                 ),
-                TextFormField(
-                  controller: _reTypePasswordController,
-                  obscureText: _obscureText3,
-                  decoration: InputDecoration(
-                    label: const Text("Re-Type New Password"),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black38,
-                      ),
-                    ),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: BorderSide(
-                        color: Colors.black38,
-                      ),
-                    ),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        _obscureText3 ? Icons.visibility_off : Icons.visibility,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _obscureText3 = !_obscureText3;
-                        });
-                      },
-                    ),
-                  ),
-                  validator: (val) {
-                    if (val == null || val.isEmpty) {
-                      return "Enter Your Password";
-                    }
-                    return null;
-                  },
-                ),
+                PasswordTextField(
+                    controller: _reTypePasswordController,
+                    label: "Re-type New Password",
+                    hintText: "Re-type New Password",
+                    obText: true),
                 const SizedBox(
                   height: 80,
                 ),
@@ -176,7 +93,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                             changePassword();
                           } else {
                             showSnackBar(context,
-                                "New password and Re-typed password didn't matched");
+                                "New password and Re-typed password didn't matched!!");
                           }
                         }
                       }
