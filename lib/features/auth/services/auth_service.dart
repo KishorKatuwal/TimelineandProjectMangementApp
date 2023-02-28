@@ -1,18 +1,19 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/login_screen.dart';
 import 'package:timelineandprojectmanagementapp/model/user.dart';
-import 'package:http/http.dart' as http;
 import 'package:timelineandprojectmanagementapp/providers/user_provider.dart';
+
 import '../../../admin/main_screen/admin_screen.dart';
 import '../../../constants/error_handling.dart';
 import '../../../constants/utils.dart';
-
 
 class AuthService {
   //function  for signup user
@@ -27,6 +28,7 @@ class AuthService {
     required String year,
   }) async {
     try {
+      DateTime now = DateTime.now();
       User user = User(
         id: '',
         firstName: firstName,
@@ -38,6 +40,7 @@ class AuthService {
         type: '',
         token: '',
         password: password,
+        lastActiveTime: now.toString(),
         events: [],
         projects: [],
       );
@@ -134,7 +137,7 @@ class AuthService {
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
-      print("Program failed on catch");
+      print("Program failed get user data on catch");
       showSnackBar(context, e.toString());
     }
   }
@@ -144,6 +147,7 @@ class AuthService {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       await sharedPreferences.setString('x-auth-token', "");
+      await sharedPreferences.setBool('methodExecuted', false);
       Navigator.pushNamedAndRemoveUntil(
           context, LoginScreen.routeName, (route) => false);
     } catch (e) {

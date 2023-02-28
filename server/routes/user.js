@@ -195,6 +195,22 @@ res.status(500).json({error: e.message});
 });
 
 
+//editing user information
+userRouter.put("/api/update-last-active",auth, async (req, res) => {
+try {
+    const { lastActiveTime } = req.body;
+    let user = await User.findById(req.user);
+    user.lastActiveTime = lastActiveTime;
+    user.save();
+    res.json(user);
+} catch (e) {
+res.status(500).json({error: e.message});
+}
+});
+
+
+
+
 //changing password
 userRouter.put("/api/change-password",auth, async (req, res) => {
 try {

@@ -8,7 +8,7 @@ const auth = require("../middlewares/auth");
 authRouter.post("/api/signup", async (req, res) => {
   try {
     //getting data from the client
-    const { firstName,lastName, email, password, group, faculty, year } = req.body;
+    const { firstName,lastName, email, password, group, faculty, year,lastActiveTime } = req.body;
     //checking whether the user already exits or not
     const existingUser = await User.findOne({ email });
     if (existingUser) {
@@ -24,6 +24,7 @@ authRouter.post("/api/signup", async (req, res) => {
       group,
       faculty,
       year,
+      lastActiveTime,
     });
     //post that data in the database
     user = await user.save();

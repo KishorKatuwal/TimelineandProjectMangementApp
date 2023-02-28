@@ -49,6 +49,12 @@ const userSchema = mongoose.Schema({
       type: String,
       trim: true,
     },
+    lastActiveTime: {
+      required: true,
+      type: String,
+      trim: true,
+    },
+
   type: {
     type: String,
     default: "user",

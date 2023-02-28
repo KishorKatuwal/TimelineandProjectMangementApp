@@ -80,15 +80,14 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
           settings: routeSettings,
           builder: (_) => const ViewAddedEventScreen());
 
-      case ChangePasswordScreen.routeName:
+    case ChangePasswordScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings,
           builder: (_) => const ChangePasswordScreen());
 
     case ExamScreen.routeName:
       return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (_) => const ExamScreen());
+          settings: routeSettings, builder: (_) => const ExamScreen());
 
     //for admin
     case AdminScreen.routeName:
@@ -105,10 +104,12 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
 
     default:
       return MaterialPageRoute(
-          settings: routeSettings,
-          builder: (_) => const Scaffold(
-                  body: Center(
-                child: Text("Screen Doesn't exist"),
-              )));
+        settings: routeSettings,
+        builder: (_) => const Scaffold(
+          body: Center(
+            child: Text("Screen Doesn't exist"),
+          ),
+        ),
+      );
   }
 }

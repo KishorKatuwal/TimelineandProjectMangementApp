@@ -155,10 +155,8 @@ class EventServices {
   //getting upcoming events
   List<EventDataModel> upcomingEvents = [];
   List<EventDataModel> getEvents = [];
-
   Future<List<EventDataModel>> getUpcomingEvents(BuildContext context) async {
     getEvents = await fetchAllProducts(context);
-    // print(getEvents.length);
     for (int i = 0; i < getEvents.length; i++) {
       String date1 = getEvents[i].EventDate;
       DateTime date2 = DateTime.now();

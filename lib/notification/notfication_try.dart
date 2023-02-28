@@ -1,7 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/services/schedules_service.dart';
+import 'package:timelineandprojectmanagementapp/notification/calling_method.dart';
 import 'package:timelineandprojectmanagementapp/notification/notification_service.dart';
 
 class NotificationTryScreen extends StatefulWidget {
@@ -13,7 +15,9 @@ class NotificationTryScreen extends StatefulWidget {
 
 class _NotificationTryScreenState extends State<NotificationTryScreen> {
   final NotificationService notificationService = NotificationService();
+  final CallingMethod callingMethod = CallingMethod();
   final SchedulesService schedulesService = SchedulesService();
+  final Random random= Random.secure();
   late final String group;
   List<List<dynamic>> _data = [];
 
@@ -63,7 +67,7 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
           CustomButton(
               text: "Set Notification for Class",
               onTap: () {
-                for (int i = 0; i<_data.length; i++) {
+                for (int i = 0; i < _data.length; i++) {
                   notificationService.scheduleNotificationForClass(
                     i,
                     _data[i][11],
@@ -95,9 +99,20 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
           CustomButton(
               text: "Cancel Class Notifications",
               onTap: () {
-                 notificationService
-                    .deleteNotificationsByChannelId('ccc');
+                notificationService.deleteNotificationsByChannelId('ccc');
                 print("nothing happened");
+              }),
+          const SizedBox(
+            height: 20,
+          ),
+          CustomButton(
+              text: "Printing random number",
+              onTap: () {
+                for(int i=0; i<10;i++){
+                  int randomNumber = random.nextInt(31)+20;
+                  print("$i : $randomNumber");
+                }
+
               }),
           const SizedBox(
             height: 20,
