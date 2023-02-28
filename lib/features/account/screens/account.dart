@@ -58,15 +58,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final name = Provider.of<UserProvider>(context).user.firstName;
-    final lName = Provider.of<UserProvider>(context).user.lastName;
-    final email = Provider.of<UserProvider>(context).user.email;
-    final group = Provider.of<UserProvider>(context).user.group;
-    final year = Provider.of<UserProvider>(context).user.year;
-    final totalProjects =
-        Provider.of<UserProvider>(context).user.projects.length;
-    final totalEvents = Provider.of<UserProvider>(context).user.events.length;
-    final faculty = context.watch<UserProvider>().user.faculty;
+    final user = Provider.of<UserProvider>(context).user;
 
     return Scaffold(
       appBar: AppBar(
@@ -78,18 +70,20 @@ class _AccountScreenState extends State<AccountScreen> {
                 color: Colors.white,
               ),
               onSelected: (value) {
-                // Handle the selected value
+                // value is coming from popup menu item
                 if (value == "1") {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => EditUserDetails(
-                                firstName: name,
-                                lastName: lName,
-                                year: year,
-                                group: group,
-                                faculty: faculty,
-                              )));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EditUserDetails(
+                        firstName: user.firstName,
+                        lastName: user.lastName,
+                        year: user.year,
+                        group: user.group,
+                        faculty: user.faculty,
+                      ),
+                    ),
+                  );
                 }
               },
               itemBuilder: (BuildContext context) => [
@@ -100,7 +94,6 @@ class _AccountScreenState extends State<AccountScreen> {
                   ]),
         ],
         centerTitle: true,
-        // automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: finalLoading
@@ -113,58 +106,19 @@ class _AccountScreenState extends State<AccountScreen> {
               )
             : Container(
                 width: MediaQuery.of(context).size.width,
-                // height: MediaQuery.of(context).size.height,
                 padding: const EdgeInsets.all(15),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Center(
-                    //   child: Column(
-                    //     children: [
-                    //       const SizedBox(
-                    //         height: 10,
-                    //       ),
-                    //       const CircleAvatar(
-                    //         radius: 40,
-                    //         child: Icon(
-                    //           Icons.person,
-                    //           size: 60,
-                    //         ),
-                    //       ),
-                    //       const SizedBox(
-                    //         height: 4,
-                    //       ),
-                    //       Text(
-                    //         name,
-                    //         maxLines: 1,
-                    //         style: const TextStyle(
-                    //             fontSize: 20,
-                    //             color: Colors.black,
-                    //             fontWeight: FontWeight.w600),
-                    //       ),
-                    //       Text(
-                    //         email,
-                    //         maxLines: 1,
-                    //         style: const TextStyle(
-                    //             fontSize: 17,
-                    //             color: Colors.black45,
-                    //             fontWeight: FontWeight.w500),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // const SizedBox(
-                    //   height: 25,
-                    // ),
                     DisplayDetails(
                       title: "User Details",
                       completed: "Email",
-                      completedValue: email,
+                      completedValue: user.email,
                       pending: "Last Name",
-                      pendingValue: lName,
+                      pendingValue: user.lastName,
                       total: "First Name",
-                      totalValue: name,
+                      totalValue: user.firstName,
                     ),
                     const SizedBox(
                       height: 20,
@@ -172,11 +126,11 @@ class _AccountScreenState extends State<AccountScreen> {
                     DisplayDetails(
                       title: "Academic Details",
                       completed: "Student's Year",
-                      completedValue: year,
+                      completedValue: user.year,
                       pending: "Student's Faculty",
-                      pendingValue: faculty,
+                      pendingValue: user.faculty,
                       total: "Student's Group",
-                      totalValue: group,
+                      totalValue: user.group,
                     ),
                     const SizedBox(
                       height: 20,
@@ -185,11 +139,11 @@ class _AccountScreenState extends State<AccountScreen> {
                       title: "Project Details",
                       completed: "Completed Projects",
                       completedValue:
-                          (totalProjects - pendingProjects).toString(),
+                          (user.projects.length - pendingProjects).toString(),
                       pending: "Pending Projects",
                       pendingValue: pendingProjects.toString(),
                       total: "Total Projects",
-                      totalValue: totalProjects.toString(),
+                      totalValue: user.projects.length.toString(),
                     ),
                     const SizedBox(
                       height: 20,
@@ -197,11 +151,12 @@ class _AccountScreenState extends State<AccountScreen> {
                     DisplayDetails(
                       title: "Event Details",
                       completed: "Completed Events",
-                      completedValue: (totalEvents - upcomingEvents).toString(),
+                      completedValue:
+                          (user.events.length - upcomingEvents).toString(),
                       pending: "Upcoming Events",
                       pendingValue: upcomingEvents.toString(),
                       total: "Total Events",
-                      totalValue: totalEvents.toString(),
+                      totalValue: user.events.length.toString(),
                     ),
                   ],
                 ),

@@ -184,12 +184,12 @@ class ProjectServices {
                 .copyWith(projects: jsonDecode(res.body)['projects']);
             userProvider.setUserFromModel(user);
             Navigator.pop(context);
+
           });
     } catch (e) {
       showSnackBar(context, e.toString());
     }
   }
-
 
   //update project status
   void updateProjectStatus({
@@ -233,13 +233,4 @@ class ProjectServices {
       showSnackBar(context, e.toString());
     }
   }
-
-
-
-
-
-
-
-
-
 }

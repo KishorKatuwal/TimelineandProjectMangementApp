@@ -90,7 +90,7 @@ class _ExamScreenState extends State<ExamScreen> {
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500)),
                                     const SizedBox(height: 8.0),
-                                    Text("Submission Week: ${_data[index][6]}",
+                                    Text("Submission At: ${_data[index][6]}",
                                         style: const TextStyle(
                                             fontSize: 18,
                                             fontWeight: FontWeight.w500)),

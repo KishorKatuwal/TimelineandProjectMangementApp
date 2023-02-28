@@ -30,6 +30,9 @@ class NotificationService {
   void cancelAllNotification() async {
     await _flutterLocalNotificationsPlugin.cancelAll();
   }
+  void cancelAllNotificationById(int id) async {
+    await _flutterLocalNotificationsPlugin.cancel(id);
+  }
 
   ktmTime() {
     var kathmandu = tz.getLocation('Asia/Kathmandu');

@@ -11,6 +11,7 @@ class User {
   final String type;
   final String token;
   final String password;
+  final String lastActiveTime;
   final List<dynamic> events;
   final List<dynamic> projects;
 
@@ -25,13 +26,13 @@ class User {
     required this.type,
     required this.token,
     required this.password,
+    required this.lastActiveTime,
     required this.events,
     required this.projects,
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-
     result.addAll({'id': id});
     result.addAll({'firstName': firstName});
     result.addAll({'lastName': lastName});
@@ -42,6 +43,7 @@ class User {
     result.addAll({'type': type});
     result.addAll({'token': token});
     result.addAll({'password': password});
+    result.addAll({'lastActiveTime': lastActiveTime});
     result.addAll({'events': events});
     result.addAll({'projects': projects});
 
@@ -60,6 +62,7 @@ class User {
       type: map['type'] ?? '',
       token: map['token'] ?? '',
       password: map['password'] ?? '',
+      lastActiveTime: map['lastActiveTime'] ?? '',
       events: List<Map<String, dynamic>>.from(
         map['events']?.map(
           (x) => Map<String, dynamic>.from(x),
@@ -87,6 +90,7 @@ class User {
     String? faculty,
     String? type,
     String? password,
+    String? lastActiveTime,
     String? token,
     List<dynamic>? events,
     List<dynamic>? projects,
@@ -101,9 +105,10 @@ class User {
       faculty: faculty ?? this.faculty,
       type: type ?? this.type,
       password: password ?? this.password,
+      lastActiveTime: lastActiveTime ?? this.lastActiveTime,
       token: token ?? this.token,
       events: events ?? this.events,
-      projects: events ?? this.projects,
+      projects: projects ?? this.projects,
     );
   }
 }

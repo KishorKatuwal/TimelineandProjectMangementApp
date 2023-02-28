@@ -125,16 +125,16 @@ class _ViewUserScreenState extends State<ViewUserScreen> {
                               ),
                             ),
                           ),
-                          // Padding(
-                          //   padding: const EdgeInsets.only(left: 10),
-                          //   child: Text(
-                          //     "Last Login Date: ${userModel[index].projects.length}",
-                          //     style: const TextStyle(
-                          //       fontSize: 18,
-                          //       color: Colors.black54,
-                          //     ),
-                          //   ),
-                          // ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              "Last Login Date: ${userModel[index].lastActiveTime}",
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ),
                           const SizedBox(
                             height: 10,
                           ),
