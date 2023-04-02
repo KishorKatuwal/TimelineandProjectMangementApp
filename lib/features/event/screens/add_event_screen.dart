@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 import 'package:timelineandprojectmanagementapp/notification/notification_service.dart';
 import '../../../common/widgets/category_card.dart';
@@ -96,10 +97,16 @@ class _AddEventScreenState extends State<AddEventScreen> {
         firstDate: DateTime(2000),
         lastDate: DateTime(2101));
     if (pickedDate != null) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-      setState(() {
-        _eventDateController.text = formattedDate;
-      });
+      DateTime now = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      print(now);
+      if(pickedDate.isBefore(now)){
+        showSnackBar(context, "You cannot pick past dates");
+      }else{
+        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+        setState(() {
+          _eventDateController.text = formattedDate;
+        });
+      }
     }
   }
 

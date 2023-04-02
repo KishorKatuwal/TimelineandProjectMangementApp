@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../../common/widgets/category_card.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
+import '../../../constants/utils.dart';
 import '../../../notification/notification_service.dart';
 import '../services/event_service.dart';
 
@@ -55,7 +56,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
     _eventNameController.text = widget.eventName;
     _descriptionController.text = widget.eventDescription;
     // _eventTimeController.text = widget.eventTime;
-    _eventDateController.text = widget.eventDate;
+    // _eventDateController.text = widget.eventDate;
     _eventTypeController.text = widget.eventCategory;
     _repeatController.text = widget.eventRepeat;
   }
@@ -118,10 +119,16 @@ class _EditEventScreenState extends State<EditEventScreen> {
         firstDate: DateTime(2000),
         lastDate: DateTime(2101));
     if (pickedDate != null) {
-      String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-      setState(() {
-        _eventDateController.text = formattedDate;
-      });
+      DateTime now = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+      print(now);
+      if(pickedDate.isBefore(now)){
+        showSnackBar(context, "You cannot pick past dates");
+      }else{
+        String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+        setState(() {
+          _eventDateController.text = formattedDate;
+        });
+      }
     }
   }
 

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
+
 import '../../../constants/global_variables.dart';
-import '../models/project_management_model.dart';
 import '../models/task_model.dart';
 
 class AddNewTask extends StatefulWidget {
@@ -14,27 +14,31 @@ class AddNewTask extends StatefulWidget {
 }
 
 class _AddNewTaskState extends State<AddNewTask> {
-  final TextEditingController _Titlecontroller = TextEditingController();
-  late TextEditingController _startDatecontroller;
-  late TextEditingController _endDatecontroller;
+  final TextEditingController _titleController = TextEditingController();
+  late TextEditingController _startDateController;
+  late TextEditingController _endDateController;
   final TextEditingController _descriptionController = TextEditingController();
   final bool isCompleted = false;
   final _formKey = GlobalKey<FormState>();
-  final _allformKey = GlobalKey<FormState>();
+  final _allFormKey = GlobalKey<FormState>();
   final List<Task> _tasks = [];
   String _newTaskName = "";
   bool _newTaskStatus = false;
   final TextEditingController _taskNameController = TextEditingController();
   DateTime SelectedDate = DateTime.now();
+  DateTime selectedStartDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime selectedEndDate =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   final ProjectServices projectServices = ProjectServices();
 
   void addNewProject() {
     projectServices.addNewProject(
         context: context,
-        projectName: _Titlecontroller.text,
+        projectName: _titleController.text,
         projectDescription: _descriptionController.text,
-        startDate: _startDatecontroller.text,
-        endDate: _endDatecontroller.text,
+        startDate: _startDateController.text,
+        endDate: _endDateController.text,
         isCompleted: isCompleted,
         tasks: _tasks);
   }
@@ -43,9 +47,9 @@ class _AddNewTaskState extends State<AddNewTask> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _startDatecontroller = TextEditingController(
+    _startDateController = TextEditingController(
         text: DateFormat('MMM d, ' 'yy').format(SelectedDate));
-    _endDatecontroller = TextEditingController(
+    _endDateController = TextEditingController(
         text: DateFormat('MMM d, ' 'yy').format(SelectedDate));
   }
 
@@ -60,10 +64,12 @@ class _AddNewTaskState extends State<AddNewTask> {
       setState(() {
         SelectedDate = selected;
         if (DateType == "StartDate") {
-          _startDatecontroller.text =
+          selectedStartDate = selected;
+          _startDateController.text =
               DateFormat('MMM d, ' 'yy').format(selected);
         } else {
-          _endDatecontroller.text = DateFormat('MMM d, ' 'yy').format(selected);
+          _endDateController.text = DateFormat('MMM d, ' 'yy').format(selected);
+          selectedEndDate = selected;
         }
       });
     }
@@ -137,7 +143,7 @@ class _AddNewTaskState extends State<AddNewTask> {
             child: SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Form(
-                key: _allformKey,
+                key: _allFormKey,
                 child: Column(
                   children: [
                     Container(
@@ -172,7 +178,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                       padding: const EdgeInsets.only(
                           left: 20, right: 20, top: 10, bottom: 10),
                       child: TextFormField(
-                        controller: _Titlecontroller,
+                        controller: _titleController,
                         cursorColor: Colors.white,
                         style: const TextStyle(
                           color: Colors.white,
@@ -259,7 +265,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                       MediaQuery.of(context).size.width * 0.4,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller: _startDatecontroller,
+                                    controller: _startDateController,
                                     decoration: InputDecoration(
                                       labelText: "Start Date",
                                       suffixIcon: GestureDetector(
@@ -298,7 +304,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                       MediaQuery.of(context).size.width * 0.4,
                                   child: TextFormField(
                                     readOnly: true,
-                                    controller: _endDatecontroller,
+                                    controller: _endDateController,
                                     decoration: InputDecoration(
                                       labelText: "End Date",
                                       suffixIcon: GestureDetector(
@@ -517,15 +523,25 @@ class _AddNewTaskState extends State<AddNewTask> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              print("Button Presses");
-                              if (_allformKey.currentState!.validate()) {
-                                if (_tasks.isEmpty) {
-                                  showSnackBar(context,
-                                      "Please add a Task before creating project");
-                                }else{
-                                  addNewProject();
+                              print("st date $selectedStartDate");
+                              print("ed date $selectedEndDate");
+                              if (selectedStartDate.isAfter(selectedEndDate)) {
+                                showSnackBar(
+                                    context, "Start Date is after End Date");
+                              } else if (selectedStartDate
+                                  .isAtSameMomentAs(selectedEndDate)) {
+                                showSnackBar(
+                                    context, "Start Date is same as End Date");
+                              } else {
+                                print("no conflict");
+                                if (_allFormKey.currentState!.validate()) {
+                                  if (_tasks.isEmpty) {
+                                    showSnackBar(context,
+                                        "Please add a Task before creating project");
+                                  } else {
+                                    addNewProject();
+                                  }
                                 }
-                                // Navigator.of(context).pop();
                               }
                             },
                             child: Container(
