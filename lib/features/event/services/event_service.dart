@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
@@ -18,6 +19,7 @@ import '../../../providers/user_provider.dart';
 
 class EventServices {
   NotificationService notificationService = NotificationService();
+  final Random random = Random.secure();
 
   void addNewEvent({
     required BuildContext context,
@@ -65,23 +67,108 @@ class EventServices {
           Navigator.pushReplacementNamed(context, BottomBar.routeName,
               arguments: 2);
           if (Repeat == "Once") {
+            int id= random.nextInt(50) + 50;
             notificationService.scheduleNotificationOnce(
-                123, year, month, day, hour, minute, EventName, EventType);
+                id, year, month, day, hour, minute, EventName, EventType);
             print("Notification added Once");
           } else if (Repeat == "Daily") {
+            int id= random.nextInt(101) + 50;
             notificationService.scheduleDailyEventNotification(
-                123, hour, minute, EventName, EventType);
+                id, hour, minute, EventName, EventType);
             print("Notification added Daily");
           } else if (Repeat == "Weekly") {
-            notificationService.scheduleWeeklyNotification(123, year, month,
+            int id= random.nextInt(200) + 50;
+            notificationService.scheduleWeeklyNotification(id, year, month,
                 day, weekDay, hour, minute, EventName, EventType);
             print("Notification added Weekly");
           } else if (Repeat == "Monthly") {
-            notificationService.scheduleMonthlyNotification(123, year, month,
+            int id= random.nextInt(300) + 50;
+            notificationService.scheduleMonthlyNotification(id, year, month,
                 day, weekDay, hour, minute, EventName, EventType);
             print("Notification added Monthly");
           } else {
-            notificationService.scheduleYearlyNotification(123, year, month,
+            int id= random.nextInt(400) + 50;
+            notificationService.scheduleYearlyNotification(id, year, month,
+                day, weekDay, hour, minute, EventName, EventType);
+            print("Notification added Yearly");
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context, e.toString());
+    }
+  }
+
+
+  void editEvent({
+    required BuildContext context,
+    required String EventName,
+    required String EventDate,
+    required String EventTime,
+    required String Repeat,
+    required String Description,
+    required String EventType,
+    required String EventID,
+    required int year,
+    required int month,
+    required int day,
+    required int weekDay,
+    required int hour,
+    required int minute,
+  }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    notificationService.initialiseNotifications();
+    try {
+      EventDataModel eventDataModel = EventDataModel(
+          EventID: EventID,
+          EventName: EventName,
+          EventDate: EventDate,
+          EventTime: EventTime,
+          Repeat: Repeat,
+          Description: Description,
+          EventType: EventType);
+
+      http.Response res = await http.put(
+        Uri.parse('$uri/api/edit-event'),
+        headers: {
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: eventDataModel.toJson(),
+      );
+      httpErrorHandle(
+        response: res,
+        context: context,
+        onSuccess: () {
+          showSnackBar(context, 'Event Successfully Added!');
+          User user = userProvider.user
+              .copyWith(events: jsonDecode(res.body)['events']);
+          userProvider.setUserFromModel(user);
+          Navigator.pushReplacementNamed(context, BottomBar.routeName,
+               arguments: 2);
+          if (Repeat == "Once") {
+            int id= random.nextInt(50) + 50;
+            notificationService.scheduleNotificationOnce(
+                id, year, month, day, hour, minute, EventName, EventType);
+            print("Notification added Once");
+          } else if (Repeat == "Daily") {
+            int id= random.nextInt(101) + 50;
+            notificationService.scheduleDailyEventNotification(
+                id, hour, minute, EventName, EventType);
+            print("Notification added Daily");
+          } else if (Repeat == "Weekly") {
+            int id= random.nextInt(200) + 50;
+            notificationService.scheduleWeeklyNotification(id, year, month,
+                day, weekDay, hour, minute, EventName, EventType);
+            print("Notification added Weekly");
+          } else if (Repeat == "Monthly") {
+            int id= random.nextInt(300) + 50;
+            notificationService.scheduleMonthlyNotification(id, year, month,
+                day, weekDay, hour, minute, EventName, EventType);
+            print("Notification added Monthly");
+          } else {
+            int id= random.nextInt(400) + 50;
+            notificationService.scheduleYearlyNotification(id, year, month,
                 day, weekDay, hour, minute, EventName, EventType);
             print("Notification added Yearly");
           }
@@ -102,7 +189,6 @@ class EventServices {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
-
       httpErrorHandle(
           response: res,
           context: context,

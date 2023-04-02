@@ -29,6 +29,13 @@ class _ViewUserScreenState extends State<ViewUserScreen> {
         });
   }
 
+  void hideUser(User user){
+    viewUserService.hideUser(context: context, userModel: user,userStatus: true);
+  }
+  void removeHide(User user){
+    viewUserService.hideUser(context: context, userModel: user, userStatus: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     final userID = Provider.of<UserProvider>(context).user.id;
@@ -84,12 +91,29 @@ class _ViewUserScreenState extends State<ViewUserScreen> {
                                           color: Colors.white),
                                     ),
                                   ),
-                                  IconButton(
+                                  userModel[index].hideUser?IconButton(
                                     onPressed: () {
                                       if (userID == userModel[index].id) {
-                                        showSnackBar(context, "You cannot delete Yourself!!");
+                                        showSnackBar(context,
+                                            "You cannot delete Yourself!!");
                                       } else {
-                                        deleteUser(userModel[index], index);
+                                        // deleteUser(userModel[index], index);
+                                        removeHide(userModel[index]);
+                                      }
+                                    },
+                                    icon: const Icon(
+                                      Icons.undo,
+                                      color: Colors.green,
+                                      size: 30,
+                                    ),
+                                  ):IconButton(
+                                    onPressed: () {
+                                      if (userID == userModel[index].id) {
+                                        showSnackBar(context,
+                                            "You cannot delete Yourself!!");
+                                      } else {
+                                        // deleteUser(userModel[index], index);
+                                        hideUser(userModel[index]);
                                       }
                                     },
                                     icon: const Icon(
@@ -104,6 +128,16 @@ class _ViewUserScreenState extends State<ViewUserScreen> {
                           ),
                           const SizedBox(
                             height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              "User Status: ${userModel[index].hideUser? "Removed":"Active User"}",
+                              style:  TextStyle(
+                                fontSize: 18,
+                                color: userModel[index].hideUser?Colors.red:Colors.black54,
+                              ),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(left: 10),

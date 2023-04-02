@@ -12,6 +12,7 @@ class User {
   final String token;
   final String password;
   final String lastActiveTime;
+  final bool hideUser;
   final List<dynamic> events;
   final List<dynamic> projects;
 
@@ -27,6 +28,7 @@ class User {
     required this.token,
     required this.password,
     required this.lastActiveTime,
+    required this.hideUser,
     required this.events,
     required this.projects,
   });
@@ -44,6 +46,7 @@ class User {
     result.addAll({'token': token});
     result.addAll({'password': password});
     result.addAll({'lastActiveTime': lastActiveTime});
+    result.addAll({'hideUser': hideUser});
     result.addAll({'events': events});
     result.addAll({'projects': projects});
 
@@ -63,6 +66,7 @@ class User {
       token: map['token'] ?? '',
       password: map['password'] ?? '',
       lastActiveTime: map['lastActiveTime'] ?? '',
+      hideUser: map['hideUser'] ?? false,
       events: List<Map<String, dynamic>>.from(
         map['events']?.map(
           (x) => Map<String, dynamic>.from(x),
@@ -91,6 +95,7 @@ class User {
     String? type,
     String? password,
     String? lastActiveTime,
+    bool? hideUser,
     String? token,
     List<dynamic>? events,
     List<dynamic>? projects,
@@ -100,13 +105,14 @@ class User {
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
       email: email ?? this.email,
-      year: year ?? this.year,
       group: group ?? this.group,
       faculty: faculty ?? this.faculty,
+      year: year ?? this.year,
       type: type ?? this.type,
+      token: token ?? this.token,
       password: password ?? this.password,
       lastActiveTime: lastActiveTime ?? this.lastActiveTime,
-      token: token ?? this.token,
+      hideUser: hideUser ?? this.hideUser,
       events: events ?? this.events,
       projects: projects ?? this.projects,
     );

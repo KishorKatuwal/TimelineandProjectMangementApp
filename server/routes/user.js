@@ -23,6 +23,32 @@ userRouter.post("/api/add-event", auth, async (req, res) => {
         res.status(500).json({error: e.message});
     }
 });
+
+
+//editing events
+userRouter.put("/api/edit-event", auth, async (req, res) => {
+    try {
+           const { EventID, EventName, EventDate, EventTime, Repeat, Description, EventType }= req.body;
+           let user = await User.findById(req.user);
+//         console.log(req.body);
+           const event = user.events.id(EventID);
+           console.log(event);
+           event.EventName = EventName;
+           event.EventDate = EventDate;
+           event.EventTime = EventTime;
+           event.Description = Description;
+           event.Repeat = Repeat;
+           event.EventType = EventType;
+
+           user = await user.save();
+           res.json(user);
+    } catch (e) {
+        res.status(500).json({error: e.message});
+    }
+});
+
+
+
 //fetching events
 userRouter.get('/api/get-events',auth, async (req, res) => {
     try {

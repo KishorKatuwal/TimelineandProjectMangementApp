@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -6,9 +5,8 @@ import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_detail.dart';
-import 'package:timelineandprojectmanagementapp/tryclass.dart';
+
 import '../../../providers/user_provider.dart';
-import '../../event/model/event_data_model.dart';
 import '../addNewProjectScreen/add_new_project.dart';
 import '../models/project_management_model.dart';
 import '../models/task_model.dart';
@@ -76,24 +74,20 @@ class _TasksPageState extends State<TasksPage> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Icon(
+                      children: [
+                        const Icon(
                           Icons.assignment_outlined,
                           color: Colors.black,
                           size: 30,
                         ),
-                        Text(
+                        const Text(
                           "User Projects ",
                           style: TextStyle(
                             fontSize: 23,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        Icon(
-                          Icons.search_rounded,
-                          color: Colors.black,
-                          size: 30,
-                        )
+                        Container(),
                       ],
                     ),
                     const SizedBox(height: 25),
