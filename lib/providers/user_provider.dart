@@ -14,6 +14,7 @@ class UserProvider extends ChangeNotifier {
     token: '',
     password: '',
     lastActiveTime: '',
+    hideUser: false,
     events: [],
     projects: [],
   );

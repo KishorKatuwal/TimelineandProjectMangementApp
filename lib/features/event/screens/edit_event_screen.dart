@@ -1,21 +1,37 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
-import 'package:timelineandprojectmanagementapp/notification/notification_service.dart';
+
 import '../../../common/widgets/category_card.dart';
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
+import '../../../notification/notification_service.dart';
+import '../services/event_service.dart';
 
-class AddEventScreen extends StatefulWidget {
-  static const String routeName = '/add-event-screen';
+class EditEventScreen extends StatefulWidget {
+  final String eventName;
+  final String eventDescription;
+  final String eventRepeat;
+  final String eventDate;
+  final String eventTime;
+  final String eventCategory;
+  final String eventID;
 
-  const AddEventScreen({Key? key}) : super(key: key);
+
+  const EditEventScreen({Key? key,
+    required this.eventName,
+    required this.eventDescription,
+    required this.eventDate,
+    required this.eventTime,
+    required this.eventRepeat,
+    required this.eventCategory,
+    required this.eventID
+  }) : super(key: key);
 
   @override
-  State<AddEventScreen> createState() => _AddEventScreenState();
+  State<EditEventScreen> createState() => _EditEventScreenState();
 }
 
-class _AddEventScreenState extends State<AddEventScreen> {
+class _EditEventScreenState extends State<EditEventScreen> {
   final _addEventFormKey = GlobalKey<FormState>();
   final NotificationService notificationService = NotificationService();
   final _eventNameController = TextEditingController();
@@ -35,8 +51,13 @@ class _AddEventScreenState extends State<AddEventScreen> {
     // TODO: implement initState
     super.initState();
     notificationService.initialiseNotifications();
-    _repeatController.text = eventRepeatValue;
-    _eventTypeController.text = category;
+    //getting values from next page
+    _eventNameController.text = widget.eventName;
+    _descriptionController.text = widget.eventDescription;
+    // _eventTimeController.text = widget.eventTime;
+    _eventDateController.text = widget.eventDate;
+    _eventTypeController.text = widget.eventCategory;
+    _repeatController.text = widget.eventRepeat;
   }
 
   _setCategory(String newCategory) {
@@ -66,9 +87,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _descriptionController.dispose();
   }
 
-  void addNewEvent(int year, int month, int day, int weekDay) {
-    eventServices.addNewEvent(
+  void editEvent(int year, int month, int day, int weekDay) {
+    eventServices.editEvent(
       context: context,
+      EventID: widget.eventID,
       EventName: _eventNameController.text,
       EventDate: _eventDateController.text,
       EventTime: _eventTimeController.text,
@@ -122,7 +144,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Add New Event"),
+        title: const Text("Edit Event Screen"),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -315,12 +337,12 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     height: 30,
                   ),
                   CustomButton(
-                    text: "Add Event",
+                    text: "Edit Event",
                     onTap: () {
                       if (_addEventFormKey.currentState!.validate()) {
                         DateTime date =
                             DateTime.parse(_eventDateController.text);
-                        addNewEvent(
+                        editEvent(
                             date.year, date.month, date.day, date.weekday);
                       }
                     },

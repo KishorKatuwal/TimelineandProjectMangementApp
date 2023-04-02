@@ -7,6 +7,7 @@ import '../../../constants/utils.dart';
 import '../../../model/user.dart';
 import 'package:http/http.dart' as http;
 import '../../../providers/user_provider.dart';
+import '../screens/view_user_screen.dart';
 
 
 class ViewUserService{
@@ -61,6 +62,40 @@ class ViewUserService{
           });
     } catch (e) {
       print("Failed on admin feedback service catch");
+      showSnackBar(context, e.toString());
+    }
+  }
+
+
+  //hide user
+  void hideUser(
+      {required BuildContext context,
+        required User userModel,
+        required bool userStatus,
+     }) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    try {
+      http.Response res = await http.put(
+        Uri.parse('$uri/admin/hide-user'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+          'x-auth-token': userProvider.user.token,
+        },
+        body: jsonEncode({
+          'id': userModel.id,
+          'status': userStatus,
+        }),
+      );
+      httpErrorHandle(
+          response: res,
+          context: context,
+          onSuccess: () {
+            showSnackBar(context, "User Status Successfully Changed!!");
+            Navigator.pop(context);
+            Navigator.pushNamed(context, ViewUserScreen.routeName);
+          });
+    } catch (e) {
+      print("Failed on admin hide service catch");
       showSnackBar(context, e.toString());
     }
   }

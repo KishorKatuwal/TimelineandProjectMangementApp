@@ -59,6 +59,10 @@ const userSchema = mongoose.Schema({
     type: String,
     default: "user",
   },
+  hideUser: {
+     type: Boolean,
+     required: true,
+    },
   //for events
   events: [Events.schema],
   //for projects

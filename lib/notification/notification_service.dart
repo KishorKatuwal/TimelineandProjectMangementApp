@@ -7,7 +7,7 @@ class NotificationService {
       FlutterLocalNotificationsPlugin();
 
   final AndroidInitializationSettings androidInitializationSettings =
-      const AndroidInitializationSettings('logo');
+      const AndroidInitializationSettings('@mipmap/ic_launcher');
 
   void initialiseNotifications() async {
     _configureLocalTimeZone();

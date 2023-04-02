@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timelineandprojectmanagementapp/features/event/screens/edit_event_screen.dart';
 
 import '../../../common/widgets/common_text.dart';
 import '../model/event_data_model.dart';
@@ -53,7 +54,7 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
             return Center(
               child: Text("An error occurred: ${snapshot.error}"),
             );
-          } else if (!snapshot.hasData|| snapshot.data.isEmpty) {
+          } else if (!snapshot.hasData || snapshot.data.isEmpty) {
             return const Center(
               child: Text("No Events are added"),
             );
@@ -64,11 +65,7 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(
-                    top: 4,
-                    right: 8,
-                    left: 8,
-                    bottom: 4
-                  ),
+                      top: 4, right: 8, left: 8, bottom: 4),
                   child: Container(
                     padding: const EdgeInsets.only(
                       left: 10,
@@ -141,6 +138,25 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                               ),
                               onPressed: () {
                                 print("Edit Button Pressed");
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => EditEventScreen(
+                                            eventName:
+                                                eventModel[index].EventName,
+                                            eventCategory:
+                                                eventModel[index].EventType,
+                                            eventDate:
+                                                eventModel[index].EventDate,
+                                            eventDescription:
+                                                eventModel[index].Description,
+                                            eventRepeat:
+                                                eventModel[index].Repeat,
+                                            eventTime:
+                                                eventModel[index].EventTime,
+                                        eventID: eventModel[index].EventID,
+                                          )),
+                                );
                               },
                             ),
                             ElevatedButton(

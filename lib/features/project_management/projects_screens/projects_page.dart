@@ -30,7 +30,7 @@ class _ProjectsPageState extends State<ProjectsPage> {
     final userName = Provider.of<UserProvider>(context).user.firstName;
     return Scaffold(
       key: _scaffoldKey,
-      drawer:  AppDrawer(),
+      drawer:  const AppDrawer(),
       drawerEnableOpenDragGesture: false,
       body: SafeArea(
         child: SingleChildScrollView(

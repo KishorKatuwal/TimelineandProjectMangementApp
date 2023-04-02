@@ -47,6 +47,19 @@ adminRouter.post('/admin/delete-user', admin, async (req, res) => {
     }
 });
 
+//hiding user users
+adminRouter.put('/admin/hide-user', admin, async (req, res) => {
+    try {
+        const { id, status } = req.body;
+        let user = await User.findById(id);
+        user.hideUser = status;
+        user.save();
+        res.json(user);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 
 
 

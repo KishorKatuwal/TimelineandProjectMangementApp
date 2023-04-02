@@ -41,10 +41,10 @@ class AuthService {
         token: '',
         password: password,
         lastActiveTime: now.toString(),
+        hideUser: false,
         events: [],
         projects: [],
       );
-
       http.Response res = await http.post(
         Uri.parse('$uri/api/signup'),
         body: user.toJson(),
@@ -52,7 +52,6 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
-
       httpErrorHandle(
         response: res,
         context: context,
@@ -65,7 +64,7 @@ class AuthService {
         },
       );
     } catch (e) {
-      print("Program failed on catch on signupUSER");
+      print("Program failed on catch on signinUSER");
       showSnackBar(context, e.toString());
     }
   }
@@ -107,8 +106,17 @@ class AuthService {
         },
       );
     } catch (e) {
-      print("Program failed on catch on signupUSER");
-      showSnackBar(context, e.toString());
+      // print("Program failed on catch on signupUSER");
+      print(e.toString());
+      if(e.toString()=="Connection failed"){
+        showSnackBar(context, "No internet connection!");
+      }else if(e.toString()=="Connection timed out"){
+        showSnackBar(context, "Server down!");
+      }else{
+        showSnackBar(context, e.toString());
+
+      }
+
     }
   }
 
