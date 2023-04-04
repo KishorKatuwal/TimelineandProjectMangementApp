@@ -7,6 +7,7 @@ import 'package:timelineandprojectmanagementapp/features/exam/screen/exam_screen
 import 'package:timelineandprojectmanagementapp/notification/notfication_try.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../features/feedback/screens/feedback_screen.dart';
+import '../features/feedback/screens/user_feedback_screen.dart';
 import '../settings/settings.dart';
 
 class AppDrawer extends StatefulWidget {
@@ -116,7 +117,7 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               const SizedBox(
-                height: 200,
+                height: 170,
               ),
               const Divider(
                 height: 3,
@@ -138,6 +139,17 @@ class _AppDrawerState extends State<AppDrawer> {
                 ),
               ),
               ListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, UserFeedbackScreen.routeName);
+                },
+                leading: const Icon(Icons.feedback),
+                title: const Text(
+                  "View Feedback Response",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),   ListTile(
                 onTap: () {
                   Navigator.pushNamed(context, ChangePasswordScreen.routeName);
                 },

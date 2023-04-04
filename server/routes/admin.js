@@ -61,6 +61,21 @@ adminRouter.put('/admin/hide-user', admin, async (req, res) => {
 });
 
 
+//replying feedback
+adminRouter.put('/admin/api/reply-feedback', admin, async (req, res) => {
+    try {
+        const { feedbackId, replyMessage,replyStatus } = req.body;
+        let feedback = await Feedback.findById(feedbackId);
+        feedback.replyMessage = replyMessage;
+        feedback.replyStatus = replyStatus;
+        feedback.save();
+        res.json(feedback);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
+
 
 
 module.exports = adminRouter;
