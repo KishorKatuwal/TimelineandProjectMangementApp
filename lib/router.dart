@@ -13,6 +13,7 @@ import 'package:timelineandprojectmanagementapp/features/exam/screen/exam_screen
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/feedback/screens/user_feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/settings/settings.dart';
 import 'admin/main_screen/admin_screen.dart';
 import 'features/auth/screens/auth_screen.dart';
@@ -97,6 +98,11 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
     case ViewFeedbackScreen.routeName:
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const ViewFeedbackScreen());
+
+
+    case UserFeedbackScreen.routeName:
+      return MaterialPageRoute(
+          settings: routeSettings, builder: (_) => const UserFeedbackScreen());
 
     case ViewUserScreen.routeName:
       return MaterialPageRoute(

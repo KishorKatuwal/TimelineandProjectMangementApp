@@ -30,6 +30,24 @@ const feedbackSchema = mongoose.Schema({
     type: String,
     trim: true,
   },
+    replyDate: {
+      required: true,
+      type: String,
+      trim: true,
+    },
+      replyStatus: {
+        required: true,
+        type: Boolean,
+      },
+      hide: {
+        required: true,
+        type: Boolean,
+      },
+        replyMessage: {
+          required: false,
+          type: String,
+          trim: true,
+        },
 
 
 });

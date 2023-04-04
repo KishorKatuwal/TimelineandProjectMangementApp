@@ -161,8 +161,8 @@ res.status(500).json({error: e.message});
 //giving feedback
 userRouter.post('/api/give-feedback',auth, async(req,res)=>{
 try{
-    const {userId, userEmail, feedbackType, description} = req.body;
-    let feedback = new Feedback({userId, userEmail, feedbackType, description});
+    const {userId, userEmail, feedbackType, description,replyDate, replyStatus,hide, replyMessage} = req.body;
+    let feedback = new Feedback({userId, userEmail, feedbackType, description,replyDate,hide, replyStatus, replyMessage});
     feedback = await feedback.save();
     res.json(feedback);
 }catch(e){
@@ -171,7 +171,27 @@ try{
 });
 
 //retrieving feedback
+userRouter.get('/api/get-feedback', auth, async (req, res) => {
+    try {
+        const feedbacks = await Feedback.find({});
+        res.json(feedbacks);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 
+//hiding feedback from user after deleting
+userRouter.put('/api/update-user-feedback', auth, async (req, res) => {
+    try {
+        const { feedbackId, hide } = req.body;
+        let feedback = await Feedback.findById(feedbackId);
+        feedback.hide = hide;
+        feedback.save();
+        res.json(feedback);
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
 
 
 //adding message
