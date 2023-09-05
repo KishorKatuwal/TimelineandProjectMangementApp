@@ -34,14 +34,13 @@ mongoose.connect(DB).then(()=>{
     console.log(e);
 });
 
-
 io.on("connection",(socket)=>{
     socket.join("discussion_group");
     console.log("Chat backend connected");
     socket.on("send", (msg)=>{
         console.log(msg);
 //        socket.emit("sendMsgServer", {...msg, messageTime:"otherTime"})
-    io.to("discussion_group").emit("sendMsgServer", {...msg, messageTime:"otherTime"});
+    io.to("discussion_group").emit("sendMsgServer", {...msg});
        let discussion = new Discussion({
        message:msg.message,
        messageTime:msg.messageTime,

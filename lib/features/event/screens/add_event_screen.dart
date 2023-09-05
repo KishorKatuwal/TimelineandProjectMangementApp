@@ -40,6 +40,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _eventTypeController.text = category;
   }
 
+  //method for setting category
   _setCategory(String newCategory) {
     setState(() {
       category = newCategory;
@@ -47,6 +48,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     });
   }
 
+  //event categories
   List<String> eventTypeCategories = [
     'Once',
     'Daily',
@@ -67,6 +69,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     _descriptionController.dispose();
   }
 
+  //method for adding new event
   void addNewEvent(int year, int month, int day, int weekDay) {
     eventServices.addNewEvent(
       context: context,
@@ -90,6 +93,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     print(minute);
   }
 
+  //method for opening date picker
   void openDatePicker() async {
     DateTime? pickedDate = await showDatePicker(
         context: context,
@@ -100,7 +104,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
       DateTime now = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
       print(now);
       if(pickedDate.isBefore(now)){
-        showSnackBar(context, "You cannot pick past dates");
+        showSnackBar(context, "You cannot pick past date !");
       }else{
         String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
         setState(() {
@@ -110,6 +114,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
     }
   }
 
+  //method for showing time picler
   void openTimePicker() async {
     TimeOfDay? pickedTime = await showTimePicker(
       context: context,
@@ -325,6 +330,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     text: "Add Event",
                     onTap: () {
                       if (_addEventFormKey.currentState!.validate()) {
+                        //getting individual values
                         DateTime date =
                             DateTime.parse(_eventDateController.text);
                         addNewEvent(

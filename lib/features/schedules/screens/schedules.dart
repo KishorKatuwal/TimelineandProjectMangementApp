@@ -17,7 +17,6 @@ class SchedulesPage extends StatefulWidget {
 
 class _SchedulesPageState extends State<SchedulesPage> {
   final SchedulesService schedulesService = SchedulesService();
-  final AuthService authService= AuthService();
   String formattedDate = DateFormat('E').format(DateTime.now()).toUpperCase();
 
   List<List<dynamic>> _data = [];

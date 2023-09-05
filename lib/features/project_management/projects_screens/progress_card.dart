@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../../constants/global_variables.dart';
 
+
+//view on task page
 class ProgressCard extends StatelessWidget {
   ProgressCard(
       {Key? key,

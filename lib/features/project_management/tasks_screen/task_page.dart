@@ -12,6 +12,7 @@ import '../models/project_management_model.dart';
 import '../models/task_model.dart';
 import '../projects_screens/progress_card.dart';
 
+//project shown below calendar
 class TasksPage extends StatefulWidget {
   const TasksPage({
     Key? key,
@@ -28,9 +29,9 @@ class _TasksPageState extends State<TasksPage> {
   DateTime _selectedDate = DateTime.now();
 
   void _onDateChange(DateTime date) {
-    setState(() {
-      _selectedDate = date;
-    });
+    // setState(() {
+    _selectedDate = date;
+    // });
   }
 
   @override
@@ -105,9 +106,11 @@ class _TasksPageState extends State<TasksPage> {
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const AddNewTask()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const AddNewTask(),
+                              ),
+                            );
                           },
                           child: Container(
                             padding: const EdgeInsets.all(15),
@@ -139,6 +142,7 @@ class _TasksPageState extends State<TasksPage> {
                       ],
                     ),
                     const SizedBox(height: 25),
+                    //calender
                     DatePicker(
                       DateTime.now(),
                       initialSelectedDate: _selectedDate,

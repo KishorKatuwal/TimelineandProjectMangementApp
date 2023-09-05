@@ -3,6 +3,8 @@ import 'package:timelineandprojectmanagementapp/constants/global_variables.dart'
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 import '../models/project_management_model.dart';
 
+
+//details of every project
 class TaskDetailScreen extends StatefulWidget {
   final String projectId;
 
@@ -182,7 +184,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                       },
                                       child: statusLoader
                                           ? const CircularProgressIndicator()
-                                          : const Text("Set as Complete"),
+                                          : const Text("Set as Complete "),
                                     ),
                             ),
                           );
@@ -261,7 +263,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                     ? [
                                         const Icon(Icons.remove_done_outlined),
                                         const Text(
-                                          "Set as Incomplete",
+                                          "Set as Incomplete Project",
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,
@@ -271,7 +273,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                     : [
                                         const Icon(Icons.check_circle_outline),
                                         const Text(
-                                          "Set as Completed",
+                                          "Set as Completed Project",
                                           style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500,

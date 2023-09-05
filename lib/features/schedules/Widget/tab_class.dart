@@ -14,11 +14,13 @@ class TabClass extends StatefulWidget {
 }
 
 class _TabClassState extends State<TabClass> {
+  //getting current week day
   String formattedDate = DateFormat('E').format(DateTime.now()).toUpperCase();
 
   @override
   Widget build(BuildContext context) {
-    String UserGroup = Provider.of<UserProvider>(context).user.group.trim();
+    //getting user group
+    String userGroup = Provider.of<UserProvider>(context).user.group.trim();
     return DefaultTabController(
       length: 7,
       initialIndex: formattedDate == "SUN"
@@ -39,15 +41,11 @@ class _TabClassState extends State<TabClass> {
           preferredSize: const Size.fromHeight(100),
           child: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [GlobalVariables.mainColor, GlobalVariables.mainColor],
-              ),
+              color: GlobalVariables.mainColor,
             ),
             child: SafeArea(
               child: Column(
-                children: const <Widget>[
+                children: const [
                   SizedBox(
                     height: 10.0,
                   ),
@@ -87,15 +85,15 @@ class _TabClassState extends State<TabClass> {
             ),
           ),
         ),
-        body:  TabBarView(
+        body: TabBarView(
           children: [
-            SchedulesPage(Weekday: "SUN", Group:UserGroup),
-            SchedulesPage(Weekday: "MON", Group:UserGroup),
-            SchedulesPage(Weekday: "TUE", Group:UserGroup),
-            SchedulesPage(Weekday: "WED", Group:UserGroup),
-            SchedulesPage(Weekday: "THU", Group:UserGroup),
-            SchedulesPage(Weekday: "FRI", Group:UserGroup),
-            SchedulesPage(Weekday: "SAT", Group:UserGroup),
+            SchedulesPage(Weekday: "SUN", Group: userGroup),
+            SchedulesPage(Weekday: "MON", Group: userGroup),
+            SchedulesPage(Weekday: "TUE", Group: userGroup),
+            SchedulesPage(Weekday: "WED", Group: userGroup),
+            SchedulesPage(Weekday: "THU", Group: userGroup),
+            SchedulesPage(Weekday: "FRI", Group: userGroup),
+            SchedulesPage(Weekday: "SAT", Group: userGroup),
           ],
         ),
       ),

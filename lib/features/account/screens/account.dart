@@ -4,8 +4,8 @@ import 'package:timelineandprojectmanagementapp/features/account/screens/edit_us
 import 'package:timelineandprojectmanagementapp/features/account/widgets/display_details.dart';
 import 'package:timelineandprojectmanagementapp/features/event/model/event_data_model.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
-import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
+
 import '../../../providers/user_provider.dart';
 import '../../project_management/models/project_management_model.dart';
 
@@ -35,6 +35,7 @@ class _AccountScreenState extends State<AccountScreen> {
     runMethod();
   }
 
+  // mounted ensured that widget is currently active and mounted in the widget tree.
   void runMethod() {
     if (mounted) {
       setState(() {
@@ -43,6 +44,7 @@ class _AccountScreenState extends State<AccountScreen> {
     }
   }
 
+  //getting data from the backend
   void getAllData() async {
     setState(() {
       finalLoading = true;
@@ -65,33 +67,34 @@ class _AccountScreenState extends State<AccountScreen> {
         title: const Text("User Profile"),
         actions: [
           PopupMenuButton(
-              icon: const Icon(
-                Icons.edit,
-                color: Colors.white,
+            icon: const Icon(
+              Icons.edit,
+              color: Colors.white,
+            ),
+            onSelected: (value) {
+              // value is coming from popup menu item
+              if (value == "1") {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditUserDetails(
+                      firstName: user.firstName,
+                      lastName: user.lastName,
+                      year: user.year,
+                      group: user.group,
+                      faculty: user.faculty,
+                    ),
+                  ),
+                );
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              const PopupMenuItem(
+                value: "1",
+                child: Text("Edit Details"),
               ),
-              onSelected: (value) {
-                // value is coming from popup menu item
-                if (value == "1") {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditUserDetails(
-                        firstName: user.firstName,
-                        lastName: user.lastName,
-                        year: user.year,
-                        group: user.group,
-                        faculty: user.faculty,
-                      ),
-                    ),
-                  );
-                }
-              },
-              itemBuilder: (BuildContext context) => [
-                    const PopupMenuItem(
-                      value: "1",
-                      child: Text("Edit Details"),
-                    ),
-                  ]),
+            ],
+          ),
         ],
         centerTitle: true,
       ),
@@ -111,6 +114,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    //display details is imported from display details class inside widget folder
                     DisplayDetails(
                       title: "User Details",
                       completed: "Email",

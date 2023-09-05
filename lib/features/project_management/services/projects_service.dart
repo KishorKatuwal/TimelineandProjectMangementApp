@@ -69,7 +69,7 @@ class ProjectServices {
         'Content-Type': 'application/json; charset=UTF-8',
         'x-auth-token': userProvider.user.token,
       });
-
+      print(res.body);
       httpErrorHandle(
           response: res,
           context: context,
@@ -138,6 +138,7 @@ class ProjectServices {
   //getting pending projects
   Future<List<ProjectDataModel>> getPendingProjects(
       BuildContext context) async {
+    getProjects=[];
     getProjects = await fetchAllProducts(context);
     for (int i = 0; i < getProjects.length; i++) {
       if (getProjects[i].isCompleted == false) {
@@ -151,6 +152,7 @@ class ProjectServices {
 //getting completed projects
   Future<List<ProjectDataModel>> getCompletedProjects(
       BuildContext context) async {
+    getProjects=[];
     getProjects = await fetchAllProducts(context);
     for (int i = 0; i < getProjects.length; i++) {
       if (getProjects[i].isCompleted == true) {

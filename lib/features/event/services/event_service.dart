@@ -32,7 +32,9 @@ class EventServices {
     required int hour,
     required int minute,
   }) async {
+    //getting user details
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    //initializing notification service
     notificationService.initialiseNotifications();
     try {
       EventDataModel eventDataModel = EventDataModel(
@@ -43,7 +45,7 @@ class EventServices {
           Repeat: Repeat,
           Description: Description,
           EventType: EventType);
-
+// Send a POST request to the add-event API endpoint
       http.Response res = await http.post(
         Uri.parse('$uri/api/add-event'),
         headers: {
@@ -60,6 +62,7 @@ class EventServices {
           User user = userProvider.user
               .copyWith(events: jsonDecode(res.body)['events']);
           userProvider.setUserFromModel(user);
+          Navigator.pop(context);
           Navigator.pushReplacementNamed(context, BottomBar.routeName,
               arguments: 2);
           if (Repeat == "Once") {
@@ -95,7 +98,7 @@ class EventServices {
     }
   }
 
-
+//method for editing event
   void editEvent({
     required BuildContext context,
     required String EventName,
@@ -176,7 +179,7 @@ class EventServices {
   }
 
   // method for fetching data
-  Future<List<EventDataModel>> fetchAllProducts(BuildContext context) async {
+  Future<List<EventDataModel>> fetchAllEvents(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     List<EventDataModel> eventList = [];
     try {
@@ -201,6 +204,7 @@ class EventServices {
     return eventList;
   }
 
+  //method for deleting event
   void deleteEvent({
     required BuildContext context,
     required String eventID,
@@ -238,7 +242,8 @@ class EventServices {
   List<EventDataModel> upcomingEvents = [];
   List<EventDataModel> getEvents = [];
   Future<List<EventDataModel>> getUpcomingEvents(BuildContext context) async {
-    getEvents = await fetchAllProducts(context);
+    getEvents = [];
+    getEvents = await fetchAllEvents(context);
     for (int i = 0; i < getEvents.length; i++) {
       String date1 = getEvents[i].EventDate;
       DateTime date2 = DateTime.now();
@@ -248,6 +253,7 @@ class EventServices {
         upcomingEvents.add(getEvents[i]);
       }
     }
+    //sorting list according to the dates
     upcomingEvents.sort((a, b) => a.EventDate.compareTo(b.EventDate));
     return upcomingEvents;
   }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
-import 'package:timelineandprojectmanagementapp/features/change_passwprd/screen/change_password_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/change_password/screen/change_password_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/group_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/exam/screen/exam_screen.dart';
-import 'package:timelineandprojectmanagementapp/notification/notfication_try.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../features/feedback/screens/feedback_screen.dart';
 import '../features/feedback/screens/user_feedback_screen.dart';
@@ -37,8 +37,11 @@ class _AppDrawerState extends State<AppDrawer> {
               ),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async{
                 authService.logOut(context);
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                String authToken = prefs.getString('x-auth-token')!;
+                print('Token: $authToken');
               },
               child: const Text(
                 "Yes",
@@ -173,21 +176,21 @@ class _AppDrawerState extends State<AppDrawer> {
                   ),
                 ),
               ),
-              ListTile(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const NotificationTryScreen()));
-                },
-                leading: const Icon(Icons.info_outline),
-                title: const Text(
-                  "About App",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              // ListTile(
+              //   onTap: () {
+              //     Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => const NotificationTryScreen()));
+              //   },
+              //   leading: const Icon(Icons.info_outline),
+              //   title: const Text(
+              //     "About App",
+              //     style: TextStyle(
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              // ),
               GestureDetector(
                 onTap: () {
                   _showDeleteAlertDialog();

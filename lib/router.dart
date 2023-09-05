@@ -12,23 +12,17 @@ import 'package:timelineandprojectmanagementapp/features/event/screens/event_scr
 import 'package:timelineandprojectmanagementapp/features/exam/screen/exam_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
-import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/feedback/screens/user_feedback_screen.dart';
 import 'package:timelineandprojectmanagementapp/settings/settings.dart';
 import 'admin/main_screen/admin_screen.dart';
-import 'features/auth/screens/auth_screen.dart';
-import 'features/change_passwprd/screen/change_password_screen.dart';
-import 'features/home/screens/home_screen.dart';
+
+import 'features/change_password/screen/change_password_screen.dart';
+
 
 Route<dynamic> generateRoute(RouteSettings routeSettings) {
   switch (routeSettings.name) {
-    case AuthScreen.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const AuthScreen());
 
-    case HomeScreen.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const HomeScreen());
+
 
     case LoginScreen.routeName:
       return MaterialPageRoute(
@@ -64,9 +58,9 @@ Route<dynamic> generateRoute(RouteSettings routeSettings) {
       return MaterialPageRoute(
           settings: routeSettings, builder: (_) => const EventScreen());
 
-    case ViewEventScreen.routeName:
-      return MaterialPageRoute(
-          settings: routeSettings, builder: (_) => const ViewEventScreen());
+    // case ViewEventScreen.routeName:
+    //   return MaterialPageRoute(
+    //       settings: routeSettings, builder: (_) => const ViewEventScreen());
 
     case FeedbackScreen.routeName:
       return MaterialPageRoute(

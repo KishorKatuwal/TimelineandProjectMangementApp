@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
+import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
-import 'package:timelineandprojectmanagementapp/features/change_passwprd/widget/password_textfiled.dart';
+import 'package:timelineandprojectmanagementapp/features/change_password/widget/password_textfiled.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = '/login-screen';
@@ -15,11 +16,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //uniquely identify a form
   final _signInFormKey = GlobalKey<FormState>();
   final AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  //used to release resources when a State object is removed permanently from the tree.
   @override
   void dispose() {
     super.dispose();
@@ -28,11 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool loader = true;
-
+  //used to show loader when login button is pressed
   Future<void> runMethodForDuration() async {
     setState(() {
       loader = false;
     });
+    //used to delay method for 1sec
     await Future.delayed(const Duration(seconds: 1));
     signInUser();
     setState(() {
@@ -40,6 +44,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+  //method for sign in user
   void signInUser() {
     authService.signInUser(
         context: context,
@@ -88,29 +93,33 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 25,
                   ),
+                  //login button
                   CustomButton(
                     text: "Log in",
                     loader: loader,
                     onTap: () {
                       if (_signInFormKey.currentState!.validate()) {
-                        runMethodForDuration();
-                        // signInUser();
+                        if(_passwordController.text.length<6){
+                          showSnackBar(context, "Use Longer Password!!");
+                        }else{
+                          runMethodForDuration();
+                        }
                       }
                     },
                   ),
                   const SizedBox(
-                    height: 5,
+                    height: 20,
                   ),
-                  Container(
-                    margin: const EdgeInsets.only(right: 220, top: 5),
-                    child: TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        "Forgot Password?",
-                        style: TextStyle(color: Colors.redAccent),
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   margin: const EdgeInsets.only(right: 220, top: 5),
+                  //   child: TextButton(
+                  //     onPressed: () {},
+                  //     child: const Text(
+                  //       "Forgot Password?",
+                  //       style: TextStyle(color: Colors.redAccent),
+                  //     ),
+                  //   ),
+                  // ),
                   const Divider(
                     color: Colors.black,
                     height: 10,

@@ -10,6 +10,7 @@ import 'package:timelineandprojectmanagementapp/notification/calling_method.dart
 import '../../constants/global_variables.dart';
 import '../../features/account/screens/account.dart';
 
+//bottom bar of the system
 class BottomBar extends StatefulWidget {
   static const String routeName = '/actual-home';
   final int pageIndex;

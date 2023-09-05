@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../constants/global_variables.dart';
 
+//projects on dashboard
 class OverviewCard extends StatefulWidget {
   final String projectName;
   final int index;

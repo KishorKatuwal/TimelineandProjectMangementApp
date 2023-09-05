@@ -15,7 +15,10 @@ class ViewAddedEventScreen extends StatefulWidget {
 }
 
 class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
+  //creating an object
   final EventServices eventServices = EventServices();
+
+  //making empty list
   List<EventDataModel> eventModel = [];
 
   // @override
@@ -26,11 +29,12 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
   // }
 
   void getDate() async {
-    eventModel = await eventServices.fetchAllProducts(context);
+    eventModel = await eventServices.fetchAllEvents(context);
     print(eventModel.length);
     setState(() {});
   }
 
+  //method for deleting event
   void deleteProduct(String eventId) {
     eventServices.deleteEvent(context: context, eventID: eventId);
     setState(() {});
@@ -44,7 +48,7 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-        future: eventServices.fetchAllProducts(context),
+        future: eventServices.fetchAllEvents(context),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
@@ -83,12 +87,11 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                         ),
                       ],
                     ),
+                    //expansion tile is used to expand the
                     child: ExpansionTile(
                       title: Text(eventModel[index].EventName,
                           style: const TextStyle(
-                              fontSize: 20,
-                              // fontWeight: FontWeight.bold,
-                              color: Colors.black87)),
+                              fontSize: 20, color: Colors.black87)),
                       children: [
                         const Divider(
                           color: Colors.black12,
@@ -124,6 +127,7 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
+                            //button for editing event
                             ElevatedButton(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -141,24 +145,22 @@ class _ViewAddedEventScreenState extends State<ViewAddedEventScreen> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => EditEventScreen(
-                                            eventName:
-                                                eventModel[index].EventName,
-                                            eventCategory:
-                                                eventModel[index].EventType,
-                                            eventDate:
-                                                eventModel[index].EventDate,
-                                            eventDescription:
-                                                eventModel[index].Description,
-                                            eventRepeat:
-                                                eventModel[index].Repeat,
-                                            eventTime:
-                                                eventModel[index].EventTime,
-                                        eventID: eventModel[index].EventID,
-                                          )),
+                                    builder: (context) => EditEventScreen(
+                                      eventName: eventModel[index].EventName,
+                                      eventCategory:
+                                          eventModel[index].EventType,
+                                      eventDate: eventModel[index].EventDate,
+                                      eventDescription:
+                                          eventModel[index].Description,
+                                      eventRepeat: eventModel[index].Repeat,
+                                      eventTime: eventModel[index].EventTime,
+                                      eventID: eventModel[index].EventID,
+                                    ),
+                                  ),
                                 );
                               },
                             ),
+                            //button for deleting event
                             ElevatedButton(
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
