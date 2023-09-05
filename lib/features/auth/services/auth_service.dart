@@ -16,7 +16,7 @@ import '../../../constants/error_handling.dart';
 import '../../../constants/utils.dart';
 
 class AuthService {
-  //function  for signup user
+  //method for signup user
   void signUpUser({
     required BuildContext context,
     required String email,
@@ -45,13 +45,16 @@ class AuthService {
         events: [],
         projects: [],
       );
+      // Send a POST request to the signup API endpoint
       http.Response res = await http.post(
         Uri.parse('$uri/api/signup'),
         body: user.toJson(),
+        //headers indicates that request body is in json format
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+      // Handle the HTTP response and perform actions accordingly
       httpErrorHandle(
         response: res,
         context: context,
@@ -63,13 +66,15 @@ class AuthService {
           Navigator.pop(context);
         },
       );
-    } catch (e) {
-      print("Program failed on catch on signinUSER");
+    }
+    // Handle any errors that occur during the process
+    catch (e) {
+      print("Program failed on catch on sign in USER");
       showSnackBar(context, e.toString());
     }
   }
 
-  //function  for sign in user
+  //method  for sign in user
   void signInUser({
     required BuildContext context,
     required String email,
@@ -91,6 +96,10 @@ class AuthService {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+          showSnackBar(
+            context,
+            'Successfully logged in!',
+          );
           if (Provider.of<UserProvider>(context, listen: false).user.type ==
               'user') {
             Navigator.pushNamedAndRemoveUntil(
@@ -99,24 +108,18 @@ class AuthService {
             Navigator.pushNamedAndRemoveUntil(
                 context, AdminScreen.routeName, (route) => false);
           }
-          showSnackBar(
-            context,
-            'Successfully logged in!',
-          );
         },
       );
     } catch (e) {
       // print("Program failed on catch on signupUSER");
       print(e.toString());
-      if(e.toString()=="Connection failed"){
+      if (e.toString() == "Connection failed") {
         showSnackBar(context, "No internet connection!");
-      }else if(e.toString()=="Connection timed out"){
+      } else if (e.toString() == "Connection timed out") {
         showSnackBar(context, "Server down!");
-      }else{
+      } else {
         showSnackBar(context, e.toString());
-
       }
-
     }
   }
 
@@ -135,7 +138,7 @@ class AuthService {
           });
       var response = jsonDecode(tokenRes.body);
       if (response == true) {
-        //get the user data
+        //getting the user data
         http.Response userRes = await http.get(Uri.parse('$uri/'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
@@ -145,17 +148,19 @@ class AuthService {
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
-      print("Program failed get user data on catch");
+      print("Program failed on get user data on catch");
       showSnackBar(context, e.toString());
     }
   }
 
+  //method for logout user
   void logOut(BuildContext context) async {
     try {
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
       await sharedPreferences.setString('x-auth-token', "");
       await sharedPreferences.setBool('methodExecuted', false);
+      //will not go back if back button pressed
       Navigator.pushNamedAndRemoveUntil(
           context, LoginScreen.routeName, (route) => false);
     } catch (e) {

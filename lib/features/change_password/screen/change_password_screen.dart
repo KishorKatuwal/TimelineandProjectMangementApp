@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
-import 'package:timelineandprojectmanagementapp/features/change_passwprd/services/change_password_service.dart';
-import 'package:timelineandprojectmanagementapp/features/change_passwprd/widget/password_textfiled.dart';
+import 'package:timelineandprojectmanagementapp/features/change_password/services/change_password_service.dart';
+import 'package:timelineandprojectmanagementapp/features/change_password/widget/password_textfiled.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   static const String routeName = '/change-password-screen';
@@ -57,8 +57,8 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
               children: [
                 PasswordTextField(
                     controller: _previousPasswordController,
-                    label: "Previous Password",
-                    hintText: "Previous Password",
+                    label: "Current Password",
+                    hintText: "Current Password",
                     obText: true),
                 const SizedBox(
                   height: 15,

@@ -14,6 +14,7 @@ class AddNewTask extends StatefulWidget {
 }
 
 class _AddNewTaskState extends State<AddNewTask> {
+  //required variables
   final TextEditingController _titleController = TextEditingController();
   late TextEditingController _startDateController;
   late TextEditingController _endDateController;
@@ -25,6 +26,8 @@ class _AddNewTaskState extends State<AddNewTask> {
   String _newTaskName = "";
   bool _newTaskStatus = false;
   final TextEditingController _taskNameController = TextEditingController();
+
+  //for dates
   DateTime SelectedDate = DateTime.now();
   DateTime selectedStartDate =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
@@ -32,6 +35,7 @@ class _AddNewTaskState extends State<AddNewTask> {
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   final ProjectServices projectServices = ProjectServices();
 
+  //method for adding project
   void addNewProject() {
     projectServices.addNewProject(
         context: context,
@@ -53,6 +57,7 @@ class _AddNewTaskState extends State<AddNewTask> {
         text: DateFormat('MMM d, ' 'yy').format(SelectedDate));
   }
 
+  //method for showing date picker
   _selectDate(BuildContext context, String DateType) async {
     final DateTime? selected = await showDatePicker(
       context: context,
@@ -75,6 +80,7 @@ class _AddNewTaskState extends State<AddNewTask> {
     }
   }
 
+  //pop up for adding task
   void _addTask() async {
     return showDialog(
       context: context,
@@ -152,6 +158,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
+                          //back button arrow
                           GestureDetector(
                             onTap: () {
                               Navigator.pop(context);
@@ -247,6 +254,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                       padding: const EdgeInsets.only(
                           left: 20, right: 20, top: 20, bottom: 20),
                       decoration: const BoxDecoration(
+                          //background color of white in middle
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30),
@@ -274,7 +282,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                         },
                                         child: const Icon(
                                           Icons.calendar_month_outlined,
-                                          color: Colors.black26,
+                                          color: Colors.black54,
                                         ),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
@@ -313,7 +321,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                         },
                                         child: const Icon(
                                           Icons.calendar_month_outlined,
-                                          color: Colors.black26,
+                                          color: Colors.black54,
                                         ),
                                       ),
                                       enabledBorder: const UnderlineInputBorder(
@@ -346,6 +354,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                   fontSize: 18, fontWeight: FontWeight.bold)),
                           SizedBox(
                             height: 150,
+                            //occupy as much as possible within its parent container
                             width: double.infinity,
                             child: _tasks.isEmpty
                                 ? const Center(
@@ -388,6 +397,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                   style: const TextStyle(
                                                       fontSize: 16)),
                                             ),
+                                            //button to edit task
                                             IconButton(
                                               icon: const Icon(
                                                 Icons.edit,
@@ -419,7 +429,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                               decoration:
                                                                   const InputDecoration(
                                                                       labelText:
-                                                                          "Task Name"),
+                                                                          "Task Nam"),
                                                               validator: (val) {
                                                                 if (val ==
                                                                         null ||
@@ -446,24 +456,33 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                           child: const Text(
                                                               "Save"),
                                                           onPressed: () {
-                                                            setState(() {
-                                                              Task updatedTask =
-                                                                  Task(
-                                                                id: taskToEdit
-                                                                    .id,
-                                                                status:
-                                                                    taskToEdit
-                                                                        .status,
-                                                                taskName:
-                                                                    _taskNameController
-                                                                        .text,
-                                                              );
-                                                              _tasks[taskIndex] =
-                                                                  updatedTask;
-                                                            });
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop();
+                                                            if (_taskNameController
+                                                                .text
+                                                                .isNotEmpty) {
+                                                              setState(() {
+                                                                Task
+                                                                    updatedTask =
+                                                                    Task(
+                                                                  id: taskToEdit
+                                                                      .id,
+                                                                  status:
+                                                                      taskToEdit
+                                                                          .status,
+                                                                  taskName:
+                                                                      _taskNameController
+                                                                          .text,
+                                                                );
+                                                                _tasks[taskIndex] =
+                                                                    updatedTask;
+                                                              });
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .pop();
+                                                            } else {
+                                                              showSnackBar(
+                                                                  context,
+                                                                  "Enter a task Name");
+                                                            }
                                                           },
                                                         ),
                                                       ],
@@ -472,6 +491,7 @@ class _AddNewTaskState extends State<AddNewTask> {
                                                 );
                                               },
                                             ),
+                                            //button to delete task
                                             IconButton(
                                               icon: const Icon(
                                                 Icons.delete,

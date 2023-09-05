@@ -24,7 +24,6 @@ userRouter.post("/api/add-event", auth, async (req, res) => {
     }
 });
 
-
 //editing events
 userRouter.put("/api/edit-event", auth, async (req, res) => {
     try {
@@ -69,6 +68,7 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
         const existingEvents = await user.events;
        for(let i=0; i<existingEvents.length; i++){
         if(existingEvents[i]._id==EventID){
+             // If a matching event is found, remove it from the events list using splice()
             user.events.splice(i, 1);
         }
         }
@@ -99,6 +99,7 @@ userRouter.delete("/api/delete-events",auth, async (req, res) => {
         try {
             let user = await User.findById(req.user);
             const userProjects = user.projects;
+
             res.json(userProjects);
         } catch (e) {
             res.status(500).json({ error: e.message });
@@ -271,7 +272,7 @@ try {
     const isMatch = await bcryptjs.compare(previousPassword, user.password);
     if(!isMatch){
         return res.status(400)
-        .json({msg: "Previous Password didn't matched"});
+        .json({msg: "Current Password didn't matched"});
     }
     user.password = hashedPassword;
     user.save();

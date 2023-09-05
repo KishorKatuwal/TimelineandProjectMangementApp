@@ -88,6 +88,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
     _descriptionController.dispose();
   }
 
+  //method for editing event
   void editEvent(int year, int month, int day, int weekDay) {
     eventServices.editEvent(
       context: context,

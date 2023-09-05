@@ -4,8 +4,6 @@ import 'package:timelineandprojectmanagementapp/constants/global_variables.dart'
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_upcomming_events.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/addNewProjectScreen/add_new_project.dart';
-import 'package:timelineandprojectmanagementapp/features/project_management/projects_screens/progress_card.dart';
-import 'package:timelineandprojectmanagementapp/features/project_management/tasks_screen/task_page.dart';
 import '../../../drawer/app_drawer.dart';
 import '../../../providers/user_provider.dart';
 import '../../event/model/event_data_model.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/Provider.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:timelineandprojectmanagementapp/features/discussion/chat_screens/other_message.dart';
@@ -19,6 +20,7 @@ class GroupScreen extends StatefulWidget {
 
 class _GroupScreenState extends State<GroupScreen> {
   final DiscussionService discussionService = DiscussionService();
+  DateTime now = DateTime.now();
   IO.Socket? socket;
   List<DiscussionModel> discussionModel = [];
   final _messageController = TextEditingController();
@@ -37,13 +39,17 @@ class _GroupScreenState extends State<GroupScreen> {
   }
 
   void connect() {
+    // Create a socket instance with the specified URI and options
     socket = IO.io(uri, <String, dynamic>{
       "transports": ["websocket"],
       "autoConnect": false,
     });
+    // Connect to the server
     socket!.connect();
+    // Listen for the "sendMsgServer" event from the server
     socket!.on("sendMsgServer", (msg) {
       print(msg);
+      // Check if the widget is still mounted before updating the UI
       if (mounted) {
         setState(() {
           getPreviousMessage();
@@ -52,12 +58,13 @@ class _GroupScreenState extends State<GroupScreen> {
     });
   }
 
+//method to send message
   void sendMsg(String msg, String userName, String userId, String userGroup,
       String userYear) {
     socket!.emit('send', {
       'messageId': '',
       'message': msg,
-      'messageTime': "myTime",
+      'messageTime': DateFormat('hh:mm a').format(now),
       'userId': userId,
       'userName': userName,
       'userGroup': userGroup,
@@ -69,10 +76,7 @@ class _GroupScreenState extends State<GroupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userName = Provider.of<UserProvider>(context).user.firstName;
-    final userId = Provider.of<UserProvider>(context).user.id;
-    final userYear = Provider.of<UserProvider>(context).user.year;
-    final userGroup = Provider.of<UserProvider>(context).user.group;
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Group Chat"),
@@ -85,7 +89,7 @@ class _GroupScreenState extends State<GroupScreen> {
               reverse: true,
                 itemCount: discussionModel.length,
                 itemBuilder: (context, index) {
-                  if (discussionModel[index].userId == userId) {
+                  if (discussionModel[index].userId == user.id) {
                     return OwnMessage(
                         message: discussionModel[index].message,
                         userName: discussionModel[index].userName);
@@ -114,8 +118,8 @@ class _GroupScreenState extends State<GroupScreen> {
                   onPressed: () {
                     if (_messageController.text.isEmpty) {
                     } else {
-                      sendMsg(_messageController.text, userName, userId,
-                          userGroup, userYear);
+                      sendMsg(_messageController.text, user.firstName, user.id,
+                          user.group, user.year);
                     }
                   },
                   icon: const Icon(

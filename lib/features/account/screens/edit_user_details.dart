@@ -54,6 +54,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
     _lastNameController.dispose();
   }
 
+//method for updating user details
   void updateUserDetails() {
     accountService.updateUserDetails(
         context: context,
@@ -94,12 +95,12 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                     height: 35,
                   ),
                   CustomTextField(
-                      controller: _firstNameController, hintText: "Full Name"),
+                      controller: _firstNameController, hintText: "First Name"),
                   const SizedBox(
                     height: 15,
                   ),
                   CustomTextField(
-                      controller: _lastNameController, hintText: "Email"),
+                      controller: _lastNameController, hintText: "Last Name"),
                   const SizedBox(
                     height: 15,
                   ),
@@ -176,6 +177,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                     text: "Edit Details",
                     onTap: () {
                       if (_editFormKey.currentState!.validate()) {
+                        //checking if same details are provided or not
                         if (_firstNameController.text == widget.firstName &&
                             _lastNameController.text == widget.lastName &&
                             _groupController.text == widget.group &&

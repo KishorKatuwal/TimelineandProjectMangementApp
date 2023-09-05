@@ -7,14 +7,16 @@ const auth = require("../middlewares/auth");
 
 authRouter.post("/api/signup", async (req, res) => {
   try {
+
     //getting data from the client
     const { firstName,lastName, email, password, group, faculty, year,lastActiveTime,hideUser } = req.body;
     //checking whether the user already exits or not
     const existingUser = await User.findOne({ email });
+    //400 is bad request
     if (existingUser) {
-      return res.status(400).json({ msg: "Already logged in" });
+      return res.status(400).json({ msg: "Already signed up with this email address!" });
     }
-    //8is like salt
+    //has password with a salt of 8 rounds
     const hashedPassword = await bcryptjs.hash(password, 8);
     let user = new User({
       email,
@@ -32,6 +34,8 @@ authRouter.post("/api/signup", async (req, res) => {
     //return that data to the user
     res.json(user);
   } catch (e) {
+  //500 means internal server error
+  console.log(e.message);
     res.status(500).json({ error: e.message });
   }
 });
@@ -39,22 +43,28 @@ authRouter.post("/api/signup", async (req, res) => {
 //api for singing in
  authRouter.post('/api/signin', async (req, res)=> {
     try{
+        console.log(req.body);
+        console.log("hit here");
         const {email, password} = req.body;
         const user = await User.findOne({ email});
         if(!user){
             return res.status(400)
-            .json({msg: "User with this email does not exist"});
+            .json({msg: "User with this email does not existss"});
         }
         const isMatch = await bcryptjs.compare(password, user.password);
         if(!isMatch){
             return res.status(400)
             .json({msg: "Incorrect Password"});
         }
-       if(user.hideUser){
-            return res.status(400)
-            .json({msg: "Your account is deactivated!!"});
-       }
+//       if(user.hideUser){
+//            return res.status(400)
+//            .json({msg: "Your account is deactivated!!"});
+//       }
+       //taking payload and secret key and creates unique token
         const token = jwt.sign({id: user._id}, "passwordKey");
+        //...is used to include all properties of user
+
+//        console.log(token, ...user._doc);
         res.json({token, ...user._doc})
 
     }catch(e){
@@ -79,7 +89,9 @@ authRouter.post("/api/signup", async (req, res) => {
 
     //get user data
     authRouter.get("/", auth, async (req, res) => {
+    //getting user details from the user
       const user = await User.findById(req.user);
+    // Send a JSON response containing the user document and the authentication token
       res.json({ ...user._doc, token: req.token });
     });
 

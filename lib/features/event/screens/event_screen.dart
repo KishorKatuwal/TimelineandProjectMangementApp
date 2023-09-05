@@ -1,14 +1,12 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/add_event_screen.dart';
-import 'package:timelineandprojectmanagementapp/tryclass.dart';
 import 'package:timelineandprojectmanagementapp/features/event/screens/view_addedEvent_screen.dart';
-import 'package:timelineandprojectmanagementapp/features/event/screens/view_event_screen.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
+
 import '../model/event_data_model.dart';
 
 class EventScreen extends StatefulWidget {
@@ -44,18 +42,23 @@ class _EventScreenState extends State<EventScreen> {
 
   void getFinalData() async {
     mySelectedEvents = await getFinalDataList();
-    // print("New event for backed Developer ${json.encode(mySelectedEvents)}");
   }
 
+  //fetching user events
   Future<Map<String, List>> getFinalDataList() async {
-    _eventsFromBackend = await eventServices.fetchAllProducts(context);
+    _eventsFromBackend = await eventServices.fetchAllEvents(context);
     for (int i = 0; i < _eventsFromBackend.length; i++) {
+      //checking key of date exists or not
       if (_finalEvents[_eventsFromBackend[i].EventDate] != null) {
+        //there is already an entry for that date
+        //add on existing entry
         _finalEvents[_eventsFromBackend[i].EventDate]?.add({
           "eventTitle": _eventsFromBackend[i].EventName,
           "eventType": _eventsFromBackend[i].EventType,
         });
       } else {
+        //there is no existing entry for the date
+        //creates new entry
         _finalEvents[_eventsFromBackend[i].EventDate] = [
           {
             "eventTitle": _eventsFromBackend[i].EventName,
@@ -66,9 +69,11 @@ class _EventScreenState extends State<EventScreen> {
     }
     loading = true;
     setState(() {});
+    print(_finalEvents);
     return _finalEvents;
   }
 
+  //method for showing event details below calendar
   List _listofDayEvents(DateTime dateTime) {
     if (mySelectedEvents[DateFormat('yyyy-MM-dd').format(dateTime)] != null) {
       return mySelectedEvents[DateFormat('yyyy-MM-dd').format(dateTime)]!;
@@ -81,6 +86,7 @@ class _EventScreenState extends State<EventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //removing icon from app bar
         automaticallyImplyLeading: false,
         title: const Text("Event Calendar"),
         centerTitle: true,
@@ -92,12 +98,15 @@ class _EventScreenState extends State<EventScreen> {
                   TableCalendar(
                     calendarStyle: const CalendarStyle(
                       todayDecoration: BoxDecoration(
+                        //colour of today's date when others selected
                           color: Color.fromRGBO(112, 141, 246, 1.0),
                           shape: BoxShape.circle),
                       selectedDecoration: BoxDecoration(
+                        //color of selected date
                         color: Colors.blueAccent,
                         shape: BoxShape.circle,
                       ),
+                      //color of weekend text
                       weekendTextStyle: TextStyle(color: Colors.red),
                       markerDecoration: BoxDecoration(
                           color: GlobalVariables.mainColor,
@@ -152,6 +161,7 @@ class _EventScreenState extends State<EventScreen> {
                     color: Colors.black26,
                     thickness: 2,
                   ),
+                  //... is a spread operator used to iterate over all elements
                   ..._listofDayEvents(_selectedDate!).map(
                     (myEvents) => ListTile(
                       title: Container(
@@ -185,6 +195,7 @@ class _EventScreenState extends State<EventScreen> {
                   const SizedBox(
                     height: 15,
                   ),
+                  //button for viewing events
                   Container(
                     padding: const EdgeInsets.all(8),
                     child: CustomButton(
@@ -194,6 +205,7 @@ class _EventScreenState extends State<EventScreen> {
                               context, ViewAddedEventScreen.routeName);
                         }),
                   ),
+                  //button for adding new event
                   Container(
                     padding: const EdgeInsets.all(8),
                     child: CustomButton(

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/services/schedules_service.dart';
 import 'package:timelineandprojectmanagementapp/notification/calling_method.dart';
@@ -121,6 +122,16 @@ class _NotificationTryScreenState extends State<NotificationTryScreen> {
               text: "Cancel All notifications",
               onTap: () {
                 notificationService.cancelAllNotification();
+              }),
+          const SizedBox(
+            height: 20,
+          ),
+          CustomButton(
+              text: "Checking User Token",
+              onTap: () async{
+                SharedPreferences prefs = await SharedPreferences.getInstance();
+                String authToken = prefs.getString('x-auth-token')!;
+                print('Token: $authToken');
               }),
         ],
       ),

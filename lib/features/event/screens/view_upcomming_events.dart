@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../constants/global_variables.dart';
 
+//class for viewing upcoming events in dashboard
 class ViewUpcomingEvents extends StatefulWidget {
   ViewUpcomingEvents(
       {Key? key,

@@ -45,6 +45,7 @@ class AccountService {
             User user = userProvider.user.copyWith(
               group: jsonDecode(res.body)['group'],
               firstName: jsonDecode(res.body)['firstName'],
+              lastName: jsonDecode(res.body)['lastName'],
               faculty: jsonDecode(res.body)['faculty'],
               year: jsonDecode(res.body)['year'],
             );
@@ -59,7 +60,7 @@ class AccountService {
 
 
 
-
+//method for updating user last active date
   void updateLastActiveDate({
     required BuildContext context,
   }) async {

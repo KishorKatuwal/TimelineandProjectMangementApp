@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
-import 'package:timelineandprojectmanagementapp/features/change_passwprd/widget/password_textfiled.dart';
+import 'package:timelineandprojectmanagementapp/features/change_password/widget/password_textfiled.dart';
+
+import '../../../constants/utils.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String routeName = '/signup-screen';
@@ -21,6 +23,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _groupController = TextEditingController();
+  //giving initial value to dropdown
   String category = 'Year1';
   String facultyValue = "Computing";
 
@@ -34,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
     _lastNameController.dispose();
   }
 
+  //calling method to sign up user
   void signUpUser() {
     authService.signUpUser(
       context: context,
@@ -47,12 +51,14 @@ class _SignupScreenState extends State<SignupScreen> {
     );
   }
 
+  //values for year categories
   List<String> yearCategories = [
     'Year1',
     'Year2',
     'Year3',
   ];
 
+  //values for year categories
   List<String> facultyCategories = [
     'Computing',
     'Multimedia',
@@ -60,7 +66,7 @@ class _SignupScreenState extends State<SignupScreen> {
   ];
 
   bool loader = true;
-
+//calling method to show loader
   Future<void> runMethodForDuration() async {
     setState(() {
       loader = false;
@@ -182,12 +188,17 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(
                     height: 25,
                   ),
+                  //Sign Up button
                   CustomButton(
                     text: "Sign Up",
                     loader: loader,
                     onTap: () {
                       if (_signUpFormKey.currentState!.validate()) {
-                        runMethodForDuration();
+                        if(_passwordController.text.length<6){
+                          showSnackBar(context, "Use Longer Password!!");
+                        }else{
+                          runMethodForDuration();
+                        }
                       }
                     },
                   ),

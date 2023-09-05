@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+//used in view added event screen
 class CommonText extends StatefulWidget {
   final String headText;
   final String text;
@@ -28,7 +29,6 @@ class _CommonTextState extends State<CommonText> {
             text: widget.headText,
             style: TextStyle(
                 color: Colors.black87,
-                // fontWeight: FontWeight.bold,
                 fontSize: widget.fontSize + 2,
                 letterSpacing: 1.5),
           ),
