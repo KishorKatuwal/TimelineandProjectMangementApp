@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/services/project_controler.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 
 import '../../../constants/global_variables.dart';
 import '../models/task_model.dart';
 
-class AddNewTask extends StatefulWidget {
+class AddNewTask extends ConsumerStatefulWidget {
   const AddNewTask({Key? key}) : super(key: key);
 
   @override
-  State<AddNewTask> createState() => _AddNewTaskState();
+  ConsumerState<AddNewTask> createState() => _AddNewTaskState();
 }
 
-class _AddNewTaskState extends State<AddNewTask> {
+class _AddNewTaskState extends ConsumerState<AddNewTask> {
   //required variables
   final TextEditingController _titleController = TextEditingController();
   late TextEditingController _startDateController;
@@ -37,7 +39,8 @@ class _AddNewTaskState extends State<AddNewTask> {
 
   //method for adding project
   void addNewProject() {
-    projectServices.addNewProject(
+    ref.read(projectControllerProvider).addNewProject(
+        ref: ref,
         context: context,
         projectName: _titleController.text,
         projectDescription: _descriptionController.text,

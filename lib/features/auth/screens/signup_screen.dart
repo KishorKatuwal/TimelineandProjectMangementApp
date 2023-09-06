@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/services/auth_controller.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/change_password/widget/password_textfiled.dart';
 
 import '../../../constants/utils.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends ConsumerStatefulWidget {
   static const String routeName = '/signup-screen';
 
   const SignupScreen({Key? key}) : super(key: key);
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
   final AuthService authService = AuthService();
   final _signUpFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
@@ -23,6 +25,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _firstNameController = TextEditingController();
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _groupController = TextEditingController();
+
   //giving initial value to dropdown
   String category = 'Year1';
   String facultyValue = "Computing";
@@ -37,18 +40,17 @@ class _SignupScreenState extends State<SignupScreen> {
     _lastNameController.dispose();
   }
 
-  //calling method to sign up user
   void signUpUser() {
-    authService.signUpUser(
-      context: context,
-      email: _emailController.text,
-      password: _passwordController.text,
-      firstName: _firstNameController.text,
-      lastName: _lastNameController.text,
-      faculty: facultyValue,
-      group: _groupController.text.toUpperCase(),
-      year: category,
-    );
+    ref.read(authControllerProvider).signUp(
+          context: context,
+          email: _emailController.text,
+          password: _passwordController.text,
+          firstName: _firstNameController.text,
+          lastName: _lastNameController.text,
+          faculty: facultyValue,
+          group: _groupController.text.toUpperCase(),
+          year: category,
+        );
   }
 
   //values for year categories
@@ -66,6 +68,7 @@ class _SignupScreenState extends State<SignupScreen> {
   ];
 
   bool loader = true;
+
 //calling method to show loader
   Future<void> runMethodForDuration() async {
     setState(() {
@@ -194,9 +197,9 @@ class _SignupScreenState extends State<SignupScreen> {
                     loader: loader,
                     onTap: () {
                       if (_signUpFormKey.currentState!.validate()) {
-                        if(_passwordController.text.length<6){
+                        if (_passwordController.text.length < 6) {
                           showSnackBar(context, "Use Longer Password!!");
-                        }else{
+                        } else {
                           runMethodForDuration();
                         }
                       }

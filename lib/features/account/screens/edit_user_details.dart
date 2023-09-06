@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
+import 'package:timelineandprojectmanagementapp/features/account/services/account_controller.dart';
 import 'package:timelineandprojectmanagementapp/features/account/services/account_service.dart';
 
 import '../../../common/widgets/custom_button.dart';
 import '../../../common/widgets/custom_textfiels.dart';
 
-class EditUserDetails extends StatefulWidget {
+class EditUserDetails extends ConsumerStatefulWidget {
   final String firstName;
   final String lastName;
   final String group;
@@ -22,10 +24,10 @@ class EditUserDetails extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<EditUserDetails> createState() => _EditUserDetailsState();
+  ConsumerState<EditUserDetails> createState() => _EditUserDetailsState();
 }
 
-class _EditUserDetailsState extends State<EditUserDetails> {
+class _EditUserDetailsState extends ConsumerState<EditUserDetails> {
   final _editFormKey = GlobalKey<FormState>();
   final AccountService accountService = AccountService();
   final TextEditingController _firstNameController = TextEditingController();
@@ -56,8 +58,9 @@ class _EditUserDetailsState extends State<EditUserDetails> {
 
 //method for updating user details
   void updateUserDetails() {
-    accountService.updateUserDetails(
+    ref.read(accountControllerProvider).updateUserDetails(
         context: context,
+        ref: ref,
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
         group: _groupController.text,

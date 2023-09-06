@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 // String uri = 'http://192.168.1.70:3000';
-String uri = 'http://192.168.1.22:3000';
+// String uri = 'http://192.168.1.22:3000';
+String uri = 'https://timelineand-project-mangement-app-aw2c-mu0icdj6z-kishorkatuwal.vercel.app';
 // String uri = 'http://localhost:3000';
 
 class GlobalVariables {

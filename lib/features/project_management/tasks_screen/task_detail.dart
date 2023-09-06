@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timelineandprojectmanagementapp/features/project_management/services/project_controler.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
+
 import '../models/project_management_model.dart';
 
-
 //details of every project
-class TaskDetailScreen extends StatefulWidget {
+class TaskDetailScreen extends ConsumerStatefulWidget {
   final String projectId;
 
   const TaskDetailScreen({Key? key, required this.projectId}) : super(key: key);
 
   @override
-  State<TaskDetailScreen> createState() => _TaskDetailScreenState();
+  ConsumerState<TaskDetailScreen> createState() => _TaskDetailScreenState();
 }
 
-class _TaskDetailScreenState extends State<TaskDetailScreen> {
+class _TaskDetailScreenState extends ConsumerState<TaskDetailScreen> {
   final ProjectServices projectServices = ProjectServices();
   List<ProjectDataModel> projectDataModal = [];
   List<ProjectDataModel> projectData = [];
@@ -26,13 +27,18 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   void updateTask(String projectID, String taskID) {
     setState(() {
       projectServices.updateTask(
-          context: context, projectID: projectID, taskID: taskID, status: true);
+          ref: ref,
+          context: context,
+          projectID: projectID,
+          taskID: taskID,
+          status: true);
     });
   }
 
   void updateTaskToFalse(String projectID, String taskID) {
     setState(() {
       projectServices.updateTask(
+          ref: ref,
           context: context,
           projectID: projectID,
           taskID: taskID,
@@ -41,12 +47,13 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   }
 
   void deleteProject(String projectId) {
-    projectServices.deleteProject(context: context, projectId: projectId);
+    projectServices.deleteProject(
+        context: context, projectId: projectId, ref: ref);
   }
 
   void updateProjectStatus(String projectId, bool status) {
     projectServices.updateProjectStatus(
-        context: context, projectID: projectId, status: status);
+        ref: ref, context: context, projectID: projectId, status: status);
   }
 
   @override
@@ -57,14 +64,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
   }
 
   void getData() async {
-    final projectData = await projectServices.fetchAllProducts(context);
-    for (int i = 0; i < projectData.length; i++) {
-      if (projectData[i].projectid == widget.projectId) {
-        setState(() {
-          projectDataModal.add(projectData[i]);
-        });
-      }
-    }
+     final data =  ref.read(projectDataProvider.future);
+     projectDataModal = await data;
+     setState(() {
+
+     });
   }
 
   @override
@@ -108,11 +112,11 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                     projectDataModal[0].isCompleted
                         ? Text(
                             "Completed",
-                            style: Theme.of(context).textTheme.subtitle2,
+                            style: Theme.of(context).textTheme.titleSmall,
                           )
                         : Text(
                             "Not Completed",
-                            style: Theme.of(context).textTheme.subtitle2,
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                     const SizedBox(height: 10),
                     Text(
@@ -164,7 +168,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                               projectDataModal[0]
                                                   .tasks[index]
                                                   .id);
-                                          statusLoader= true;
+                                          statusLoader = true;
                                         });
                                       },
                                       child: statusLoader
@@ -179,7 +183,7 @@ class _TaskDetailScreenState extends State<TaskDetailScreen> {
                                               projectDataModal[0]
                                                   .tasks[index]
                                                   .id);
-                                          statusLoader=true;
+                                          statusLoader = true;
                                         });
                                       },
                                       child: statusLoader

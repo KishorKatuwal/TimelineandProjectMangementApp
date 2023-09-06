@@ -1,26 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/services/auth_controller.dart';
 import 'package:timelineandprojectmanagementapp/features/schedules/screens/schedules.dart';
 
-import '../../../providers/user_provider.dart';
-
-class TabClass extends StatefulWidget {
+class TabClass extends ConsumerStatefulWidget {
   const TabClass({Key? key}) : super(key: key);
 
   @override
-  State<TabClass> createState() => _TabClassState();
+  ConsumerState<TabClass> createState() => _TabClassState();
 }
 
-class _TabClassState extends State<TabClass> {
+class _TabClassState extends ConsumerState<TabClass> {
   //getting current week day
   String formattedDate = DateFormat('E').format(DateTime.now()).toUpperCase();
 
   @override
   Widget build(BuildContext context) {
     //getting user group
-    String userGroup = Provider.of<UserProvider>(context).user.group.trim();
+    String userGroup = ref.watch(userProvider)!.group;
     return DefaultTabController(
       length: 7,
       initialIndex: formattedDate == "SUN"
@@ -43,9 +42,9 @@ class _TabClassState extends State<TabClass> {
             decoration: const BoxDecoration(
               color: GlobalVariables.mainColor,
             ),
-            child: SafeArea(
+            child: const SafeArea(
               child: Column(
-                children: const [
+                children: [
                   SizedBox(
                     height: 10.0,
                   ),
