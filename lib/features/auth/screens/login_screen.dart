@@ -1,28 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timelineandprojectmanagementapp/common/widgets/bottom_bar.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_button.dart';
 import 'package:timelineandprojectmanagementapp/common/widgets/custom_textfiels.dart';
 import 'package:timelineandprojectmanagementapp/constants/utils.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/screens/signup_screen.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/services/auth_controller.dart';
 import 'package:timelineandprojectmanagementapp/features/auth/services/auth_service.dart';
 import 'package:timelineandprojectmanagementapp/features/change_password/widget/password_textfiled.dart';
+import 'package:timelineandprojectmanagementapp/model/error_model.dart';
 
-class LoginScreen extends StatefulWidget {
+import '../../../model/user.dart';
+
+class LoginScreen extends ConsumerStatefulWidget {
   static const String routeName = '/login-screen';
 
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  ConsumerState<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  //uniquely identify a form
+class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _signInFormKey = GlobalKey<FormState>();
   final AuthService authService = AuthService();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
-  //used to release resources when a State object is removed permanently from the tree.
   @override
   void dispose() {
     super.dispose();
@@ -31,6 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   bool loader = true;
+
   //used to show loader when login button is pressed
   Future<void> runMethodForDuration() async {
     setState(() {
@@ -44,12 +49,20 @@ class _LoginScreenState extends State<LoginScreen> {
     });
   }
 
+   late User user;
+
   //method for sign in user
-  void signInUser() {
-    authService.signInUser(
+  void signInUser() async {
+    user = (await ref.read(authControllerProvider).loginTo(
         context: context,
         email: _emailController.text,
-        password: _passwordController.text);
+        password: _passwordController.text))!;
+    if (user.id.isNotEmpty) {
+      ref.read(userProvider.notifier).update((state) => user);
+      Navigator.pushNamed(context, BottomBar.routeName, arguments: 0);
+    } else {
+      showSnackBar(context, "in login screen");
+    }
   }
 
   @override
@@ -86,7 +99,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  PasswordTextField(controller: _passwordController,
+                  PasswordTextField(
+                      controller: _passwordController,
                       label: "Password",
                       hintText: "Password",
                       obText: true),
@@ -99,9 +113,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     loader: loader,
                     onTap: () {
                       if (_signInFormKey.currentState!.validate()) {
-                        if(_passwordController.text.length<6){
+                        if (_passwordController.text.length < 6) {
                           showSnackBar(context, "Use Longer Password!!");
-                        }else{
+                        } else {
                           runMethodForDuration();
                         }
                       }

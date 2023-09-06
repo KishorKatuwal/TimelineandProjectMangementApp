@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:timelineandprojectmanagementapp/model/user.dart';
 
@@ -22,7 +24,7 @@ class UserProvider extends ChangeNotifier {
   User get user => _user;
 
   void setUser(String user) {
-    _user = User.fromJson(user);
+    _user = User.fromJson(jsonDecode(user));
     notifyListeners();
   }
 

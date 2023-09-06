@@ -1,5 +1,6 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/Provider.dart';
 import 'package:timelineandprojectmanagementapp/constants/global_variables.dart';
@@ -13,16 +14,16 @@ import '../models/task_model.dart';
 import '../projects_screens/progress_card.dart';
 
 //project shown below calendar
-class TasksPage extends StatefulWidget {
+class TasksPage extends ConsumerStatefulWidget {
   const TasksPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<TasksPage> createState() => _TasksPageState();
+  ConsumerState<TasksPage> createState() => _TasksPageState();
 }
 
-class _TasksPageState extends State<TasksPage> {
+class _TasksPageState extends ConsumerState<TasksPage> {
   final ProjectServices projectServices = ProjectServices();
   List<ProjectDataModel> projectModel = [];
   List<ProjectDataModel> projectData = [];
@@ -48,7 +49,7 @@ class _TasksPageState extends State<TasksPage> {
 
   void deleteProject(String projectId) {
     setState(() {
-      projectServices.deleteProject(context: context, projectId: projectId);
+      projectServices.deleteProject(context: context, projectId: projectId, ref: ref);
     });
   }
 
@@ -170,7 +171,7 @@ class _TasksPageState extends State<TasksPage> {
                       SizedBox(
                         height: 395,
                         child: FutureBuilder(
-                          future: projectServices.fetchAllProducts(context),
+                          future: projectServices.fetchAllProducts(ref: ref, context: context),
                           builder: (context, AsyncSnapshot snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
@@ -216,16 +217,16 @@ class _TasksPageState extends State<TasksPage> {
                                     tasks = [];
                                     return GestureDetector(
                                       onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                TaskDetailScreen(
-                                              projectId:
-                                                  projectModel[index].projectid,
-                                            ),
-                                          ),
-                                        );
+                                        // Navigator.push(
+                                        //   context,
+                                        //   MaterialPageRoute(
+                                        //     builder: (context) =>
+                                        //         TaskDetailScreen(
+                                        //       projectId:
+                                        //           projectModel[index].projectid,
+                                        //     ),
+                                        //   ),
+                                        // );
                                       },
                                       child: ProgressCard(
                                         ProjectName:

@@ -1,67 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:provider/Provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:timelineandprojectmanagementapp/features/account/screens/edit_user_details.dart';
 import 'package:timelineandprojectmanagementapp/features/account/widgets/display_details.dart';
-import 'package:timelineandprojectmanagementapp/features/event/model/event_data_model.dart';
+import 'package:timelineandprojectmanagementapp/features/auth/services/auth_controller.dart';
 import 'package:timelineandprojectmanagementapp/features/event/services/event_service.dart';
 import 'package:timelineandprojectmanagementapp/features/project_management/services/projects_service.dart';
 
-import '../../../providers/user_provider.dart';
-import '../../project_management/models/project_management_model.dart';
-
-class AccountScreen extends StatefulWidget {
+class AccountScreen extends ConsumerStatefulWidget {
   static const String routeName = '/account-screen';
 
   const AccountScreen({Key? key}) : super(key: key);
 
   @override
-  State<AccountScreen> createState() => _AccountScreenState();
+  ConsumerState<AccountScreen> createState() => _AccountScreenState();
 }
 
-class _AccountScreenState extends State<AccountScreen> {
+class _AccountScreenState extends ConsumerState<AccountScreen> {
   final EventServices eventServices = EventServices();
   final ProjectServices projectServices = ProjectServices();
-  late final int upcomingEvents;
-  late final int pendingProjects;
 
-  List<ProjectDataModel> getPendingProj = [];
-  List<EventDataModel> getUpcomingEve = [];
-  bool finalLoading = true;
+  // late final int upcomingEvents;
+  // late final int pendingProjects;
+  //
+  // List<ProjectDataModel> getPendingProj = [];
+  // List<EventDataModel> getUpcomingEve = [];
+  bool finalLoading = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    runMethod();
+    //runMethod();
   }
 
   // mounted ensured that widget is currently active and mounted in the widget tree.
-  void runMethod() {
-    if (mounted) {
-      setState(() {
-        getAllData();
-      });
-    }
-  }
-
-  //getting data from the backend
-  void getAllData() async {
-    setState(() {
-      finalLoading = true;
-    });
-    getPendingProj = await projectServices.getPendingProjects(context);
-    getUpcomingEve = await eventServices.getUpcomingEvents(context);
-    setState(() {
-      finalLoading = false;
-      pendingProjects = getPendingProj.length;
-      upcomingEvents = getUpcomingEve.length;
-    });
-  }
+  // void runMethod() {
+  //   if (mounted) {
+  //     setState(() {
+  //       getAllData();
+  //     });
+  //   }
+  // }
+  //
+  // //getting data from the backend
+  // void getAllData() async {
+  //   setState(() {
+  //     finalLoading = true;
+  //   });
+  //   getPendingProj =
+  //       await projectServices.getPendingProjects(ref: ref, context: context);
+  //   getUpcomingEve = await eventServices.getUpcomingEvents(context);
+  //   setState(() {
+  //     finalLoading = false;
+  //     pendingProjects = getPendingProj.length;
+  //     upcomingEvents = getUpcomingEve.length;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
-    final user = Provider.of<UserProvider>(context).user;
-
+    final user = ref.watch(userProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("User Profile"),
@@ -78,7 +76,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => EditUserDetails(
-                      firstName: user.firstName,
+                      firstName: user!.firstName,
                       lastName: user.lastName,
                       year: user.year,
                       group: user.group,
@@ -118,7 +116,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     DisplayDetails(
                       title: "User Details",
                       completed: "Email",
-                      completedValue: user.email,
+                      completedValue: user!.email,
                       pending: "Last Name",
                       pendingValue: user.lastName,
                       total: "First Name",
@@ -139,29 +137,29 @@ class _AccountScreenState extends State<AccountScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    DisplayDetails(
-                      title: "Project Details",
-                      completed: "Completed Projects",
-                      completedValue:
-                          (user.projects.length - pendingProjects).toString(),
-                      pending: "Pending Projects",
-                      pendingValue: pendingProjects.toString(),
-                      total: "Total Projects",
-                      totalValue: user.projects.length.toString(),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    DisplayDetails(
-                      title: "Event Details",
-                      completed: "Completed Events",
-                      completedValue:
-                          (user.events.length - upcomingEvents).toString(),
-                      pending: "Upcoming Events",
-                      pendingValue: upcomingEvents.toString(),
-                      total: "Total Events",
-                      totalValue: user.events.length.toString(),
-                    ),
+                    // DisplayDetails(
+                    //   title: "Project Details",
+                    //   completed: "Completed Projects",
+                    //   completedValue:
+                    //       (user.projects.length - pendingProjects).toString(),
+                    //   pending: "Pending Projects",
+                    //   pendingValue: pendingProjects.toString(),
+                    //   total: "Total Projects",
+                    //   totalValue: user.projects.length.toString(),
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // DisplayDetails(
+                    //   title: "Event Details",
+                    //   completed: "Completed Events",
+                    //   completedValue:
+                    //       (user.events.length - upcomingEvents).toString(),
+                    //   pending: "Upcoming Events",
+                    //   pendingValue: upcomingEvents.toString(),
+                    //   total: "Total Events",
+                    //   totalValue: user.events.length.toString(),
+                    // ),
                   ],
                 ),
               ),
